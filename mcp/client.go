@@ -17,6 +17,7 @@ type Provider string
 const (
 	ProviderDeepSeek Provider = "deepseek"
 	ProviderQwen     Provider = "qwen"
+	ProviderGemini   Provider = "gemini"
 	ProviderCustom   Provider = "custom"
 )
 
@@ -88,6 +89,30 @@ func (client *Client) SetQwenAPIKey(apiKey string, customURL string, customModel
 	if len(apiKey) > 8 {
 		log.Printf("🔧 [MCP] Qwen API Key: %s...%s", apiKey[:4], apiKey[len(apiKey)-4:])
 	}
+}
+
+// SetGeminiAPIKey 设置Google Gemini API密钥
+// customURL 为空时使用默认URL，customModel 为空时使用默认模型
+func (client *Client) SetGeminiAPIKey(apiKey string, customURL string, customModel string) {
+    client.Provider = ProviderGemini
+    client.APIKey = apiKey
+    if customURL != "" {
+        client.BaseURL = customURL
+        log.Printf("🔧 [MCP] Gemini 使用自定义 BaseURL: %s", customURL)
+    } else {
+        client.BaseURL = "https://generativelanguage.googleapis.com/v1beta"
+        log.Printf("🔧 [MCP] Gemini 使用默认 BaseURL: %s", client.BaseURL)
+    }
+    if customModel != "" {
+        client.Model = customModel
+        log.Printf("🔧 [MCP] Gemini 使用自定义 Model: %s", customModel)
+    } else {
+        client.Model = "gemini-1.5-flash"
+        log.Printf("🔧 [MCP] Gemini 使用默认 Model: %s", client.Model)
+    }
+    if len(apiKey) > 8 {
+        log.Printf("🔧 [MCP] Gemini API Key: %s...%s", apiKey[:4], apiKey[len(apiKey)-4:])
+    }
 }
 
 // SetCustomAPI 设置自定义OpenAI兼容API
@@ -168,47 +193,81 @@ func (client *Client) callOnce(systemPrompt, userPrompt string) (string, error) 
 		log.Printf("   API Key: %s...%s", client.APIKey[:4], client.APIKey[len(client.APIKey)-4:])
 	}
 
-	// 构建 messages 数组
-	messages := []map[string]string{}
+	var jsonData []byte
+	var err error
 
-	// 如果有 system prompt，添加 system message
-	if systemPrompt != "" {
+	if client.Provider == ProviderGemini {
+		// Gemini 请求体：generateContent
+		geminiBody := map[string]interface{}{}
+
+		// system 指令（可选）
+		if systemPrompt != "" {
+			geminiBody["system_instruction"] = map[string]interface{}{
+				"role":  "system",
+				"parts": []map[string]string{{"text": systemPrompt}},
+			}
+		}
+
+		// 用户消息
+		geminiBody["contents"] = []map[string]interface{}{
+			{
+				"role":  "user",
+				"parts": []map[string]string{{"text": userPrompt}},
+			},
+		}
+
+		// 生成参数
+		geminiBody["generationConfig"] = map[string]interface{}{
+			"temperature": 0.5,
+			"maxOutputTokens": 2000,
+		}
+
+		jsonData, err = json.Marshal(geminiBody)
+		if err != nil {
+			return "", fmt.Errorf("序列化Gemini请求失败: %w", err)
+		}
+	} else {
+		// OpenAI 兼容的请求体
+		messages := []map[string]string{}
+		if systemPrompt != "" {
+			messages = append(messages, map[string]string{
+				"role":    "system",
+				"content": systemPrompt,
+			})
+		}
 		messages = append(messages, map[string]string{
-			"role":    "system",
-			"content": systemPrompt,
+			"role":    "user",
+			"content": userPrompt,
 		})
+		requestBody := map[string]interface{}{
+			"model":       client.Model,
+			"messages":    messages,
+			"temperature": 0.5,
+			"max_tokens":  2000,
+		}
+		jsonData, err = json.Marshal(requestBody)
+		if err != nil {
+			return "", fmt.Errorf("序列化请求失败: %w", err)
+		}
 	}
-
-	// 添加 user message
-	messages = append(messages, map[string]string{
-		"role":    "user",
-		"content": userPrompt,
-	})
-
-	// 构建请求体
-	requestBody := map[string]interface{}{
-		"model":       client.Model,
-		"messages":    messages,
-		"temperature": 0.5, // 降低temperature以提高JSON格式稳定性
-		"max_tokens":  2000,
-	}
-
-	// 注意：response_format 参数仅 OpenAI 支持，DeepSeek/Qwen 不支持
-	// 我们通过强化 prompt 和后处理来确保 JSON 格式正确
-
-	jsonData, err := json.Marshal(requestBody)
 	if err != nil {
 		return "", fmt.Errorf("序列化请求失败: %w", err)
 	}
 
 	// 创建HTTP请求
 	var url string
-	if client.UseFullURL {
-		// 使用完整URL，不添加/chat/completions
-		url = client.BaseURL
+	if client.Provider == ProviderGemini {
+		base := client.BaseURL
+		if base == "" {
+			base = "https://generativelanguage.googleapis.com/v1beta"
+		}
+		url = fmt.Sprintf("%s/models/%s:generateContent?key=%s", base, client.Model, client.APIKey)
 	} else {
-		// 默认行为：添加/chat/completions
-		url = fmt.Sprintf("%s/chat/completions", client.BaseURL)
+		if client.UseFullURL {
+			url = client.BaseURL
+		} else {
+			url = fmt.Sprintf("%s/chat/completions", client.BaseURL)
+		}
 	}
 	log.Printf("📡 [MCP] 请求 URL: %s", url)
 
@@ -221,12 +280,13 @@ func (client *Client) callOnce(systemPrompt, userPrompt string) (string, error) 
 
 	// 根据不同的Provider设置认证方式
 	switch client.Provider {
+	case ProviderGemini:
+		// Gemini 使用查询参数中的 key，不使用 Authorization 头
+		// 无需额外处理
 	case ProviderDeepSeek:
 		req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", client.APIKey))
 	case ProviderQwen:
-		// 阿里云Qwen使用API-Key认证
 		req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", client.APIKey))
-		// 注意：如果使用的不是兼容模式，可能需要不同的认证方式
 	default:
 		req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", client.APIKey))
 	}
@@ -250,23 +310,39 @@ func (client *Client) callOnce(systemPrompt, userPrompt string) (string, error) 
 	}
 
 	// 解析响应
-	var result struct {
-		Choices []struct {
-			Message struct {
-				Content string `json:"content"`
-			} `json:"message"`
-		} `json:"choices"`
+	if client.Provider == ProviderGemini {
+		var gres struct {
+			Candidates []struct {
+				Content struct {
+					Parts []struct {
+						Text string `json:"text"`
+					} `json:"parts"`
+				} `json:"content"`
+			} `json:"candidates"`
+		}
+		if err := json.Unmarshal(body, &gres); err != nil {
+			return "", fmt.Errorf("解析Gemini响应失败: %w", err)
+		}
+		if len(gres.Candidates) == 0 || len(gres.Candidates[0].Content.Parts) == 0 {
+			return "", fmt.Errorf("API返回空响应")
+		}
+		return gres.Candidates[0].Content.Parts[0].Text, nil
+	} else {
+		var result struct {
+			Choices []struct {
+				Message struct {
+					Content string `json:"content"`
+				} `json:"message"`
+			} `json:"choices"`
+		}
+		if err := json.Unmarshal(body, &result); err != nil {
+			return "", fmt.Errorf("解析响应失败: %w", err)
+		}
+		if len(result.Choices) == 0 {
+			return "", fmt.Errorf("API返回空响应")
+		}
+		return result.Choices[0].Message.Content, nil
 	}
-
-	if err := json.Unmarshal(body, &result); err != nil {
-		return "", fmt.Errorf("解析响应失败: %w", err)
-	}
-
-	if len(result.Choices) == 0 {
-		return "", fmt.Errorf("API返回空响应")
-	}
-
-	return result.Choices[0].Message.Content, nil
 }
 
 // isRetryableError 判断错误是否可重试
