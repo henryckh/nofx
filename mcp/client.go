@@ -17,6 +17,8 @@ type Provider string
 const (
 	ProviderDeepSeek Provider = "deepseek"
 	ProviderQwen     Provider = "qwen"
+    ProviderGemini   Provider = "gemini"
+    ProviderPerplexity Provider = "perplexity"
 	ProviderCustom   Provider = "custom"
 )
 
@@ -88,6 +90,57 @@ func (client *Client) SetQwenAPIKey(apiKey string, customURL string, customModel
 	if len(apiKey) > 8 {
 		log.Printf("🔧 [MCP] Qwen API Key: %s...%s", apiKey[:4], apiKey[len(apiKey)-4:])
 	}
+}
+
+// SetGeminiAPIKey 设置 Google Gemini API 密钥（OpenAI兼容端点）
+// customURL 为空时使用默认OpenAI兼容URL，customModel 为空时使用默认模型
+func (client *Client) SetGeminiAPIKey(apiKey string, customURL string, customModel string) {
+    client.Provider = ProviderGemini
+    client.APIKey = apiKey
+    if customURL != "" {
+        client.BaseURL = customURL
+        log.Printf("🔧 [MCP] Gemini 使用自定义 BaseURL: %s", customURL)
+    } else {
+        // 使用 Gemini 的 OpenAI 兼容端点前缀，后续会自动拼接 /chat/completions
+        client.BaseURL = "https://generativelanguage.googleapis.com/v1beta/openai"
+        log.Printf("🔧 [MCP] Gemini 使用默认 BaseURL: %s", client.BaseURL)
+    }
+    if customModel != "" {
+        client.Model = customModel
+        log.Printf("🔧 [MCP] Gemini 使用自定义 Model: %s", customModel)
+    } else {
+        client.Model = "gemini-2.5-flash"
+        log.Printf("🔧 [MCP] Gemini 使用默认 Model: %s", client.Model)
+    }
+    if len(apiKey) > 8 {
+        log.Printf("🔧 [MCP] Gemini API Key: %s...%s", apiKey[:4], apiKey[len(apiKey)-4:])
+    }
+}
+
+// SetPerplexityAPIKey 设置 Perplexity API 密钥（OpenAI兼容端点）
+// customURL 为空时使用默认OpenAI兼容URL，customModel 为空时使用默认模型
+func (client *Client) SetPerplexityAPIKey(apiKey string, customURL string, customModel string) {
+    client.Provider = ProviderPerplexity
+    client.APIKey = apiKey
+    if customURL != "" {
+        client.BaseURL = customURL
+        log.Printf("🔧 [MCP] Perplexity 使用自定义 BaseURL: %s", customURL)
+    } else {
+        // Perplexity 的 OpenAI 兼容前缀，后续会自动拼接 /chat/completions
+        client.BaseURL = "https://api.perplexity.ai"
+        log.Printf("🔧 [MCP] Perplexity 使用默认 BaseURL: %s", client.BaseURL)
+    }
+    if customModel != "" {
+        client.Model = customModel
+        log.Printf("🔧 [MCP] Perplexity 使用自定义 Model: %s", customModel)
+    } else {
+        // 默认选用一个常见的在线模型名称，用户可覆盖
+        client.Model = "llama-3.1-sonar-small-128k-online"
+        log.Printf("🔧 [MCP] Perplexity 使用默认 Model: %s", client.Model)
+    }
+    if len(apiKey) > 8 {
+        log.Printf("🔧 [MCP] Perplexity API Key: %s...%s", apiKey[:4], apiKey[len(apiKey)-4:])
+    }
 }
 
 // SetCustomAPI 设置自定义OpenAI兼容API
@@ -193,6 +246,11 @@ func (client *Client) callOnce(systemPrompt, userPrompt string) (string, error) 
 		"max_tokens":  2000,
 	}
 
+    // Gemini OpenAI 兼容端点可选支持 reasoning_effort
+    if client.Provider == ProviderGemini {
+        requestBody["reasoning_effort"] = "low"
+    }
+
 	// 注意：response_format 参数仅 OpenAI 支持，DeepSeek/Qwen 不支持
 	// 我们通过强化 prompt 和后处理来确保 JSON 格式正确
 
@@ -227,6 +285,12 @@ func (client *Client) callOnce(systemPrompt, userPrompt string) (string, error) 
 		// 阿里云Qwen使用API-Key认证
 		req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", client.APIKey))
 		// 注意：如果使用的不是兼容模式，可能需要不同的认证方式
+    case ProviderGemini:
+        // Gemini OpenAI 兼容端点使用 Bearer 认证
+        req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", client.APIKey))
+    case ProviderPerplexity:
+        // Perplexity OpenAI 兼容端点使用 Bearer 认证
+        req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", client.APIKey))
 	default:
 		req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", client.APIKey))
 	}

@@ -18,7 +18,7 @@ var JWTSecret []byte
 var AdminMode bool = false
 
 // OTPIssuer OTP发行者名称
-const OTPIssuer = "nofxAI"
+const OTPIssuer = "AIO"
 
 // SetJWTSecret 设置JWT密钥
 func SetJWTSecret(secret string) {

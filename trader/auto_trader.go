@@ -18,7 +18,7 @@ type AutoTraderConfig struct {
 	// Trader标识
 	ID      string // Trader唯一标识（用于日志目录等）
 	Name    string // Trader显示名称
-	AIModel string // AI模型: "qwen" 或 "deepseek"
+    AIModel string // AI模型: "deepseek" | "qwen" | "gemini" | "perplexity" | "custom"
 
 	// 交易平台选择
 	Exchange string // "binance", "hyperliquid" 或 "aster"
@@ -43,6 +43,8 @@ type AutoTraderConfig struct {
 	UseQwen     bool
 	DeepSeekKey string
 	QwenKey     string
+    GeminiKey   string
+    PerplexityKey string
 
 	// 自定义AI API配置
 	CustomAPIURL    string
@@ -124,7 +126,7 @@ func NewAutoTrader(config AutoTraderConfig) (*AutoTrader, error) {
 		// 使用自定义API
 		mcpClient.SetCustomAPI(config.CustomAPIURL, config.CustomAPIKey, config.CustomModelName)
 		log.Printf("🤖 [%s] 使用自定义AI API: %s (模型: %s)", config.Name, config.CustomAPIURL, config.CustomModelName)
-	} else if config.UseQwen || config.AIModel == "qwen" {
+    } else if config.UseQwen || config.AIModel == "qwen" {
 		// 使用Qwen (支持自定义URL和Model)
 		mcpClient.SetQwenAPIKey(config.QwenKey, config.CustomAPIURL, config.CustomModelName)
 		if config.CustomAPIURL != "" || config.CustomModelName != "" {
@@ -132,6 +134,22 @@ func NewAutoTrader(config AutoTraderConfig) (*AutoTrader, error) {
 		} else {
 			log.Printf("🤖 [%s] 使用阿里云Qwen AI", config.Name)
 		}
+    } else if config.AIModel == "gemini" {
+        // 使用Gemini (OpenAI兼容端点，支持自定义URL和Model)
+        mcpClient.SetGeminiAPIKey(config.GeminiKey, config.CustomAPIURL, config.CustomModelName)
+        if config.CustomAPIURL != "" || config.CustomModelName != "" {
+            log.Printf("🤖 [%s] 使用Google Gemini AI (自定义URL: %s, 模型: %s)", config.Name, config.CustomAPIURL, config.CustomModelName)
+        } else {
+            log.Printf("🤖 [%s] 使用Google Gemini AI", config.Name)
+        }
+    } else if config.AIModel == "perplexity" {
+        // 使用 Perplexity (OpenAI兼容端点，支持自定义URL和Model)
+        mcpClient.SetPerplexityAPIKey(config.PerplexityKey, config.CustomAPIURL, config.CustomModelName)
+        if config.CustomAPIURL != "" || config.CustomModelName != "" {
+            log.Printf("🤖 [%s] 使用Perplexity AI (自定义URL: %s, 模型: %s)", config.Name, config.CustomAPIURL, config.CustomModelName)
+        } else {
+            log.Printf("🤖 [%s] 使用Perplexity AI", config.Name)
+        }
 	} else {
 		// 默认使用DeepSeek (支持自定义URL和Model)
 		mcpClient.SetDeepSeekAPIKey(config.DeepSeekKey, config.CustomAPIURL, config.CustomModelName)
@@ -818,10 +836,19 @@ func (at *AutoTrader) GetDecisionLogger() *logger.DecisionLogger {
 
 // GetStatus 获取系统状态（用于API）
 func (at *AutoTrader) GetStatus() map[string]interface{} {
-	aiProvider := "DeepSeek"
-	if at.config.UseQwen {
-		aiProvider = "Qwen"
-	}
+    aiProvider := "DeepSeek"
+    switch strings.ToLower(at.aiModel) {
+    case "qwen":
+        aiProvider = "Qwen"
+    case "gemini":
+        aiProvider = "Gemini"
+    case "perplexity":
+        aiProvider = "Perplexity"
+    case "custom":
+        aiProvider = "Custom"
+    default:
+        aiProvider = "DeepSeek"
+    }
 
 	return map[string]interface{}{
 		"trader_id":       at.id,

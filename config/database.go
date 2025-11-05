@@ -225,6 +225,8 @@ func (d *Database) initDefaultData() error {
 	}{
 		{"deepseek", "DeepSeek", "deepseek"},
 		{"qwen", "Qwen", "qwen"},
+		{"gemini", "Gemini", "gemini"},
+		{"perplexity", "Perplexity", "perplexity"},
 	}
 
 	for _, model := range aiModels {
