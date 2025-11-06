@@ -3,8 +3,9 @@ export type Language = 'en' | 'zh';
 export const translations = {
   en: {
     // Header
-    appTitle: 'NOFX',
-    subtitle: 'Multi-AI Model Trading Platform',
+    appTitle: 'Nexus',
+    subtitle: 'Smart Data Paradigms for Intelligent Agents',
+    nexusHeroDescription: 'A decentralized AI trading layer that provides pre-processed datasets, letting builders focus on creating AI agents, executing strategies, and profiting in a secure, modular ecosystem.',
     aiTraders: 'AI Traders',
     details: 'Details',
     tradingPanel: 'Trading Panel',
@@ -22,7 +23,7 @@ export const translations = {
     dashboardNav: 'Dashboard',
 
     // Footer
-    footerTitle: 'NOFX - AI Trading System',
+    footerTitle: 'Nexus - Smart Data Paradigms',
     footerWarning: '⚠️ Trading involves risk. Use at your own discretion.',
 
     // Stats Cards
@@ -411,13 +412,15 @@ export const translations = {
     strategicInvestment: '(Strategic Investment)',
     
     // Login Modal
-    accessNofxPlatform: 'Access NOFX Platform',
+    accessNofxPlatform: 'Access Nexus Platform',
+    accessNexusPlatform: 'Access Nexus Platform',
     loginRegisterPrompt: 'Please login or register to access the full AI trading platform',
     registerNewAccount: 'Register New Account',
   },
   zh: {
     // Header
-    appTitle: 'NOFX',
+    appTitle: 'Nexus',
+    nexusHeroDescription: '去中心化 AI 交易层，提供预处理数据集，让构建者专注于创建 AI 代理、执行策略，并在安全、模块化的生态系统中获利。',
     subtitle: '多AI模型交易平台',
     aiTraders: 'AI交易员',
     details: '详情',
@@ -436,7 +439,7 @@ export const translations = {
     dashboardNav: '看板',
 
     // Footer
-    footerTitle: 'NOFX - AI交易系统',
+    footerTitle: 'Nexus - 智能数据范式',
     footerWarning: '⚠️ 交易有风险，请谨慎使用。',
 
     // Stats Cards
@@ -825,7 +828,8 @@ export const translations = {
     strategicInvestment: '(战略投资)',
     
     // Login Modal
-    accessNofxPlatform: '访问 NOFX 平台',
+    accessNofxPlatform: '访问 Nexus 平台',
+    accessNexusPlatform: '访问 Nexus 平台',
     loginRegisterPrompt: '请选择登录或注册以访问完整的 AI 交易平台',
     registerNewAccount: '注册新账号',
   }

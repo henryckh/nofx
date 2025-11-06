@@ -6,19 +6,11 @@ interface FooterSectionProps {
 
 export default function FooterSection({ language }: FooterSectionProps) {
   return (
-    <footer style={{ borderTop: '1px solid var(--panel-border)', background: 'var(--brand-dark-gray)' }}>
-      <div className='max-w-[1200px] mx-auto px-6 py-10'>
+    <footer className='footer' style={{ background: '#000000', paddingTop: '100px', paddingBottom: '20px' }}>
+      <div className='max-w-[1200px] mx-auto px-6 pt-6 pb-2'>
         {/* Brand */}
         <div className='flex items-center gap-3 mb-8'>
-          <img src='/icons/nofx.svg' alt='NOFX Logo' className='w-8 h-8' />
-          <div>
-            <div className='text-lg font-bold' style={{ color: '#EAECEF' }}>
-              NOFX
-            </div>
-            <div className='text-xs' style={{ color: '#848E9C' }}>
-              {t('futureStandardAI', language)}
-            </div>
-          </div>
+          <img src='/images/nexus/NEXUS-white-logo.webp' alt='Nexus Logo' className='h-12' />
         </div>
 
         {/* Multi-link columns */}
@@ -33,32 +25,30 @@ export default function FooterSection({ language }: FooterSectionProps) {
             <ul className='space-y-2 text-sm' style={{ color: '#848E9C' }}>
               <li>
                 <a
-                  className='hover:text-[#F0B90B]'
-                  href='https://github.com/tinkle-community/nofx'
+                  className='hover:text-[#E781FD]'
+                  href='https://olaxbt.xyz/'
                   target='_blank'
                   rel='noopener noreferrer'
                 >
-                  GitHub
+                  OLAXBT Agent
                 </a>
               </li>
               <li>
                 <a
-                  className='hover:text-[#F0B90B]'
-                  href='https://t.me/nofx_dev_community'
+                  className='hover:text-[#E781FD]'
+                  href='https://olaxbt-docs.gitbook.io/'
                   target='_blank'
                   rel='noopener noreferrer'
                 >
-                  Telegram
+                  Whitepaper
                 </a>
               </li>
               <li>
                 <a
-                  className='hover:text-[#F0B90B]'
-                  href='https://x.com/nofx_ai'
-                  target='_blank'
-                  rel='noopener noreferrer'
+                  className='hover:text-[#E781FD]'
+                  href='#'
                 >
-                  X (Twitter)
+                  Announcement
                 </a>
               </li>
             </ul>
@@ -74,96 +64,64 @@ export default function FooterSection({ language }: FooterSectionProps) {
             <ul className='space-y-2 text-sm' style={{ color: '#848E9C' }}>
               <li>
                 <a
-                  className='hover:text-[#F0B90B]'
-                  href='https://github.com/tinkle-community/nofx/blob/main/README.md'
+                  className='hover:text-[#E781FD]'
+                  href='https://x.com/olaxbt'
                   target='_blank'
                   rel='noopener noreferrer'
                 >
-                  {t('documentation', language)}
+                  X (Twitter)
                 </a>
               </li>
               <li>
                 <a
-                  className='hover:text-[#F0B90B]'
-                  href='https://github.com/tinkle-community/nofx/issues'
+                  className='hover:text-[#E781FD]'
+                  href='https://t.me/OLAXBT_Community'
                   target='_blank'
                   rel='noopener noreferrer'
                 >
-                  Issues
+                  Telegram
                 </a>
               </li>
               <li>
                 <a
-                  className='hover:text-[#F0B90B]'
-                  href='https://github.com/tinkle-community/nofx/pulls'
+                  className='hover:text-[#E781FD]'
+                  href='https://github.com/olaxbt'
                   target='_blank'
                   rel='noopener noreferrer'
                 >
-                  Pull Requests
+                  GitHub
                 </a>
               </li>
             </ul>
           </div>
 
-          <div>
-            <h3
-              className='text-sm font-semibold mb-3'
-              style={{ color: '#EAECEF' }}
-            >
-              {t('supporters', language)}
-            </h3>
-            <ul className='space-y-2 text-sm' style={{ color: '#848E9C' }}>
-              <li>
-                <a
-                  className='hover:text-[#F0B90B]'
-                  href='https://asterdex.com/'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                >
-                  Aster DEX
-                </a>
-              </li>
-              <li>
-                <a
-                  className='hover:text-[#F0B90B]'
-                  href='https://www.binance.com/'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                >
-                  Binance
-                </a>
-              </li>
-              <li>
-                <a
-                  className='hover:text-[#F0B90B]'
-                  href='https://hyperliquid.xyz/'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                >
-                  Hyperliquid
-                </a>
-              </li>
-              <li>
-                <a
-                  className='hover:text-[#F0B90B]'
-                  href='https://amber.ac/'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                >
-                  Amber.ac <span className='opacity-70'>{t('strategicInvestment', language)}</span>
-                </a>
-              </li>
-            </ul>
+          <div className='footer-social'>
+            <div className='social-icons flex gap-4'>
+              <a href='https://x.com/olaxbt' target='_blank' rel='noopener noreferrer' className='social-icon w-8' title='X (Twitter)'>
+                <img src='/images/nexus/footer/Twitter-icon.png' alt='Twitter' className='w-full' />
+              </a>
+              <a href='https://t.me/OLAXBT_Community' target='_blank' rel='noopener noreferrer' className='social-icon w-8' title='Telegram'>
+                <img src='/images/nexus/footer/telegram.png' alt='Telegram' className='w-full' />
+              </a>
+              <a href='https://github.com/olaxbt' target='_blank' rel='noopener noreferrer' className='social-icon w-8' title='GitHub'>
+                <img src='/images/nexus/footer/github.png' alt='GitHub' className='w-full' />
+              </a>
+              <a href='https://www.youtube.com/@olaxbt' target='_blank' rel='noopener noreferrer' className='social-icon w-8' title='YouTube'>
+                <img src='/images/nexus/footer/youtube-icon.png' alt='YouTube' className='w-full' />
+              </a>
+              <a href='https://www.linkedin.com/company/olaxbt/' target='_blank' rel='noopener noreferrer' className='social-icon w-8' title='LinkedIn'>
+                <img src='/images/nexus/footer/linkedin.png' alt='LinkedIn' className='w-full' />
+              </a>
+            </div>
           </div>
         </div>
 
         {/* Bottom note (kept subtle) */}
         <div
-          className='pt-6 mt-8 text-center text-xs'
-          style={{ color: 'var(--text-tertiary)', borderTop: '1px solid var(--panel-border)' }}
+          className='pt-6 mt-8 text-left italic'
+          style={{ color: '#727272', fontStyle: 'italic' }}
         >
-          <p>{t('footerTitle', language)}</p>
-          <p className='mt-1'>{t('footerWarning', language)}</p>
+          OLAXBT © 2025. All rights reserved.
         </div>
       </div>
     </footer>

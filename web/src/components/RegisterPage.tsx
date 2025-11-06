@@ -109,12 +109,9 @@ export function RegisterPage() {
 
           {/* Logo */}
           <div className="text-center mb-8">
-          <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <img src="/icons/nofx.svg" alt="NoFx Logo" className="w-16 h-16 object-contain" />
+          <div className="w-36 mx-auto mb-4 flex items-center justify-center">
+            <img src="/images/nexus/NEXUS-white-logo.webp" alt="Nexus Logo" className="h-16 object-contain" />
           </div>
-          <h1 className="text-2xl font-bold" style={{ color: '#EAECEF' }}>
-            {t('appTitle', language)}
-          </h1>
           <p className="text-sm mt-2" style={{ color: '#848E9C' }}>
             {step === 'register' && t('registerTitle', language)}
             {step === 'setup-otp' && t('setupTwoFactor', language)}

@@ -271,7 +271,7 @@ export function EquityChart({ traderId }: EquityChartProps) {
 
       {/* Chart */}
       <div className='my-2' style={{ borderRadius: '8px', overflow: 'hidden', position: 'relative' }}>
-        {/* NOFX Watermark */}
+        {/* Nexus Watermark */}
         <div 
           style={{
             position: 'absolute',
@@ -285,7 +285,7 @@ export function EquityChart({ traderId }: EquityChartProps) {
             fontFamily: 'monospace'
           }}
         >
-          NOFX
+          Nexus
         </div>
         <ResponsiveContainer width='100%' height={280}>
           <LineChart

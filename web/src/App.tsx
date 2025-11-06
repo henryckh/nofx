@@ -199,7 +199,7 @@ function App() {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: '#0B0E11' }}>
         <div className="text-center">
-          <img src="/icons/nofx.svg" alt="NoFx Logo" className="w-16 h-16 mx-auto mb-4 animate-pulse" />
+          <img src="/images/nexus/NEXUS-white-logo.webp" alt="Nexus Logo" className="h-16 mx-auto mb-4 animate-pulse" />
           <p style={{ color: '#EAECEF' }}>{t('loading', language)}</p>
         </div>
       </div>
@@ -333,7 +333,7 @@ function App() {
           <p className="mt-1">{t('footerWarning', language)}</p>
           <div className="mt-4">
             <a
-              href="https://github.com/tinkle-community/nofx"
+              href="https://github.com/olaxbt"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-3 py-2 rounded text-sm font-semibold transition-all hover:scale-105"

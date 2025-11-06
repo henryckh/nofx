@@ -11,28 +11,38 @@ html {
 }
 
 :root {
-  /* Binance Brand Colors */
-  --brand-yellow: #F0B90B;
-  --brand-black: #000000;
-  --brand-dark-gray: #0A0A0A;
-  --brand-light-gray: #EAECEF;
-  --brand-almost-white: #FAFAFA;
+  /* Nexus Brand Colors - Extracted from web-nexus */
+  --nexus-primary: #78D2FF;
+  --nexus-secondary: #E781FD;
+  --nexus-accent-pink: #FF9EC7;
+  --nexus-accent-purple: #9D59F7;
+  --nexus-gradient: linear-gradient(90deg, #78D2FF, #E781FD);
+  --nexus-gradient-pink: linear-gradient(90deg, #FF9EC7, #9D59F7);
+  
+  /* Nexus Background Colors */
+  --background: #0d080e; /* Nexus dark background */
+  --header-bg: rgba(8, 8, 8, 0.1); /* Nexus header with blur */
+  --background-elevated: #070412; /* Section 2 background */
+  --background-section: #0d080e; /* Section 3 background */
+  --foreground: #FFFFFF;
+  --panel-bg: #050221CC; /* Feature box background */
+  --panel-bg-hover: #050221DD;
+  --panel-border: rgba(255, 255, 255, 0.1);
+  --panel-border-hover: rgba(231, 129, 253, 0.3);
+  
+  /* Legacy Binance colors (kept for compatibility) */
+  --brand-yellow: #E781FD; /* Using Nexus purple as accent */
+  --brand-black: #0d080e;
+  --brand-dark-gray: #070412;
+  --brand-light-gray: #FFFFFF;
+  --brand-almost-white: #FFFFFF;
   --brand-white: #FFFFFF;
 
-  /* Binance Theme Colors */
-  --binance-yellow: #F0B90B;
+  /* Binance Theme Colors - Updated with Nexus colors */
+  --binance-yellow: #E781FD;
   --binance-yellow-dark: #C99400;
-  --binance-yellow-light: #FCD535;
-  --binance-yellow-glow: rgba(240, 185, 11, 0.2);
-
-  --background: #000000; /* Binance body bg */
-  --header-bg: #000000;  /* Binance header bg */
-  --background-elevated: #000000;
-  --foreground: #EAECEF;
-  --panel-bg: #0A0A0A;
-  --panel-bg-hover: #111111;
-  --panel-border: #1A1A1A;
-  --panel-border-hover: #2A2A2A;
+  --binance-yellow-light: #78D2FF;
+  --binance-yellow-glow: rgba(231, 129, 253, 0.2);
 
   /* Binance Signature Colors */
   --binance-green: #0ECB81;
@@ -42,11 +52,17 @@ html {
   --binance-red-bg: rgba(246, 70, 93, 0.1);
   --binance-red-border: rgba(246, 70, 93, 0.2);
 
-  /* UI Colors */
-  --text-primary: #EAECEF;
-  --text-secondary: #848E9C;
-  --text-tertiary: #5E6673;
-  --text-disabled: #474D57;
+  /* Nexus UI Colors */
+  --text-primary: #FFFFFF;
+  --text-secondary: #D5D5FD;
+  --text-tertiary: #CACFFF;
+  --text-disabled: #727272;
+  
+  /* Nexus Text Colors */
+  --nexus-text-primary: #FFFFFF;
+  --nexus-text-secondary: #D5D5FD;
+  --nexus-text-tertiary: #CACFFF;
+  --nexus-text-muted: #727272;
 
   /* Chart Colors */
   --grid-stroke: #1A1A1A;
@@ -488,5 +504,36 @@ tr:hover {
 
   .stat-card {
     padding: 1rem;
+  }
+}
+
+/* Nexus Hero Section Animations */
+@keyframes rotate {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+.animate-spin-slow {
+  animation: rotate 180s linear infinite;
+}
+.abstract-graphic:hover img {
+  animation-play-state: paused;
+}
+@media (max-width: 767.98px) {
+  .hero-title {
+    font-size: 32px !important;
+    margin-bottom: 2rem !important;
+  }
+  .hero-description {
+    font-size: 18px !important;
+    margin-bottom: 3rem !important;
+  }
+  .hero-content {
+    height: auto !important;
+    padding-top: 30px !important;
+  }
+  .abstract-graphic {
+    width: 100% !important;
+    height: auto !important;
+    transform: translateY(50%) translateX(0) !important;
   }
 }

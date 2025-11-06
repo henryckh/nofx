@@ -20,6 +20,7 @@ export default function HeaderBar({ isLoggedIn = false, isHomePage = false, curr
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false)
   const [userDropdownOpen, setUserDropdownOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const userDropdownRef = useRef<HTMLDivElement>(null)
 
@@ -40,26 +41,37 @@ export default function HeaderBar({ isLoggedIn = false, isHomePage = false, curr
     }
   }, [])
 
+  // Detect scroll to toggle header background
+  useEffect(() => {
+    const onScroll = () => {
+      setIsScrolled(window.scrollY > 10)
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
-    <nav className='fixed top-0 w-full z-50 header-bar'>
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <div className='flex items-center justify-between h-16'>
+    <nav
+      className='fixed top-0 w-full z-50 header-bar'
+      style={{
+        background: (isScrolled || mobileMenuOpen) ? 'var(--brand-dark-gray)' : 'transparent',
+        borderBottom: (isScrolled || mobileMenuOpen) ? '1px solid rgba(240, 185, 11, 0.08)' : 'transparent',
+        transition: 'background 200ms ease, border-color 200ms ease'
+      }}
+    >
+      <div className='max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 p-4'>
+        <div className='flex items-center justify-between bg-gradient-to-r from-white/10 via-white/3 to-white/2 z-negative py-1.5 px-16 rounded-3xl'>
           {/* Logo */}
           <a href='/' className='flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer'>
-            <img src='/icons/nofx.svg' alt='NOFX Logo' className='w-8 h-8' />
-            <span className='text-xl font-bold' style={{ color: 'var(--brand-yellow)' }}>
-              NOFX
-            </span>
-            <span className='text-sm hidden sm:block' style={{ color: 'var(--text-secondary)' }}>
-              Agentic Trading OS
-            </span>
+            <img src='/images/nexus/NEXUS-white-logo.webp' alt='Nexus Logo' className='h-8' />
           </a>
 
           {/* Desktop Menu */}
           <div className='hidden md:flex items-center justify-between flex-1 ml-8'>
-            {/* Left Side - Navigation Tabs */}
+            {/* Left Side - Navigation Tabs (hide on home for a clean landing header) */}
             <div className='flex items-center gap-4'>
-              {isLoggedIn ? (
+              {!isHomePage && (isLoggedIn ? (
                 // Main app navigation when logged in
                 <>
                   <button
@@ -208,51 +220,47 @@ export default function HeaderBar({ isLoggedIn = false, isHomePage = false, curr
                   
                   {t('realtimeNav', language)}
                 </a>
-              )}
+              ))}
             </div>
             
-            {/* Right Side - Original Navigation Items and Login */}
-            <div className='flex items-center gap-6'>
-              {/* Only show original navigation items on home page */}
-              {isHomePage && [
-                { key: 'features', label: t('features', language) },
-                { key: 'howItWorks', label: t('howItWorks', language) },
-                { key: 'GitHub', label: 'GitHub' },
-                { key: 'community', label: t('community', language) }
-              ].map((item) => (
-                <a
-                  key={item.key}
-                  href={
-                    item.key === 'GitHub'
-                      ? 'https://github.com/tinkle-community/nofx'
-                      : item.key === 'community'
-                      ? 'https://t.me/nofx_dev_community'
-                      : `#${item.key === 'features' ? 'features' : 'how-it-works'}`
-                  }
-                  target={item.key === 'GitHub' || item.key === 'community' ? '_blank' : undefined}
-                  rel={item.key === 'GitHub' || item.key === 'community' ? 'noopener noreferrer' : undefined}
-                  className='text-sm transition-colors relative group'
-                  style={{ color: 'var(--brand-light-gray)' }}
-                >
-                  {item.label}
-                  <span
-                    className='absolute -bottom-1 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300'
-                    style={{ background: 'var(--brand-yellow)' }}
-                  />
-                </a>
-              ))}
+            {isHomePage && (
+              <a href={isLoggedIn ? '/dashboard' : '/competition'}>
+                <div className='rounded-full' style={{ cursor: 'button', background: 'black', color: 'white', padding: '4px 12px'}}>AI Areana</div>
+              </a>
+            )}
+            
+            
+            {/* Right Side - Marketing links on home, otherwise login/user controls */}
+            <div className='flex items-center gap-4'>
+              {isHomePage && (
+                <>
+                  <a className='text-base text-gray-50 transition-colors'>Doc</a>
+                  <a className='text-base transition-colors'>API</a>
+                  <a className='text-base transition-colors'>Pricing</a>
+                </>
+              )}
 
-              {/* User Info and Actions */}
+              {/* AI Arena CTA (home only) */}
+              {isHomePage && (
+                <a
+                  // href={isLoggedIn ? '/dashboard' : '/competition'}
+                  className='px-4 py-2 rounded-full text-base font-semibold transition-colors'
+                  style={{ background: '#000000', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.1)' }}
+                >
+                  Nexus Portal(Coming Soon) →
+                </a>
+              )}
+
+              {/* User Info and Actions (desktop) */}
               {isLoggedIn && user ? (
                 <div className='flex items-center gap-3'>
-                  {/* User Info with Dropdown */}
                   <div className='relative' ref={userDropdownRef}>
                     <button
                       onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                       className='flex items-center gap-2 px-3 py-2 rounded transition-colors'
                       style={{ background: 'var(--panel-bg)', border: '1px solid var(--panel-border)' }}
-                      onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'}
-                      onMouseLeave={(e) => e.currentTarget.style.background = 'var(--panel-bg)'}
+                      onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)')}
+                      onMouseLeave={(e) => (e.currentTarget.style.background = 'var(--panel-bg)')}
                     >
                       <div className='w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold' style={{ background: 'var(--brand-yellow)', color: 'var(--brand-black)' }}>
                         {user.email[0].toUpperCase()}
@@ -260,7 +268,6 @@ export default function HeaderBar({ isLoggedIn = false, isHomePage = false, curr
                       <span className='text-sm' style={{ color: 'var(--brand-light-gray)' }}>{user.email}</span>
                       <ChevronDown className='w-4 h-4' style={{ color: 'var(--brand-light-gray)' }} />
                     </button>
-                    
                     {userDropdownOpen && (
                       <div className='absolute right-0 top-full mt-2 w-48 rounded-lg shadow-lg overflow-hidden z-50' style={{ background: 'var(--brand-dark-gray)', border: '1px solid var(--panel-border)' }}>
                         <div className='px-3 py-2 border-b' style={{ borderColor: 'var(--panel-border)' }}>
@@ -276,7 +283,7 @@ export default function HeaderBar({ isLoggedIn = false, isHomePage = false, curr
                             className='w-full px-3 py-2 text-sm font-semibold transition-colors hover:opacity-80 text-center'
                             style={{ background: 'var(--binance-red-bg)', color: 'var(--binance-red)' }}
                           >
-{t('exitLogin', language)}
+                            {t('exitLogin', language)}
                           </button>
                         )}
                       </div>
@@ -284,7 +291,6 @@ export default function HeaderBar({ isLoggedIn = false, isHomePage = false, curr
                   </div>
                 </div>
               ) : (
-                /* Show login/register buttons when not logged in and not on login/register pages */
                 currentPage !== 'login' && currentPage !== 'register' && (
                   <div className='flex items-center gap-3'>
                     <a
@@ -292,21 +298,21 @@ export default function HeaderBar({ isLoggedIn = false, isHomePage = false, curr
                       className='px-3 py-2 text-sm font-medium transition-colors rounded'
                       style={{ color: 'var(--brand-light-gray)' }}
                     >
-{t('signIn', language)}
+                      {t('signIn', language)}
                     </a>
                     <a
                       href='/register'
                       className='px-4 py-2 rounded font-semibold text-sm transition-colors hover:opacity-90'
                       style={{ background: 'var(--brand-yellow)', color: 'var(--brand-black)' }}
                     >
-{t('signUp', language)}
+                      {t('signUp', language)}
                     </a>
                   </div>
                 )
               )}
               
               {/* Language Toggle - Always at the rightmost */}
-              <div className='relative' ref={dropdownRef}>
+              {/* <div className='relative' ref={dropdownRef}>
                 <button
                   onClick={() => setLanguageDropdownOpen(!languageDropdownOpen)}
                   className='flex items-center gap-2 px-3 py-2 rounded transition-colors'
@@ -356,7 +362,7 @@ export default function HeaderBar({ isLoggedIn = false, isHomePage = false, curr
                     </button>
                   </div>
                 )}
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -501,30 +507,22 @@ export default function HeaderBar({ isLoggedIn = false, isHomePage = false, curr
             </>
           )}
           
-          {/* Original Navigation Items - Only on home page */}
-          {isHomePage && [
-            { key: 'features', label: t('features', language) },
-            { key: 'howItWorks', label: t('howItWorks', language) },
-            { key: 'GitHub', label: 'GitHub' },
-            { key: 'community', label: t('community', language) }
-          ].map((item) => (
-            <a 
-              key={item.key} 
-              href={
-                item.key === 'GitHub'
-                  ? 'https://github.com/tinkle-community/nofx'
-                  : item.key === 'community'
-                  ? 'https://t.me/nofx_dev_community'
-                  : `#${item.key === 'features' ? 'features' : 'how-it-works'}`
-              }
-              target={item.key === 'GitHub' || item.key === 'community' ? '_blank' : undefined}
-              rel={item.key === 'GitHub' || item.key === 'community' ? 'noopener noreferrer' : undefined}
-              className='block text-sm py-2' 
-              style={{ color: 'var(--brand-light-gray)' }}
-            >
-              {item.label}
-            </a>
-          ))}
+          {/* Simplified marketing links on home (mobile) */}
+          {isHomePage && (
+            <div className='flex items-center gap-4'>
+              <a className='block text-sm py-2' style={{ color: 'var(--brand-light-gray)' }}>Doc</a>
+              <a className='block text-sm py-2' style={{ color: 'var(--brand-light-gray)' }}>API</a>
+              <a className='block text-sm py-2' style={{ color: 'var(--brand-light-gray)' }}>Pricing</a>
+              <a
+                href={isLoggedIn ? '/dashboard' : '/competition'}
+                className='ml-auto inline-block px-4 py-2 rounded-full text-sm font-semibold'
+                style={{ background: '#000000', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.1)' }}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                AI Arena →
+              </a>
+            </div>
+          )}
           
           {/* Language Toggle */}
           <div className='py-2'>

@@ -1,124 +1,148 @@
 import { motion } from 'framer-motion'
-import { Shield, Target } from 'lucide-react'
-import AnimatedSection from './AnimatedSection'
-import Typewriter from '../Typewriter'
+import { useEffect, useRef, useState } from 'react'
 import { t, Language } from '../../i18n/translations'
 
 interface AboutSectionProps {
   language: Language
 }
 
+const dataFactors = [
+  {
+    icon: '/images/nexus/section3/icon-1.png',
+    title: 'Macto & Market Factors',
+    description: 'Global economic indicators and asset correlations/volatility analyzed via Granger causality and GARCH models.'
+  },
+  {
+    icon: '/images/nexus/section3/icon-2.png',
+    title: 'On-Chain Metrics',
+    description: 'Blockchain-native metrics with anomaly detection using isolation forests.'
+  },
+  {
+    icon: '/images/nexus/section3/icon-6.png',
+    title: 'Technical & Token Indicators',
+    description: 'Price-based signals and qualitative token fundamentals refined with Kalman filters and survival analysis.'
+  },
+  {
+    icon: '/images/nexus/section3/icon-4.png',
+    title: 'Sentiment & Behavioral Data',
+    description: 'Aggregated social/KOL signals and quant strategy cues derived via projection, motif extraction, and multi-agent simulations.'
+  },
+  {
+    icon: '/images/nexus/section3/icon-7.png',
+    title: 'Portfolio Optimization Data',
+    description: 'Global economic indicators and asset correlations/volatility analyzed via Granger causality and GARCH models.'
+  }
+]
+
 export default function AboutSection({ language }: AboutSectionProps) {
+  const sectionRef = useRef<HTMLElement>(null)
+  const [isSticky, setIsSticky] = useState(false)
+
+  useEffect(() => {
+    const section = sectionRef.current
+    if (!section) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsSticky(entry.intersectionRatio >= 0.8)
+        })
+      },
+      { threshold: 0.8 }
+    )
+
+    observer.observe(section)
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <AnimatedSection id='about' backgroundColor='var(--brand-dark-gray)'>
-      <div className='max-w-7xl mx-auto'>
-        <div className='grid lg:grid-cols-2 gap-12 items-center'>
+    <section 
+      ref={sectionRef}
+      className='section3 relative min-h-screen overflow-visible z-2'
+      style={{ background: '#0d080e' }}
+    >
+      <div className='container flex flex-col justify-center items-center gap-24 relative z-2' style={{ padding: '150px 0', paddingBottom: '200px', maxWidth: '1400px', margin: '0 auto' }}>
+        <div className='row w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-start'>
+          {/* Left: Sticky Title */}
           <motion.div
-            className='space-y-6'
+            className={`lg:sticky lg:top-[20vh] z-10 h-fit ${isSticky ? 'sticky-active' : ''}`}
+            style={{
+              background: 'rgba(13, 8, 14, 0.9)',
+              padding: '20px',
+              borderRadius: '10px'
+            }}
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 1, delay: 0.2 }}
           >
-            <motion.div
-              className='inline-flex items-center gap-2 px-4 py-2 rounded-full'
-              style={{
-                background: 'rgba(240, 185, 11, 0.1)',
-                border: '1px solid rgba(240, 185, 11, 0.2)',
-              }}
-              whileHover={{ scale: 1.05 }}
-            >
-              <Target
-                className='w-4 h-4'
-                style={{ color: 'var(--brand-yellow)' }}
-              />
-              <span
-                className='text-sm font-semibold'
-                style={{ color: 'var(--brand-yellow)' }}
-              >
-                {t('aboutNofx', language)}
-              </span>
-            </motion.div>
-
-            <h2
-              className='text-4xl font-bold'
-              style={{ color: 'var(--brand-light-gray)' }}
-            >
-              {t('whatIsNofx', language)}
-            </h2>
-            <p
-              className='text-lg leading-relaxed'
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              {t('nofxNotAnotherBot', language)} {t('nofxDescription1', language)} {t('nofxDescription2', language)}
-            </p>
-            <p
-              className='text-lg leading-relaxed'
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              {t('nofxDescription3', language)} {t('nofxDescription4', language)} {t('nofxDescription5', language)}
-            </p>
-            <motion.div
-              className='flex items-center gap-3 pt-4'
-              whileHover={{ x: 5 }}
-            >
-              <div
-                className='w-12 h-12 rounded-full flex items-center justify-center'
-                style={{ background: 'rgba(240, 185, 11, 0.1)' }}
-              >
-                <Shield
-                  className='w-6 h-6'
-                  style={{ color: 'var(--brand-yellow)' }}
-                />
-              </div>
-              <div>
-                <div
-                  className='font-semibold'
-                  style={{ color: 'var(--brand-light-gray)' }}
-                >
-                  {t('youFullControl', language)}
-                </div>
-                <div
-                  className='text-sm'
-                  style={{ color: 'var(--text-secondary)' }}
-                >
-                  {t('fullControlDesc', language)}
-                </div>
-              </div>
-            </motion.div>
+            <div className='main-title text-5xl font-medium leading-tight text-white z-2' style={{ fontSize: '48px', fontWeight: 500, lineHeight: 1.3 }}>
+              Turning Multi-Source <br />Data into Agent-Ready Factors
+            </div>
           </motion.div>
 
+          {/* Right: Scrollable Content */}
           <div className='relative'>
-            <div
-              className='rounded-2xl p-8'
-              style={{
-                background: 'var(--brand-black)',
-                border: '1px solid var(--panel-border)',
-              }}
-            >
-              <Typewriter
-                lines={[
-                  '$ git clone https://github.com/tinkle-community/nofx.git',
-                  '$ cd nofx',
-                  '$ chmod +x start.sh',
-                  '$ ./start.sh start --build',
-                  t('startupMessages1', language),
-                  t('startupMessages2', language),
-                  t('startupMessages3', language),
-                ]}
-                typingSpeed={70}
-                lineDelay={900}
-                className='text-sm font-mono'
-                style={{
-                  color: '#00FF88',
-                  textShadow: '0 0 8px rgba(0,255,136,0.4)',
-                }}
-              />
+            <div className='scroll-viewport' style={{ height: 'auto' }}>
+              <div className='content-container flex flex-col gap-5'>
+                {dataFactors.map((factor, index) => (
+                  <motion.div
+                    key={index}
+                    className='content-block flex flex-col items-start gap-2 relative w-full p-14'
+                    style={{
+                      maxWidth: '800px',
+                      background: 'transparent'
+                    }}
+                    initial={{ opacity: 0, x: 50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1, delay: 0.2 + index * 0.2 }}
+                  >
+                    {/* Border Gradient */}
+                    <div 
+                      className='absolute inset-0 rounded-3xl pointer-events-none'
+                      style={{
+                        padding: '1px',
+                        background: 'linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(231,129,253,0.2) 50%)',
+                        mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                        maskComposite: 'exclude',
+                        WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                        WebkitMaskComposite: 'xor',
+                        zIndex: 1
+                      }}
+                    />
+                    
+                    <div className='relative z-2 w-full'>
+                      <div className='feature-icon mb-4' style={{ width: '122px' }}>
+                        <img src={factor.icon} alt={factor.title} style={{ width: '40%' }} />
+                      </div>
+                      <span className='feature-title text-xl mb-2 block' style={{ fontSize: '22px', color: '#CACFFF' }}>
+                        {factor.title}
+                      </span>
+                      <span className='feature-description text-sm block' style={{ fontSize: '15px', color: '#fff' }}>
+                        {factor.description}
+                      </span>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
+            <div className='dummy-spacer' style={{ height: '0px' }} />
           </div>
         </div>
       </div>
-    </AnimatedSection>
+
+      <style>{`
+        @media (max-width: 767.98px) {
+          .section3 .col-lg-6:first-child {
+            position: static !important;
+          }
+          .content-block {
+            padding: 30px 20px !important;
+          }
+        }
+      `}</style>
+    </section>
   )
 }
-
