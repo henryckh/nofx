@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
 import HeaderBar from '../components/landing/HeaderBar'
 import HeroSection from '../components/landing/HeroSection'
 import AboutSection from '../components/landing/AboutSection'
@@ -12,7 +10,6 @@ import LoginModal from '../components/landing/LoginModal'
 import FooterSection from '../components/landing/FooterSection'
 import { useAuth } from '../contexts/AuthContext'
 import { useLanguage } from '../contexts/LanguageContext'
-import { t } from '../i18n/translations'
 
 export function LandingPage() {
   const [showLoginModal, setShowLoginModal] = useState(false)

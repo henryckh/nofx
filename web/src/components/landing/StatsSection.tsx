@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { t, Language } from '../../i18n/translations'
+import { Language } from '../../i18n/translations'
 
 interface StatsSectionProps {
   language: Language
@@ -11,7 +11,7 @@ const stats = [
   { number: '95k', label: 'Members' }
 ]
 
-export default function StatsSection({ language }: StatsSectionProps) {
+export default function StatsSection({ }: StatsSectionProps) {
   return (
     <section 
       className='section4 relative py-48 -mt-48 z-3'

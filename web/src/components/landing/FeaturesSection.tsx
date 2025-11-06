@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { t, Language } from '../../i18n/translations'
+import { Language } from '../../i18n/translations'
 import { useState } from 'react'
 
 interface FeaturesSectionProps {
@@ -41,7 +41,7 @@ const features = [
   }
 ]
 
-export default function FeaturesSection({ language }: FeaturesSectionProps) {
+export default function FeaturesSection({ }: FeaturesSectionProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
   return (

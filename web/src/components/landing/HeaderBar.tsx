@@ -18,7 +18,7 @@ interface HeaderBarProps {
 
 export default function HeaderBar({ isLoggedIn = false, isHomePage = false, currentPage, language = 'zh' as Language, onLanguageChange, user, onLogout, isAdminMode = false, onPageChange }: HeaderBarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false)
+  // const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false)
   const [userDropdownOpen, setUserDropdownOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
@@ -28,7 +28,7 @@ export default function HeaderBar({ isLoggedIn = false, isHomePage = false, curr
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setLanguageDropdownOpen(false)
+        // setLanguageDropdownOpen(false)
       }
       if (userDropdownRef.current && !userDropdownRef.current.contains(event.target as Node)) {
         setUserDropdownOpen(false)

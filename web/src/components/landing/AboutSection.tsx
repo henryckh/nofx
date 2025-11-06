@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
-import { t, Language } from '../../i18n/translations'
+import { Language } from '../../i18n/translations'
 
 interface AboutSectionProps {
   language: Language
@@ -34,7 +34,7 @@ const dataFactors = [
   }
 ]
 
-export default function AboutSection({ language }: AboutSectionProps) {
+export default function AboutSection({ }: AboutSectionProps) {
   const sectionRef = useRef<HTMLElement>(null)
   const [isSticky, setIsSticky] = useState(false)
 

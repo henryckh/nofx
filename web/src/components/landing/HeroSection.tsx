@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion'
-import { t, Language } from '../../i18n/translations'
+import { Language } from '../../i18n/translations'
 
 interface HeroSectionProps {
   language: Language
 }
 
-export default function HeroSection({ language }: HeroSectionProps) {
+export default function HeroSection({ }: HeroSectionProps) {
   return (
     <section className='hero-section relative h-screen lg:pt-[76px] sm:pt-[64px] overflow-hidden' style={{ background: '#0d080e' }}>
       {/* Grid Background */}

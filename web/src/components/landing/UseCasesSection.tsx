@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { t, Language } from '../../i18n/translations'
+import { Language } from '../../i18n/translations'
 
 interface UseCasesSectionProps {
   language: Language
@@ -44,7 +44,7 @@ const useCases = [
   }
 ]
 
-export default function UseCasesSection({ language }: UseCasesSectionProps) {
+export default function UseCasesSection({}: UseCasesSectionProps) {
   return (
     <section className='section5 relative py-24' style={{ background: '#0d080e' }}>
       <div className='container' style={{ maxWidth: '1400px', padding: '0 30px', margin: '0 auto' }}>
