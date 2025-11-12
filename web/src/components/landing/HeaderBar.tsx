@@ -225,7 +225,7 @@ export default function HeaderBar({ isLoggedIn = false, isHomePage = false, curr
             
             {isHomePage && (
               <a href={isLoggedIn ? '/dashboard' : '/competition'}>
-                <div className='rounded-full' style={{ cursor: 'button', background: 'black', color: 'white', padding: '4px 12px'}}>AI Areana</div>
+                <div className='rounded-full' style={{ cursor: 'button', background: 'black', color: 'white', padding: '4px 12px'}}>AI Arena</div>
               </a>
             )}
             
@@ -252,7 +252,7 @@ export default function HeaderBar({ isLoggedIn = false, isHomePage = false, curr
               )}
 
               {/* User Info and Actions (desktop) */}
-              {isLoggedIn && user ? (
+              {!isHomePage && (isLoggedIn && user ? (
                 <div className='flex items-center gap-3'>
                   <div className='relative' ref={userDropdownRef}>
                     <button
@@ -309,7 +309,7 @@ export default function HeaderBar({ isLoggedIn = false, isHomePage = false, curr
                     </a>
                   </div>
                 )
-              )}
+              ))}
               
               {/* Language Toggle - Always at the rightmost */}
               {/* <div className='relative' ref={dropdownRef}>

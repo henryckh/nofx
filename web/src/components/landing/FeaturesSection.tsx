@@ -196,7 +196,7 @@ export default function FeaturesSection({ }: FeaturesSectionProps) {
               src='/images/nexus/section3/line.png' 
               alt='movement' 
               className='w-full'
-              style={{ height: '120%' }}
+              style={{ height: '120%', opacity: 0 }}
             />
             <video 
               className='center-image absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20'
@@ -212,27 +212,86 @@ export default function FeaturesSection({ }: FeaturesSectionProps) {
             
             {/* Line Images Container */}
             <div className='line-image-container absolute inset-0 z-2'>
-              <svg 
-                width='41.7%' 
-                viewBox='0 0 804 132' 
-                fill='none' 
-                xmlns='http://www.w3.org/2000/svg'
-                className='absolute'
-                style={{ top: '26.3%', left: '2.3%' }}
-              >
-                <path 
-                  d='M0 130.75H95.0314C106.077 130.75 115.031 121.796 115.031 110.75V20.75C115.031 9.7043 123.986 0.75 135.031 0.75H330.352C341.397 0.75 350.352 9.70431 350.352 20.75V110.75C350.352 121.796 359.306 130.75 370.352 130.75H526.705C537.751 130.75 546.705 121.796 546.705 110.75V20.75C546.705 9.7043 555.659 0.75 566.705 0.75H782.56C793.606 0.75 802.56 9.70431 802.56 20.75V130.75' 
-                  stroke='url(#paint0_linear_5335_355)' 
-                  strokeOpacity='0.5' 
-                  strokeWidth='1.5'
+            <svg 
+              width='41.7%' 
+              viewBox='0 0 804 132' 
+              fill='none' 
+              xmlns='http://www.w3.org/2000/svg'
+              className='absolute'
+              style={{ top: '26.3%', left: '2.3%' }}
+            >
+              <path 
+                d='M0 130.75H95.0314C106.077 130.75 115.031 121.796 115.031 110.75V20.75C115.031 9.7043 123.986 0.75 135.031 0.75H330.352C341.397 0.75 350.352 9.70431 350.352 20.75V110.75C350.352 121.796 359.306 130.75 370.352 130.75H526.705C537.751 130.75 546.705 121.796 546.705 110.75V20.75C546.705 9.7043 555.659 0.75 566.705 0.75H782.56C793.606 0.75 802.56 9.70431 802.56 20.75V130.75' 
+                stroke='url(#paint0_linear_5335_355)' 
+                strokeOpacity='0.5' 
+                strokeWidth='1.5'
+              />
+              <g>
+                <g filter='url(#neonGlow)'>
+                  <line 
+                    x1='-12' 
+                    y1='0' 
+                    x2='12' 
+                    y2='0' 
+                    stroke='#FF69B499' 
+                    strokeWidth='4'
+                  />
+                  <line 
+                    x1='0' 
+                    y1='-1' 
+                    x2='0' 
+                    y2='1' 
+                    stroke='#FF69B4' 
+                    strokeWidth='4'
+                  />
+                </g>
+                <animateTransform
+                  attributeName='transform'
+                  type='scale'
+                  values='1;1.3;1'
+                  dur='2s'
+                  repeatCount='indefinite'
                 />
-                <defs>
-                  <linearGradient id='paint0_linear_5335_355' x1='0' y1='65.75' x2='287.5' y2='65.75' gradientUnits='userSpaceOnUse'>
-                    <stop stopColor='#5F7099' stopOpacity='0' />
-                    <stop offset='1' stopColor='#9EBAFF' />
-                  </linearGradient>
-                </defs>
-              </svg>
+                <animateMotion 
+                  dur='4s' 
+                  repeatCount='indefinite' 
+                  path='M0 130.75H95.0314C106.077 130.75 115.031 121.796 115.031 110.75V20.75C115.031 9.7043 123.986 0.75 135.031 0.75H330.352C341.397 0.75 350.352 9.70431 350.352 20.75V110.75C350.352 121.796 359.306 130.75 370.352 130.75H526.705C537.751 130.75 546.705 121.796 546.705 110.75V20.75C546.705 9.7043 555.659 0.75 566.705 0.75H782.56C793.606 0.75 802.56 9.70431 802.56 20.75V130.75'
+                  rotate='auto'
+                  calcMode='spline'
+                  keySplines='0.5 0 0.5 1; 0.5 0 0.5 1'
+                  keyTimes='0; 0.5; 1'
+                />
+              </g>
+              <defs>
+                <linearGradient id='paint0_linear_5335_355' x1='0' y1='65.75' x2='287.5' y2='65.75' gradientUnits='userSpaceOnUse'>
+                  <stop stopColor='#5F7099' stopOpacity='0' />
+                  <stop offset='1' stopColor='#9EBAFF' />
+                </linearGradient>
+                <filter id='neonGlow' x='-100%' y='-100%' width='300%' height='300%'>
+                  <feGaussianBlur in='SourceAlpha' stdDeviation='6' result='blur1'/>
+                  <feOffset in='blur1' dx='0' dy='0'/>
+                  <feFlood floodColor='#FF1493' floodOpacity='0.8' result='flood1'/>
+                  <feComposite in='flood1' in2='blur1' operator='in' result='comp1'/>
+                  <feComposite in='comp1' in2='SourceGraphic' operator='arithmetic' k2='1' k3='0.5' result='glow1'/>
+                  <feGaussianBlur in='SourceAlpha' stdDeviation='3' result='blur2'/>
+                  <feOffset in='blur2' dx='0' dy='0'/>
+                  <feFlood floodColor='#FF69B4' floodOpacity='1' result='flood2'/>
+                  <feComposite in='flood2' in2='blur2' operator='in' result='comp2'/>
+                  <feComposite in='comp2' in2='SourceGraphic' operator='arithmetic' k2='1' k3='0.7' result='glow2'/>
+                  <feGaussianBlur in='SourceAlpha' stdDeviation='1' result='blur3'/>
+                  <feOffset in='blur3' dx='0' dy='0'/>
+                  <feFlood floodColor='#FFB6C1' floodOpacity='1' result='flood3'/>
+                  <feComposite in='flood3' in2='blur3' operator='in' result='comp3'/>
+                  <feComposite in='comp3' in2='SourceGraphic' operator='arithmetic' k2='1' k3='0.9' result='glow3'/>
+                  <feMerge>
+                    <feMergeNode in='glow1'/>
+                    <feMergeNode in='glow2'/>
+                    <feMergeNode in='glow3'/>
+                    <feMergeNode in='SourceGraphic'/>
+                  </feMerge>
+                </filter>
+              </defs>
+            </svg>
               <img src='/images/nexus/section3/line02.svg' alt='line' className='absolute' style={{ width: '9.6%', top: '4%', left: '57%' }} />
               <img src='/images/nexus/section3/line03.svg' alt='line' className='absolute' style={{ width: '46.3%', left: '-6.5%', top: '52%' }} />
               <img src='/images/nexus/section3/line04.svg' alt='line' className='absolute' style={{ width: '46.3%', top: '57%', left: '61.8%' }} />

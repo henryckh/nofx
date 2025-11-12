@@ -8,6 +8,7 @@ import { TraderConfigViewModal } from './TraderConfigViewModal';
 import { getTraderColor } from '../utils/traderColors';
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../i18n/translations';
+import { AccountDataView } from './AccountDataView';
 
 export function CompetitionPage() {
   const { language } = useLanguage();
@@ -115,6 +116,9 @@ export function CompetitionPage() {
 
   return (
     <div className="space-y-5 animate-fade-in">
+      {/* Account Data View - Upper Section */}
+      <AccountDataView competition={competition} />
+
       {/* Competition Header - 精简版 */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-0">
         <div className="flex items-center gap-3 md:gap-4">

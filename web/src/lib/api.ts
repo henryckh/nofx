@@ -15,6 +15,10 @@ import type {
 
 const API_BASE = '/api';
 
+// Hyper-Alpha-Arena API base URL (configurable via environment variable)
+// @ts-ignore - Vite environment variables
+const HYPER_ALPHA_ARENA_API_BASE = (import.meta.env?.VITE_HYPER_ALPHA_ARENA_API_BASE as string) || 'http://localhost:8802/api';
+
 // Helper function to get auth headers
 function getAuthHeaders(): Record<string, string> {
   const token = localStorage.getItem('auth_token');
@@ -312,5 +316,30 @@ export const api = {
       }),
     });
     if (!res.ok) throw new Error('保存用户信号源配置失败');
+  },
+
+  // Hyper-Alpha-Arena API functions
+  async getHyperAlphaArenaAssetCurve(params?: {
+    timeframe?: string;
+    trading_mode?: string;
+    environment?: string;
+    wallet_address?: string;
+  }): Promise<any[]> {
+    const searchParams = new URLSearchParams();
+    if (params?.timeframe) searchParams.append('timeframe', params.timeframe);
+    if (params?.trading_mode) searchParams.append('trading_mode', params.trading_mode);
+    if (params?.environment) searchParams.append('environment', params.environment);
+    if (params?.wallet_address) searchParams.append('wallet_address', params.wallet_address);
+
+    const query = searchParams.toString();
+    const url = `${HYPER_ALPHA_ARENA_API_BASE}/account/asset-curve${query ? `?${query}` : ''}`;
+    
+    const res = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!res.ok) throw new Error('Failed to fetch asset curve data from Hyper-Alpha-Arena');
+    return res.json();
   },
 };
