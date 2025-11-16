@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   LineChart,
   Line,
@@ -31,7 +31,10 @@ interface AssetCurveData {
 
 export function AssetCurve({ timeframe = '5m', tradingMode = 'paper' }: AssetCurveProps) {
   const [hoveredAccountId, setHoveredAccountId] = useState<number | null>(null);
+  const [activeAccountKeys, setActiveAccountKeys] = useState<Set<string>>(new Set());
   const getAccountKey = (accountId: number) => `account_${accountId}`;
+  const colorPalette = ['#F0B90B', '#0ECB81', '#F6465D', '#627eea', '#9945ff', '#00B8D9', '#FF9F43', '#8A63D2'];
+  const fallbackColor = '#7E8494';
 
   // Get asset curve data from Hyper-Alpha-Arena backend
   const { data: assetCurveData, isLoading } = useSWR(
@@ -185,6 +188,104 @@ export function AssetCurve({ timeframe = '5m', tradingMode = 'paper' }: AssetCur
     }).sort((a, b) => b.assets - a.assets);
   }, [chartData, uniqueAccounts]);
 
+  // Initialize active set and keep it in sync with available accounts
+  useEffect(() => {
+    if (!uniqueAccounts.length) return;
+    setActiveAccountKeys((prev) => {
+      if (prev.size === 0) {
+        return new Set(uniqueAccounts.map((account) => account.key));
+      }
+      const next = new Set<string>();
+      uniqueAccounts.forEach((account) => {
+        if (prev.has(account.key)) {
+          next.add(account.key);
+        }
+      });
+      return next.size ? next : new Set(uniqueAccounts.map((account) => account.key));
+    });
+  }, [uniqueAccounts]);
+
+  const lastPointByKey = useMemo(() => {
+    const result: Record<string, { index: number; value: number }> = {};
+    chartData.forEach((point, index) => {
+      uniqueAccounts.forEach((account) => {
+        const key = account.key;
+        const value = point[key];
+        if (typeof value === 'number') {
+          result[key] = { index, value };
+        }
+      });
+    });
+    return result;
+  }, [chartData, uniqueAccounts]);
+
+  const getColorForAccount = (accountId: number, index: number) => {
+    const colorIndex = Number.isFinite(accountId) ? (Math.abs(accountId) % colorPalette.length) : index % colorPalette.length;
+    return colorPalette[colorIndex] ?? fallbackColor;
+  };
+
+  const renderEndDot = (account: { key: string; username: string; account_id: number }, color: string) => {
+    const initials =
+      account.username
+        .split(' ')
+        .map((part) => part[0]?.toUpperCase())
+        .join('')
+        .slice(0, 3) || 'A';
+
+    return (props: any) => {
+      const { cx, cy, index } = props ?? {};
+      if (cx == null || cy == null) return <g />;
+      const last = lastPointByKey[account.key];
+      if (!last || last.index !== index) return <g />;
+
+      const value = last.value;
+      const displayValue =
+        typeof value === 'number'
+          ? `$${value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+          : '--';
+
+      return (
+        <g transform={`translate(${cx}, ${cy})`} style={{ pointerEvents: 'none' }}>
+          <circle r={16} fill={`${color}1A`} />
+          <circle r={12} fill={color} stroke="white" strokeWidth={1.5} />
+          <text x={0} y={4} textAnchor="middle" fontSize={10} fontWeight={600} fill="#FFFFFF">
+            {initials}
+          </text>
+          <foreignObject x={18} y={-14} width={120} height={28}>
+            <div
+              style={{
+                fontSize: 11,
+                fontWeight: 600,
+                color: color,
+                background: '#101214',
+                borderRadius: 6,
+                padding: '4px 8px',
+                display: 'inline-block',
+              }}
+            >
+              {displayValue}
+            </div>
+          </foreignObject>
+        </g>
+      );
+    };
+  };
+
+  const toggleAccount = (key: string) => {
+    setActiveAccountKeys((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) {
+        next.delete(key);
+      } else {
+        next.add(key);
+      }
+      if (next.size === 0) {
+        return new Set([key]);
+      }
+      return next;
+    });
+  };
+
   // Custom Tooltip
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
@@ -202,9 +303,7 @@ export function AssetCurve({ timeframe = '5m', tradingMode = 'paper' }: AssetCur
             const assets = data[key];
             if (assets === undefined) return null;
 
-            // Use a simple color based on account index
-            const colors = ['#F0B90B', '#0ECB81', '#F6465D', '#627eea', '#9945ff'];
-            const color = colors[index % colors.length];
+            const color = getColorForAccount(account.account_id, index);
 
             return (
               <div key={account.account_id} className="mb-1.5 last:mb-0">
@@ -249,7 +348,7 @@ export function AssetCurve({ timeframe = '5m', tradingMode = 'paper' }: AssetCur
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
               data={chartData}
-              margin={{ top: 20, right: 30, left: 20, bottom: 40 }}
+              margin={{ top: 20, right: 120, left: 20, bottom: 40 }}
               onMouseLeave={() => setHoveredAccountId(null)}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#2B3139" />
@@ -274,10 +373,10 @@ export function AssetCurve({ timeframe = '5m', tradingMode = 'paper' }: AssetCur
               <Tooltip content={<CustomTooltip />} />
               {uniqueAccounts.map((account, index) => {
                 const key = account.key;
-                const colors = ['#F0B90B', '#0ECB81', '#F6465D', '#627eea', '#9945ff', '#f3ba2f'];
-                const color = colors[index % colors.length];
+                const color = getColorForAccount(account.account_id, index);
                 const isHovered = hoveredAccountId === account.account_id;
-                const isHighlighted = !hoveredAccountId || isHovered;
+                const isActive = activeAccountKeys.has(key);
+                const isHighlighted = (!hoveredAccountId || isHovered) && isActive;
 
                 return (
                   <Line
@@ -286,12 +385,13 @@ export function AssetCurve({ timeframe = '5m', tradingMode = 'paper' }: AssetCur
                     dataKey={key}
                     stroke={color}
                     strokeWidth={isHighlighted ? 2.5 : 1}
-                    dot={false}
-                    activeDot={{ r: 6, fill: color, stroke: '#fff', strokeWidth: 2 }}
+                    dot={renderEndDot(account, color)}
+                    // activeDot={true}
                     connectNulls={false}
                     name={account.username}
-                    strokeOpacity={isHighlighted ? 1 : 0.3}
+                    strokeOpacity={isHighlighted ? 1 : 0.15}
                     isAnimationActive={false}
+                    hide={!isActive}
                     onMouseEnter={() => setHoveredAccountId(account.account_id)}
                     onMouseLeave={() => setHoveredAccountId(null)}
                   />
@@ -307,21 +407,23 @@ export function AssetCurve({ timeframe = '5m', tradingMode = 'paper' }: AssetCur
         <div className="text-xs font-medium mb-3" style={{ color: '#848E9C' }}>
           Account Asset Ranking
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="flex flex-wrap gap-3">
           {accountSummaries.map((summary, index) => {
             const isMuted = hoveredAccountId && hoveredAccountId !== summary.account_id;
-            const colors = ['#F0B90B', '#0ECB81', '#F6465D', '#627eea', '#9945ff', '#f3ba2f'];
-            const color = colors[index % colors.length];
+            const color = getColorForAccount(summary.account_id, index);
+            const isActive = activeAccountKeys.has(summary.key);
 
             return (
-              <div
-                key={summary.account_id}
-                className="rounded-lg px-4 py-3 flex items-center gap-3 min-w-0"
+              <button
+                key={summary.key}
+                className="rounded-lg px-4 py-3 flex items-center gap-3 min-w-[200px] transition-all"
                 style={{
                   background: 'rgba(43, 49, 57, 0.5)',
                   border: `1px solid ${color}40`,
-                  opacity: isMuted ? 0.4 : 1,
+                  opacity: isMuted || !isActive ? 0.45 : 1,
+                  cursor: 'pointer',
                 }}
+                onClick={() => toggleAccount(summary.key)}
               >
                 <div
                   className="h-10 w-10 rounded-full flex items-center justify-center text-sm font-semibold"
@@ -329,7 +431,7 @@ export function AssetCurve({ timeframe = '5m', tradingMode = 'paper' }: AssetCur
                 >
                   {summary.username.slice(0, 2).toUpperCase()}
                 </div>
-                <div className="min-w-0 flex-1">
+                <div className="min-w-0 flex-1 text-left">
                   <div className="text-xs font-medium" style={{ color: '#848E9C' }}>
                     {summary.username}
                   </div>
@@ -340,7 +442,7 @@ export function AssetCurve({ timeframe = '5m', tradingMode = 'paper' }: AssetCur
                 <div className="text-xs font-semibold" style={{ color }}>
                   #{index + 1}
                 </div>
-              </div>
+              </button>
             );
           })}
         </div>
