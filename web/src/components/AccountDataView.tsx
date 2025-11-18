@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import type { CompetitionData } from '../types';
 import { FlipNumber } from './FlipNumber';
 import { AssetCurve } from './AssetCurve';
+import { ArenaFeed } from './ArenaFeed';
 
 interface AccountDataViewProps {
   competition: CompetitionData | null;
@@ -163,19 +164,37 @@ export function AccountDataView({ competition, showChart = true }: AccountDataVi
         </div>
       </div>
 
-      {/* Chart Section */}
+      {/* Chart and Feed Section */}
       {showChart && competition.traders && competition.traders.length > 0 && (
-        <div className="binance-card p-4 md:p-5">
-          <div className="mb-4">
-            <h2 className="text-lg font-bold" style={{ color: '#EAECEF' }}>
-              Asset Curve
-            </h2>
-            <p className="text-xs" style={{ color: '#848E9C' }}>
-              Real-time equity tracking for all traders
-            </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          {/* Chart Section */}
+          <div className="binance-card p-4 md:p-5">
+            <div className="mb-4">
+              <h2 className="text-lg font-bold" style={{ color: '#EAECEF' }}>
+                Asset Curve
+              </h2>
+              <p className="text-xs" style={{ color: '#848E9C' }}>
+                Real-time equity tracking for all traders
+              </p>
+            </div>
+            <div className="min-h-[400px]">
+              <AssetCurve timeframe="5m" tradingMode="paper" />
+            </div>
           </div>
-          <div className="min-h-[400px]">
-            <AssetCurve timeframe="5m" tradingMode="paper" />
+
+          {/* Arena Feed Section */}
+          <div className="binance-card p-4 md:p-5">
+            <div className="mb-4">
+              <h2 className="text-lg font-bold" style={{ color: '#EAECEF' }}>
+                Trading Activity
+              </h2>
+              <p className="text-xs" style={{ color: '#848E9C' }}>
+                Completed trades, model chat, and positions
+              </p>
+            </div>
+            <div className="min-h-[400px]">
+              <ArenaFeed tradingMode="paper" accountId="all" />
+            </div>
           </div>
         </div>
       )}

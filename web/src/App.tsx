@@ -47,7 +47,7 @@ function App() {
   // 从URL路径读取初始页面状态（支持刷新保持页面）
   const getInitialPage = (): Page => {
     const path = window.location.pathname;
-    const hash = window.location.hash.slice(1); // 去掉 #
+    const hash = window.location.hash.slice(1); // 去掉 #»
     
     if (path === '/traders' || hash === 'traders') return 'traders';
     if (path === '/dashboard' || hash === 'trader' || hash === 'details') return 'trader';
@@ -220,7 +220,7 @@ function App() {
  
           isLoggedIn={!!user} 
           currentPage="competition"
-          language={language}
+          language={'en'}
           onLanguageChange={setLanguage}
           user={user}
           onLogout={logout}
