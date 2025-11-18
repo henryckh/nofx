@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import useSWR from 'swr';
 import { api } from '../lib/api';
 import { FlipNumber } from './FlipNumber';
