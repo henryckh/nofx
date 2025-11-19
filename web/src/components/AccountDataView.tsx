@@ -11,7 +11,8 @@ interface AccountDataViewProps {
 
 const SUPPORTED_SYMBOLS = ['BTC', 'ETH', 'SOL', 'BNB', 'XRP', 'DOGE'] as const;
 
-export function AccountDataView({ competition, showChart = true }: AccountDataViewProps) {
+export function AccountDataView({ competition }: AccountDataViewProps) {
+  const showTotal = false;
   const aggregatedTotals = useMemo(() => {
     if (!competition || !competition.traders || competition.traders.length === 0) {
       return {
@@ -109,7 +110,7 @@ export function AccountDataView({ competition, showChart = true }: AccountDataVi
           </div>
 
           {/* Totals */}
-          <div className="flex flex-wrap items-center gap-4 text-xs uppercase tracking-wide">
+          {showTotal && <div className="flex flex-wrap items-center gap-4 text-xs uppercase tracking-wide">
             <div className="flex flex-col leading-tight">
               <span style={{ color: '#848E9C' }}>Total Equity</span>
               <div className="text-base font-semibold" style={{ color: '#EAECEF' }}>
@@ -157,43 +158,42 @@ export function AccountDataView({ competition, showChart = true }: AccountDataVi
               </div>
             </div>
           </div>
+          }
         </div>
       </div>
 
       {/* Chart and Feed Section */}
-      {showChart && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          {/* Chart Section */}
-          <div className="binance-card p-4 md:p-5">
-            <div className="mb-4">
-              <h2 className="text-lg font-bold" style={{ color: '#EAECEF' }}>
-                Asset Curve
-              </h2>
-              <p className="text-xs" style={{ color: '#848E9C' }}>
-                Real-time equity tracking for all traders
-              </p>
-            </div>
-            <div className="min-h-[400px]">
-              <AssetCurve timeframe="5m" tradingMode="paper" />
-            </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        {/* Chart Section */}
+        <div className="binance-card p-4 md:p-5">
+          <div className="mb-4">
+            <h2 className="text-lg font-bold" style={{ color: '#EAECEF' }}>
+              Asset Curve
+            </h2>
+            <p className="text-xs" style={{ color: '#848E9C' }}>
+              Real-time equity tracking for all traders
+            </p>
           </div>
-
-          {/* Arena Feed Section */}
-          <div className="binance-card p-4 md:p-5">
-            <div className="mb-4">
-              <h2 className="text-lg font-bold" style={{ color: '#EAECEF' }}>
-                Trading Activity
-              </h2>
-              <p className="text-xs" style={{ color: '#848E9C' }}>
-                Completed trades, model chat, and positions
-              </p>
-            </div>
-            <div className="min-h-[400px]">
-              <ArenaFeed tradingMode="paper" accountId="all" />
-            </div>
+          <div className="min-h-[400px]">
+            <AssetCurve timeframe="5m" tradingMode="paper" />
           </div>
         </div>
-      )}
+
+        {/* Arena Feed Section */}
+        <div className="binance-card p-4 md:p-5">
+          <div className="mb-4">
+            <h2 className="text-lg font-bold" style={{ color: '#EAECEF' }}>
+              Trading Activity
+            </h2>
+            <p className="text-xs" style={{ color: '#848E9C' }}>
+              Completed trades, model chat, and positions
+            </p>
+          </div>
+          <div className="min-h-[400px]">
+            <ArenaFeed tradingMode="paper" accountId="all" />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
