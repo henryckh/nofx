@@ -62,10 +62,6 @@ export function AccountDataView({ competition, showChart = true }: AccountDataVi
     }));
   }, []);
 
-  if (!competition || !competition.traders || competition.traders.length === 0) {
-    return null;
-  }
-
   return (
     <div className="space-y-5">
       {/* Summary Section */}
@@ -165,7 +161,7 @@ export function AccountDataView({ competition, showChart = true }: AccountDataVi
       </div>
 
       {/* Chart and Feed Section */}
-      {showChart && competition.traders && competition.traders.length > 0 && (
+      {showChart && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           {/* Chart Section */}
           <div className="binance-card p-4 md:p-5">
