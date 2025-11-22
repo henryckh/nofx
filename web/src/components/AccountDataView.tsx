@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { CompetitionData } from '../types';
 import { FlipNumber } from './FlipNumber';
 import { AssetCurve } from './AssetCurve';
@@ -9,9 +9,50 @@ interface AccountDataViewProps {
   showChart?: boolean;
 }
 
-const SUPPORTED_SYMBOLS = ['BTC', 'ETH', 'SOL', 'BNB', 'XRP', 'DOGE'] as const;
+const SUPPORTED_SYMBOLS = ['BTC', 'ETH', 'SOL', 'BNB', 'AIO'] as const;
+const SYMBOL_ICONS = {
+  'BTC': '/icons/btc.svg',
+  'ETH': '/icons/eth.svg',
+  'SOL': '/icons/sol.svg',
+  'BNB': '/icons/bnb.svg',
+  'AIO': '/icons/aio.png',
+}
 
 export function AccountDataView({ competition }: AccountDataViewProps) {
+  const [marketValues, setMarketValues] = useState<Record<string, number>>(
+    Object.fromEntries(SUPPORTED_SYMBOLS.map(symbol => [symbol, 0]))
+  );
+
+  useEffect(() => {
+    const ws = new WebSocket('wss://stream.bybit.com/v5/public/linear');
+
+    ws.onopen = () => {
+      // Subscribe to price updates for supported symbols
+      SUPPORTED_SYMBOLS.forEach(symbol => {
+        ws.send(JSON.stringify({
+          op: 'subscribe',
+          args: [`tickers.${symbol}USDT`]
+        }));
+      });
+    };
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (data && data.data.markPrice) {
+        const symbol = data.topic.split('.')[1];
+        setMarketValues(prevValues => ({
+          ...prevValues,
+          [symbol]: data.data.markPrice
+        }));
+      }
+    };
+
+    return () => {
+      // Cleanup
+      ws.close();
+    };
+  }, []);
+
   const showTotal = false;
   const aggregatedTotals = useMemo(() => {
     if (!competition || !competition.traders || competition.traders.length === 0) {
@@ -40,11 +81,9 @@ export function AccountDataView({ competition }: AccountDataViewProps) {
       }
     );
 
-    // Calculate average PnL percentage (weighted by equity)
     const totalInitialEquity = totals.totalEquity - totals.totalPnL;
     totals.totalPnLPct = totalInitialEquity > 0 ? (totals.totalPnL / totalInitialEquity) * 100 : 0;
 
-    // Calculate average margin used percentage
     const avgMarginUsedPct =
       competition.traders.reduce((sum, t) => sum + (t.margin_used_pct || 0), 0) /
       competition.traders.length;
@@ -53,22 +92,18 @@ export function AccountDataView({ competition }: AccountDataViewProps) {
     return totals;
   }, [competition]);
 
-  // For now, we'll show placeholder position summaries since competition data doesn't include symbol breakdowns
-  // In the future, this could be enhanced to fetch position data separately
+  // Position Summaries using marketValues
   const positionSummaries = useMemo(() => {
-    // Return empty summaries for now - can be enhanced later with actual position data
     return SUPPORTED_SYMBOLS.map((symbol) => ({
       symbol,
-      marketValue: 0,
+      marketValue: marketValues[symbol.replace('USDT', '')] || 0,
     }));
-  }, []);
+  }, [marketValues]);
 
   return (
     <div className="space-y-5">
-      {/* Summary Section */}
       <div className="binance-card p-4 md:p-5">
         <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
-          {/* Position Summaries */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-3 overflow-x-auto pb-1">
               {positionSummaries.map((position) => (
@@ -87,7 +122,7 @@ export function AccountDataView({ competition }: AccountDataViewProps) {
                       color: '#848E9C',
                     }}
                   >
-                    {position.symbol.slice(0, 4).toUpperCase()}
+                    <img src={SYMBOL_ICONS[position.symbol]} />
                   </span>
                   <div className="flex flex-col leading-tight">
                     <span
@@ -96,12 +131,12 @@ export function AccountDataView({ competition }: AccountDataViewProps) {
                     >
                       {position.symbol}
                     </span>
-                    <div className="text-sm font-semibold" style={{ color: '#F0B90B' }}>
-                      <FlipNumber
-                        value={position.marketValue}
+                    <div className="text-sm font-semibold" style={{ color: 'white' }}>
+                      {marketValues[`${position.symbol}USDT`] && <FlipNumber
+                        value={marketValues[`${position.symbol}USDT`]}
                         prefix="$"
                         decimals={2}
-                      />
+                      />}
                     </div>
                   </div>
                 </div>
@@ -109,7 +144,6 @@ export function AccountDataView({ competition }: AccountDataViewProps) {
             </div>
           </div>
 
-          {/* Totals */}
           {showTotal && <div className="flex flex-wrap items-center gap-4 text-xs uppercase tracking-wide">
             <div className="flex flex-col leading-tight">
               <span style={{ color: '#848E9C' }}>Total Equity</span>
@@ -157,21 +191,18 @@ export function AccountDataView({ competition }: AccountDataViewProps) {
                 {aggregatedTotals.totalMarginUsed.toFixed(1)}%
               </div>
             </div>
-          </div>
-          }
+          </div>}
         </div>
       </div>
 
-      {/* Chart and Feed Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {/* Chart Section */}
         <div className="binance-card p-4 md:p-5">
           <div className="mb-4">
             <h2 className="text-lg font-bold" style={{ color: '#EAECEF' }}>
-              Asset Curve
+              Alpha Arena
             </h2>
             <p className="text-xs" style={{ color: '#848E9C' }}>
-              Real-time equity tracking for all traders
+              Real-time equity tracking for all AIs
             </p>
           </div>
           <div className="min-h-[400px]">
@@ -179,7 +210,6 @@ export function AccountDataView({ competition }: AccountDataViewProps) {
           </div>
         </div>
 
-        {/* Arena Feed Section */}
         <div className="binance-card p-4 md:p-5">
           <div className="mb-4">
             <h2 className="text-lg font-bold" style={{ color: '#EAECEF' }}>
@@ -197,4 +227,3 @@ export function AccountDataView({ competition }: AccountDataViewProps) {
     </div>
   );
 }
-

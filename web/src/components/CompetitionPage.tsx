@@ -79,10 +79,10 @@ export function CompetitionPage() {
       <AccountDataView competition={competition} />
 
       {/* Competition Header - 精简版 */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-0">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-0 pt-5">
         <div className="flex items-center gap-3 md:gap-4">
           <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center" style={{
-            background: 'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)',
+            background: 'linear-gradient(135deg, var(--nexus-secondary) 0%, var(--nexus-secondary) 100%)',
             boxShadow: '0 4px 14px rgba(240, 185, 11, 0.4)'
           }}>
             <Trophy className="w-6 h-6 md:w-7 md:h-7" style={{ color: '#000' }} />
@@ -90,7 +90,7 @@ export function CompetitionPage() {
           <div>
             <h1 className="text-xl md:text-2xl font-bold flex items-center gap-2" style={{ color: '#EAECEF' }}>
               {t('aiCompetition', language)}
-              <span className="text-xs font-normal px-2 py-1 rounded" style={{ background: 'rgba(240, 185, 11, 0.15)', color: '#F0B90B' }}>
+              <span className="text-xs font-normal px-2 py-1 rounded" style={{ background: 'rgba(240, 185, 11, 0.15)', color: 'var(--nexus-secondary)' }}>
                 {competition.count} {t('traders', language)}
               </span>
             </h1>

@@ -14,6 +14,7 @@ html {
   /* Nexus Brand Colors - Extracted from web-nexus */
   --nexus-primary: #78D2FF;
   --nexus-secondary: #E781FD;
+  --nexus-accent-pink-strong: #da59f7;
   --nexus-accent-pink: #FF9EC7;
   --nexus-accent-purple: #9D59F7;
   --nexus-gradient: linear-gradient(90deg, #78D2FF, #E781FD);

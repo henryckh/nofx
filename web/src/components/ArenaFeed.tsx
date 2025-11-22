@@ -94,7 +94,7 @@ export function ArenaFeed({ tradingMode = 'paper', accountId = 'all' }: ArenaFee
 
   const handleRefresh = useCallback(() => {
     refreshTrades();
-    refreshModelChat();
+    // refreshModelChat();
     refreshPositions();
   }, [refreshTrades, refreshModelChat, refreshPositions]);
 
@@ -136,7 +136,7 @@ export function ArenaFeed({ tradingMode = 'paper', accountId = 'all' }: ArenaFee
         >
           COMPLETED TRADES
         </button>
-        <button
+        {/* <button
           onClick={() => setActiveTab('model-chat')}
           className={`px-4 py-2 text-xs font-semibold uppercase tracking-wide transition-colors ${
             activeTab === 'model-chat' ? 'border-b-2' : ''
@@ -147,7 +147,7 @@ export function ArenaFeed({ tradingMode = 'paper', accountId = 'all' }: ArenaFee
           }}
         >
           MODELCHAT
-        </button>
+        </button> */}
         <button
           onClick={() => setActiveTab('positions')}
           className={`px-4 py-2 text-xs font-semibold uppercase tracking-wide transition-colors ${
@@ -163,7 +163,7 @@ export function ArenaFeed({ tradingMode = 'paper', accountId = 'all' }: ArenaFee
       </div>
 
       {/* Tab Content */}
-      <div className="flex-1 overflow-y-auto mt-0" style={{ maxHeight: '600px' }}>
+      <div className="flex-1 overflow-y-auto mt-0" style={{ maxHeight: '500px' }}>
         {activeTab === 'trades' && (
           <div className="p-4 space-y-4">
             {loadingTrades && trades.length === 0 ? (

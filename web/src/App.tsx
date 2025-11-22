@@ -417,10 +417,10 @@ function TraderDetailsPage({
   return (
     <div>
       {/* Trader Header */}
-      <div className="mb-6 rounded p-6 animate-scale-in" style={{ background: 'linear-gradient(135deg, rgba(240, 185, 11, 0.15) 0%, rgba(252, 213, 53, 0.05) 100%)', border: '1px solid rgba(240, 185, 11, 0.2)', boxShadow: '0 0 30px rgba(240, 185, 11, 0.15)' }}>
+      <div className="mb-6 rounded p-6 animate-scale-in" style={{ background: 'linear-gradient(135deg, rgba(252, 118, 239, 0.15) 0%, rgba(224, 63, 213, 0.05) 100%)', border: '1px solid rgba(240, 185, 11, 0.2)', boxShadow: '0 0 30px rgba(240, 185, 11, 0.15)' }}>
         <div className="flex items-start justify-between mb-3">
           <h2 className="text-2xl font-bold flex items-center gap-2" style={{ color: '#EAECEF' }}>
-            <span className="w-10 h-10 rounded-full flex items-center justify-center text-xl" style={{ background: 'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)' }}>
+            <span className="w-10 h-10 rounded-full flex items-center justify-center text-xl" style={{ background: 'linear-gradient(135deg, var(--nexus-secondary) 0%, var(--nexus-accent-pink) 100%)' }}>
               🤖
             </span>
             {selectedTrader.trader_name}
