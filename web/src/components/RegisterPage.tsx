@@ -277,7 +277,7 @@ export function RegisterPage() {
               <button
                 onClick={handleSetupComplete}
                 className="w-full px-4 py-2 rounded text-sm font-semibold transition-all hover:scale-105"
-                style={{ background: '#F0B90B', color: '#000' }}
+                style={{ background: 'var(--nexus-secondary)', color: '#000' }}
               >
                 {t('setupCompleteContinue', language)}
               </button>
@@ -329,7 +329,7 @@ export function RegisterPage() {
                   type="submit"
                   disabled={loading || otpCode.length !== 6}
                   className="flex-1 px-4 py-2 rounded text-sm font-semibold transition-all hover:scale-105 disabled:opacity-50"
-                  style={{ background: '#F0B90B', color: '#000' }}
+                  style={{ background: 'var(--nexus-secondary)', color: '#000' }}
                 >
                   {loading ? t('loading', language) : t('completeRegistration', language)}
                 </button>
@@ -341,7 +341,7 @@ export function RegisterPage() {
         {/* Login Link */}
         {step === 'register' && (
           <div className="text-center mt-6">
-            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+            <p className="text-sm" style={{ color: 'var(--nexus-secondary)' }}>
               已有账户？{' '}
               <button
                 onClick={() => {

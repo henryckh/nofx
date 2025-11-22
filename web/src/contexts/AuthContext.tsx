@@ -143,7 +143,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('auth_user', JSON.stringify(userInfo));
         
         // 跳转到首页
-        window.history.pushState({}, '', '/');
+        window.history.pushState({}, '', '/competition');
         window.dispatchEvent(new PopStateEvent('popstate'));
         
         return { success: true, message: data.message };
