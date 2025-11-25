@@ -2,7 +2,6 @@ import { createBrowserRouter, Navigate } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout'
 import AuthLayout from '../layouts/AuthLayout'
 import { LandingPage } from '../pages/LandingPage'
-import { FAQPage } from '../pages/FAQPage'
 import { LoginPage } from '../components/LoginPage'
 import { RegisterPage } from '../components/RegisterPage'
 import { ResetPasswordPage } from '../components/ResetPasswordPage'
@@ -37,10 +36,10 @@ export const router = createBrowserRouter([
   {
     element: <MainLayout />,
     children: [
-      {
-        path: '/faq',
-        element: <FAQPage />,
-      },
+      // {
+      //   path: '/faq',
+      //   element: <FAQPage />,
+      // },
       {
         path: '/competition',
         element: <CompetitionPage />,

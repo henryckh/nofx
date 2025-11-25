@@ -110,24 +110,14 @@ export function LoginPage() {
     >
       <div className="w-full max-w-md">
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <img
-              src="/icons/nofx.svg"
-              alt="NoFx Logo"
-              className="w-16 h-16 object-contain"
-            />
+          <div className="text-center mb-8">
+          <div className="w-36 mx-auto mb-4 flex items-center justify-center">
+            <img src="/images/nexus/NEXUS-white-logo.webp" alt="Nexus Logo" className="h-16 object-contain" />
           </div>
-          <h1
-            className="text-2xl font-bold"
-            style={{ color: 'var(--brand-light-gray)' }}
-          >
-            登录 NOFX
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--brand-light-gray)' }}>
+            登录 Nexus
           </h1>
-          <p
-            className="text-sm mt-2"
-            style={{ color: 'var(--text-secondary)' }}
-          >
+          <p className="text-sm mt-2" style={{ color: 'var(--text-secondary)' }}>
             {step === 'login' ? '请输入您的邮箱和密码' : '请输入两步验证码'}
           </p>
         </div>
@@ -238,7 +228,7 @@ export function LoginPage() {
                     type="button"
                     onClick={() => navigate('/reset-password')}
                     className="text-xs hover:underline"
-                    style={{ color: '#F0B90B' }}
+                    style={{ color: 'var(--brand-yellow)' }}
                   >
                     {t('forgotPassword', language)}
                   </button>
@@ -333,7 +323,7 @@ export function LoginPage() {
                   type="submit"
                   disabled={loading || otpCode.length !== 6}
                   className="flex-1 px-4 py-2 rounded text-sm font-semibold transition-all hover:scale-105 disabled:opacity-50"
-                  style={{ background: '#F0B90B', color: '#000' }}
+                  style={{ background: '#E781FD', color: '#000' }}
                 >
                   {loading ? t('loading', language) : t('verifyOTP', language)}
                 </button>

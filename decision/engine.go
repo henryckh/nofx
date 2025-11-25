@@ -206,9 +206,10 @@ func fetchMarketDataForContext(ctx *Context) error {
 		// 但现有持仓必须保留（需要决策是否平仓）
 		// 💡 OI 門檻配置：用戶可根據風險偏好調整
 		const minOIThresholdMillions = 15.0 // 可調整：15M(保守) / 10M(平衡) / 8M(寬鬆) / 5M(激進)
+		const whitelistAIO = "AIOUSDT" // ignore marketcap checking of AIO
 
 		isExistingPosition := positionSymbols[symbol]
-		if !isExistingPosition && data.OpenInterest != nil && data.CurrentPrice > 0 {
+		if !isExistingPosition && data.OpenInterest != nil && data.CurrentPrice > 0 && symbol != whitelistAIO {
 			// 计算持仓价值（USD）= 持仓量 × 当前价格
 			oiValue := data.OpenInterest.Latest * data.CurrentPrice
 			oiValueInMillions := oiValue / 1_000_000 // 转换为百万美元单位

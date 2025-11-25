@@ -268,13 +268,13 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
             right: '20px',
             fontSize: '24px',
             fontWeight: 'bold',
-            color: 'rgba(240, 185, 11, 0.15)',
+            color: 'rgba(231, 129, 253, 0.15)',
             zIndex: 10,
             pointerEvents: 'none',
             fontFamily: 'monospace',
           }}
         >
-          NOFX
+          Nexus
         </div>
         <ResponsiveContainer width="100%" height={520}>
           <LineChart
@@ -397,7 +397,7 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
       >
         <div
           className="p-2 md:p-3 rounded transition-all hover:bg-opacity-50"
-          style={{ background: 'rgba(240, 185, 11, 0.05)' }}
+          style={{ background: 'rgba(231, 129, 253, 0.05)' }}
         >
           <div
             className="text-xs mb-1 uppercase tracking-wider"
@@ -414,7 +414,7 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
         </div>
         <div
           className="p-2 md:p-3 rounded transition-all hover:bg-opacity-50"
-          style={{ background: 'rgba(240, 185, 11, 0.05)' }}
+          style={{ background: 'rgba(231, 129, 253, 0.05)' }}
         >
           <div
             className="text-xs mb-1 uppercase tracking-wider"
@@ -431,7 +431,7 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
         </div>
         <div
           className="p-2 md:p-3 rounded transition-all hover:bg-opacity-50"
-          style={{ background: 'rgba(240, 185, 11, 0.05)' }}
+          style={{ background: 'rgba(231, 129, 253, 0.05)' }}
         >
           <div
             className="text-xs mb-1 uppercase tracking-wider"
@@ -441,14 +441,14 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
           </div>
           <div
             className="text-sm md:text-base font-bold mono"
-            style={{ color: currentGap > 1 ? '#F0B90B' : '#EAECEF' }}
+            style={{ color: currentGap > 1 ? '#E781FD' : '#EAECEF' }}
           >
             {currentGap.toFixed(2)}%
           </div>
         </div>
         <div
           className="p-2 md:p-3 rounded transition-all hover:bg-opacity-50"
-          style={{ background: 'rgba(240, 185, 11, 0.05)' }}
+          style={{ background: 'rgba(231, 129, 253, 0.05)' }}
         >
           <div
             className="text-xs mb-1 uppercase tracking-wider"

@@ -231,6 +231,8 @@ export function AITradersPage({ onTraderSelect }: AITradersPageProps) {
           onDelete={handleDeleteExchange}
           onClose={() => setShowExchangeModal(false)}
           language={language}
+          traders={traders}
+          configuredExchanges={configuredExchanges}
         />
       )}
 

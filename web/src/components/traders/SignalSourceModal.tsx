@@ -93,13 +93,13 @@ export function SignalSourceModal({
             <div
               className="p-4 rounded"
               style={{
-                background: 'rgba(240, 185, 11, 0.1)',
-                border: '1px solid rgba(240, 185, 11, 0.2)',
+                background: 'rgba(231, 129, 253, 0.1)',
+                border: '1px solid rgba(231, 129, 253, 0.2)',
               }}
             >
               <div
                 className="text-sm font-semibold mb-2"
-                style={{ color: '#F0B90B' }}
+                style={{ color: '#E781FD' }}
               >
                 ℹ️ {t('information', language)}
               </div>
@@ -126,7 +126,7 @@ export function SignalSourceModal({
             <button
               type="submit"
               className="flex-1 px-4 py-2 rounded text-sm font-semibold"
-              style={{ background: '#F0B90B', color: '#000' }}
+              style={{ background: '#E781FD', color: '#000' }}
             >
               {t('save', language)}
             </button>

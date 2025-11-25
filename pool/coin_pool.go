@@ -14,13 +14,11 @@ import (
 
 // defaultMainstreamCoins 默认主流币种池（从配置文件读取）
 var defaultMainstreamCoins = []string{
+	"AIOUSDT",
 	"BTCUSDT",
 	"ETHUSDT",
 	"SOLUSDT",
 	"BNBUSDT",
-	"XRPUSDT",
-	"DOGEUSDT",
-	"ADAUSDT",
 	"HYPEUSDT",
 }
 

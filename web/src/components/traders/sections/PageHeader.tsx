@@ -31,8 +31,8 @@ export function PageHeader({
         <div
           className="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center"
           style={{
-            background: 'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)',
-            boxShadow: '0 4px 14px rgba(240, 185, 11, 0.4)',
+            background: 'linear-gradient(135deg, #EDA9FF 0%,rgb(220, 130, 245) 100%)',
+            boxShadow: '0 4px 14px rgba(231, 129, 253, 0.4)',
           }}
         >
           <Bot className="w-5 h-5 md:w-6 md:h-6" style={{ color: '#000' }} />
@@ -46,8 +46,8 @@ export function PageHeader({
             <span
               className="text-xs font-normal px-2 py-1 rounded"
               style={{
-                background: 'rgba(240, 185, 11, 0.15)',
-                color: '#F0B90B',
+                background: 'rgba(231, 129, 253, 0.15)',
+                color: '#EDA9FF',
               }}
             >
               {tradersCount} {t('active', language)}
@@ -104,7 +104,7 @@ export function PageHeader({
           disabled={!canCreateTrader}
           className="px-3 md:px-4 py-2 rounded text-xs md:text-sm font-semibold transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 md:gap-2 whitespace-nowrap"
           style={{
-            background: canCreateTrader ? '#F0B90B' : '#2B3139',
+            background: canCreateTrader ? '#EDA9FF' : '#2B3139',
             color: canCreateTrader ? '#000' : '#848E9C',
           }}
         >

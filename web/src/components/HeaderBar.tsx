@@ -23,14 +23,12 @@ export default function HeaderBar({
   isHomePage = false,
   currentPage,
   language = 'zh' as Language,
-  onLanguageChange,
   user,
   onLogout,
   onPageChange,
 }: HeaderBarProps) {
   const navigate = useNavigate()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false)
   const [userDropdownOpen, setUserDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const userDropdownRef = useRef<HTMLDivElement>(null)
@@ -44,7 +42,7 @@ export default function HeaderBar({
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
-        setLanguageDropdownOpen(false)
+        // setLanguageDropdownOpen(false)
       }
       if (
         userDropdownRef.current &&
@@ -68,19 +66,9 @@ export default function HeaderBar({
           to="/"
           className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer"
         >
-          <img src="/icons/nofx.svg" alt="NOFX Logo" className="w-8 h-8" />
-          <span
-            className="text-xl font-bold"
-            style={{ color: 'var(--brand-yellow)' }}
-          >
-            NOFX
-          </span>
-          <span
-            className="text-sm hidden sm:block"
-            style={{ color: 'var(--text-secondary)' }}
-          >
-            Agentic Trading OS
-          </span>
+          <a href='/' className='flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer'>
+            <img src='/images/nexus/NEXUS-white-logo.webp' alt='Nexus Logo' className='h-8' />
+          </a>
         </Link>
 
         {/* Desktop Menu */}
@@ -120,7 +108,7 @@ export default function HeaderBar({
                     <span
                       className="absolute inset-0 rounded-lg"
                       style={{
-                        background: 'rgba(240, 185, 11, 0.15)',
+                        background: 'rgba(231, 129, 253, 0.15)',
                         zIndex: -1,
                       }}
                     />
@@ -159,7 +147,7 @@ export default function HeaderBar({
                     <span
                       className="absolute inset-0 rounded-lg"
                       style={{
-                        background: 'rgba(240, 185, 11, 0.15)',
+                        background: 'rgba(231, 129, 253, 0.15)',
                         zIndex: -1,
                       }}
                     />
@@ -198,7 +186,7 @@ export default function HeaderBar({
                     <span
                       className="absolute inset-0 rounded-lg"
                       style={{
-                        background: 'rgba(240, 185, 11, 0.15)',
+                        background: 'rgba(231, 129, 253, 0.15)',
                         zIndex: -1,
                       }}
                     />
@@ -207,48 +195,7 @@ export default function HeaderBar({
                   {t('dashboardNav', language)}
                 </button>
 
-                <button
-                  onClick={() => {
-                    if (onPageChange) {
-                      onPageChange('faq')
-                    } else {
-                      navigate('/faq')
-                    }
-                  }}
-                  className="text-sm font-bold transition-all duration-300 relative focus:outline-2 focus:outline-yellow-500"
-                  style={{
-                    color:
-                      currentPage === 'faq'
-                        ? 'var(--brand-yellow)'
-                        : 'var(--brand-light-gray)',
-                    padding: '8px 16px',
-                    borderRadius: '8px',
-                    position: 'relative',
-                  }}
-                  onMouseEnter={(e) => {
-                    if (currentPage !== 'faq') {
-                      e.currentTarget.style.color = 'var(--brand-yellow)'
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (currentPage !== 'faq') {
-                      e.currentTarget.style.color = 'var(--brand-light-gray)'
-                    }
-                  }}
-                >
-                  {/* Background for selected state */}
-                  {currentPage === 'faq' && (
-                    <span
-                      className="absolute inset-0 rounded-lg"
-                      style={{
-                        background: 'rgba(240, 185, 11, 0.15)',
-                        zIndex: -1,
-                      }}
-                    />
-                  )}
 
-                  {t('faqNav', language)}
-                </button>
               </>
             ) : (
               // Landing page navigation when not logged in
@@ -281,50 +228,13 @@ export default function HeaderBar({
                     <span
                       className="absolute inset-0 rounded-lg"
                       style={{
-                        background: 'rgba(240, 185, 11, 0.15)',
+                        background: 'rgba(231, 129, 253, 0.15)',
                         zIndex: -1,
                       }}
                     />
                   )}
 
                   {t('realtimeNav', language)}
-                </a>
-
-                <a
-                  href="/faq"
-                  className="text-sm font-bold transition-all duration-300 relative focus:outline-2 focus:outline-yellow-500"
-                  style={{
-                    color:
-                      currentPage === 'faq'
-                        ? 'var(--brand-yellow)'
-                        : 'var(--brand-light-gray)',
-                    padding: '8px 16px',
-                    borderRadius: '8px',
-                    position: 'relative',
-                  }}
-                  onMouseEnter={(e) => {
-                    if (currentPage !== 'faq') {
-                      e.currentTarget.style.color = 'var(--brand-yellow)'
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (currentPage !== 'faq') {
-                      e.currentTarget.style.color = 'var(--brand-light-gray)'
-                    }
-                  }}
-                >
-                  {/* Background for selected state */}
-                  {currentPage === 'faq' && (
-                    <span
-                      className="absolute inset-0 rounded-lg"
-                      style={{
-                        background: 'rgba(240, 185, 11, 0.15)',
-                        zIndex: -1,
-                      }}
-                    />
-                  )}
-
-                  {t('faqNav', language)}
                 </a>
               </>
             )}
@@ -344,9 +254,9 @@ export default function HeaderBar({
                   key={item.key}
                   href={
                     item.key === 'GitHub'
-                      ? 'https://github.com/tinkle-community/nofx'
+                      ? 'https://github.com/olaxbt'
                       : item.key === 'community'
-                        ? 'https://t.me/nofx_dev_community'
+                        ? 'https://t.me/OLAXBT_Community'
                         : `#${item.key === 'features' ? 'features' : 'how-it-works'}`
                   }
                   target={
@@ -484,7 +394,7 @@ export default function HeaderBar({
             )}
 
             {/* Language Toggle - Always at the rightmost */}
-            <div className="relative" ref={dropdownRef}>
+            {/* <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setLanguageDropdownOpen(!languageDropdownOpen)}
                 className="flex items-center gap-2 px-3 py-2 rounded transition-colors"
@@ -523,7 +433,7 @@ export default function HeaderBar({
                       color: 'var(--brand-light-gray)',
                       background:
                         language === 'zh'
-                          ? 'rgba(240, 185, 11, 0.1)'
+                          ? 'rgba(231, 129, 253, 0.1)'
                           : 'transparent',
                     }}
                   >
@@ -542,7 +452,7 @@ export default function HeaderBar({
                       color: 'var(--brand-light-gray)',
                       background:
                         language === 'en'
-                          ? 'rgba(240, 185, 11, 0.1)'
+                          ? 'rgba(231, 129, 253, 0.1)'
                           : 'transparent',
                     }}
                   >
@@ -551,7 +461,7 @@ export default function HeaderBar({
                   </button>
                 </div>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -582,7 +492,7 @@ export default function HeaderBar({
         className="md:hidden overflow-hidden"
         style={{
           background: 'var(--brand-dark-gray)',
-          borderTop: '1px solid rgba(240, 185, 11, 0.1)',
+          borderTop: '1px solid rgba(231, 129, 253, 0.1)',
         }}
       >
         <div className="px-4 py-4 space-y-3">
@@ -595,6 +505,7 @@ export default function HeaderBar({
                   onPageChange
                 )
                 onPageChange?.('competition')
+                navigate('/competition')
                 setMobileMenuOpen(false)
               }}
               className="block text-sm font-bold transition-all duration-300 relative focus:outline-2 focus:outline-yellow-500"
@@ -615,7 +526,7 @@ export default function HeaderBar({
                 <span
                   className="absolute inset-0 rounded-lg"
                   style={{
-                    background: 'rgba(240, 185, 11, 0.15)',
+                    background: 'rgba(231, 129, 253, 0.15)',
                     zIndex: -1,
                   }}
                 />
@@ -642,7 +553,7 @@ export default function HeaderBar({
                 <span
                   className="absolute inset-0 rounded-lg"
                   style={{
-                    background: 'rgba(240, 185, 11, 0.15)',
+                    background: 'rgba(231, 129, 253, 0.15)',
                     zIndex: -1,
                   }}
                 />
@@ -658,6 +569,7 @@ export default function HeaderBar({
                 onClick={() => {
                   if (onPageChange) {
                     onPageChange('traders')
+                    navigate('/traders')
                   } else {
                     navigate('/traders')
                   }
@@ -681,7 +593,7 @@ export default function HeaderBar({
                   <span
                     className="absolute inset-0 rounded-lg"
                     style={{
-                      background: 'rgba(240, 185, 11, 0.15)',
+                      background: 'rgba(231, 129, 253, 0.15)',
                       zIndex: -1,
                     }}
                   />
@@ -692,7 +604,8 @@ export default function HeaderBar({
               <button
                 onClick={() => {
                   if (onPageChange) {
-                    onPageChange('trader')
+                    onPageChange('dashboard')
+                    navigate('/dashboard')
                   } else {
                     navigate('/dashboard')
                   }
@@ -716,48 +629,13 @@ export default function HeaderBar({
                   <span
                     className="absolute inset-0 rounded-lg"
                     style={{
-                      background: 'rgba(240, 185, 11, 0.15)',
+                      background: 'rgba(231, 129, 253, 0.15)',
                       zIndex: -1,
                     }}
                   />
                 )}
 
                 {t('dashboardNav', language)}
-              </button>
-              <button
-                onClick={() => {
-                  if (onPageChange) {
-                    onPageChange('faq')
-                  } else {
-                    navigate('/faq')
-                  }
-                  setMobileMenuOpen(false)
-                }}
-                className="block text-sm font-bold transition-all duration-300 relative focus:outline-2 focus:outline-yellow-500 hover:text-yellow-500"
-                style={{
-                  color:
-                    currentPage === 'faq'
-                      ? 'var(--brand-yellow)'
-                      : 'var(--brand-light-gray)',
-                  padding: '12px 16px',
-                  borderRadius: '8px',
-                  position: 'relative',
-                  width: '100%',
-                  textAlign: 'left',
-                }}
-              >
-                {/* Background for selected state */}
-                {currentPage === 'faq' && (
-                  <span
-                    className="absolute inset-0 rounded-lg"
-                    style={{
-                      background: 'rgba(240, 185, 11, 0.15)',
-                      zIndex: -1,
-                    }}
-                  />
-                )}
-
-                {t('faqNav', language)}
               </button>
             </>
           )}
@@ -774,9 +652,9 @@ export default function HeaderBar({
                 key={item.key}
                 href={
                   item.key === 'GitHub'
-                    ? 'https://github.com/tinkle-community/nofx'
+                    ? 'https://github.com/olaxbt'
                     : item.key === 'community'
-                      ? 'https://t.me/nofx_dev_community'
+                      ? 'https://t.me/OLAXBT_Community'
                       : `#${item.key === 'features' ? 'features' : 'how-it-works'}`
                 }
                 target={
@@ -797,7 +675,7 @@ export default function HeaderBar({
             ))}
 
           {/* Language Toggle */}
-          <div className="py-2">
+          {/* <div className="py-2">
             <div className="flex items-center gap-2 mb-2">
               <span
                 className="text-xs"
@@ -836,7 +714,7 @@ export default function HeaderBar({
                 <span className="text-sm">English</span>
               </button>
             </div>
-          </div>
+          </div> */}
 
           {/* User info and logout for mobile when logged in */}
           {isLoggedIn && user && (

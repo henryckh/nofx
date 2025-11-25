@@ -3,8 +3,8 @@ export type Language = 'en' | 'zh'
 export const translations = {
   en: {
     // Header
-    appTitle: 'NOFX',
-    subtitle: 'Multi-AI Model Trading Platform',
+    appTitle: 'Nexus',
+    subtitle: 'Smart Data Paradigms for Intelligent Agents',
     aiTraders: 'AI Traders',
     details: 'Details',
     tradingPanel: 'Trading Panel',
@@ -23,8 +23,9 @@ export const translations = {
     faqNav: 'FAQ',
 
     // Footer
-    footerTitle: 'NOFX - AI Trading System',
-    footerWarning: '⚠️ Trading involves risk. Use at your own discretion.',
+    footerTitle: 'Nexus - Intelligent Agent Trading Layer',
+    footerWarning:
+      '⚠️ Trading involves risk. Nexus is non-custodial; manage your keys carefully.',
 
     // Stats Cards
     totalEquity: 'Total Equity',
@@ -81,6 +82,12 @@ export const translations = {
     dataPoints: 'Data Points',
     currentGap: 'Current Gap',
     count: '{count} pts',
+    assetCurve: 'Asset Curve',
+    assetCurveDescription:
+      'Live equity telemetry for every Nexus autonomous account',
+    assetRanking: 'Account Asset Ranking',
+    loadingAssetCurve: 'Loading Nexus arena data…',
+    noAssetCurveData: 'Asset curve data will appear once agents report in.',
 
     // Competition Page
     aiCompetition: 'AI Competition',
@@ -376,6 +383,13 @@ export const translations = {
       '• Do not grant withdrawal permissions to ensure fund security',
     exchangeConfigWarning3:
       '• After deleting configuration, related traders will not be able to trade',
+    duplicateExchangeTypeWarning: 'Duplicate Exchange Type Detected',
+    duplicateExchangeTypeDesc:
+      'You are adding a new exchange of the same type. Existing traders will continue using the previous exchange key, and only new traders will use this new exchange.',
+    existingTradersUsingOldExchange: 'Traders using the previous exchange',
+    stopTradersBeforeAdding: 'Please stop these traders before adding a new exchange of the same type',
+    tradersWillUseOldKey: 'These traders will continue using the old exchange key',
+    noTradersUsingOldExchange: 'No traders are currently using exchanges of this type',
     edit: 'Edit',
     viewGuide: 'View Guide',
     binanceSetupGuide: 'Binance Setup Guide',
@@ -502,24 +516,24 @@ export const translations = {
       'User registration is currently disabled. Please contact the administrator for access.',
 
     // Hero Section
-    githubStarsInDays: '2.5K+ GitHub Stars in 3 days',
-    heroTitle1: 'Read the Market.',
-    heroTitle2: 'Write the Trade.',
+    githubStarsInDays: 'Open-source supercharged by the community',
+    heroTitle1: 'Smart Data Paradigms',
+    heroTitle2: 'for Intelligent Agents',
     heroDescription:
-      'NOFX is the future standard for AI trading — an open, community-driven agentic trading OS. Supporting Binance, Aster DEX and other exchanges, self-hosted, multi-agent competition, let AI automatically make decisions, execute and optimize trades for you.',
+      'Nexus delivers pre-processed, verifiable datasets and execution primitives so builders can focus on autonomous agents, modular strategy orchestration, and secure, real-time deployment across exchanges.',
     poweredBy:
-      'Powered by Aster DEX and Binance, strategically invested by Amber.ac.',
+      'Fueled by the olaxbt collective, Nexus blends on-chain telemetry with institutional execution.',
 
     // Landing Page CTA
-    readyToDefine: 'Ready to define the future of AI trading?',
+    readyToDefine: 'Architect the next wave of autonomous trading agents.',
     startWithCrypto:
-      'Starting with crypto markets, expanding to TradFi. NOFX is the infrastructure of AgentFi.',
+      'Start with 24/7 crypto markets, expand into TradFi. Nexus is the intelligence substrate for AgentFi.',
     getStartedNow: 'Get Started Now',
     viewSourceCode: 'View Source Code',
 
     // Features Section
     coreFeatures: 'Core Features',
-    whyChooseNofx: 'Why Choose NOFX?',
+    whyChooseNexus: 'Why Choose Nexus?',
     openCommunityDriven:
       'Open source, transparent, community-driven AI trading OS',
     openSourceSelfHosted: '100% Open Source & Self-Hosted',
@@ -545,19 +559,19 @@ export const translations = {
     secureFeatures4: 'Trading log auditing',
 
     // About Section
-    aboutNofx: 'About NOFX',
-    whatIsNofx: 'What is NOFX?',
-    nofxNotAnotherBot:
-      "NOFX is not another trading bot, but the 'Linux' of AI trading —",
-    nofxDescription1:
+    aboutNexus: 'About Nexus',
+    whatIsNexus: 'What is Nexus?',
+    NexusNotAnotherBot:
+      "Nexus is not another trading bot, but the 'Linux' of AI trading —",
+    NexusDescription1:
       'a transparent, trustworthy open source OS that provides a unified',
-    nofxDescription2:
+    NexusDescription2:
       "'decision-risk-execution' layer, supporting all asset classes.",
-    nofxDescription3:
+    NexusDescription3:
       'Starting with crypto markets (24/7, high volatility perfect testing ground), future expansion to stocks, futures, forex. Core: open architecture, AI',
-    nofxDescription4:
+    NexusDescription4:
       'Darwinism (multi-agent self-competition, strategy evolution), CodeFi',
-    nofxDescription5:
+    NexusDescription5:
       'flywheel (developers get point rewards for PR contributions).',
     youFullControl: 'You 100% Control',
     fullControlDesc: 'Complete control over AI prompts and funds',
@@ -566,12 +580,12 @@ export const translations = {
     startupMessages3: 'Web console http://localhost:3000',
 
     // How It Works Section
-    howToStart: 'How to Get Started with NOFX',
+    howToStart: 'How to Get Started with Nexus',
     fourSimpleSteps:
       'Four simple steps to start your AI automated trading journey',
     step1Title: 'Clone GitHub Repository',
     step1Desc:
-      'git clone https://github.com/tinkle-community/nofx and switch to dev branch to test new features.',
+      'git clone https://github.com/tinkle-community/Nexus and switch to dev branch to test new features.',
     step2Title: 'Configure Environment',
     step2Desc:
       'Frontend setup for exchange APIs (like Binance, Hyperliquid), AI models and custom prompts.',
@@ -583,12 +597,12 @@ export const translations = {
       'Monitor trading, submit PRs to improve framework. Join Telegram to share strategies.',
     importantRiskWarning: 'Important Risk Warning',
     riskWarningText:
-      'Dev branch is unstable, do not use funds you cannot afford to lose. NOFX is non-custodial, no official strategies. Trading involves risks, invest carefully.',
+      'Dev branch is unstable, do not use funds you cannot afford to lose. Nexus is non-custodial, no official strategies. Trading involves risks, invest carefully.',
 
     // Community Section (testimonials are kept as-is since they are quotes)
 
     // Footer Section
-    futureStandardAI: 'The future standard of AI trading',
+    futureStandardAI: 'Smart data infrastructure for agentic finance',
     links: 'Links',
     resources: 'Resources',
     documentation: 'Documentation',
@@ -596,7 +610,7 @@ export const translations = {
     strategicInvestment: '(Strategic Investment)',
 
     // Login Modal
-    accessNofxPlatform: 'Access NOFX Platform',
+    accessNexusPlatform: 'Access Nexus Platform',
     loginRegisterPrompt:
       'Please login or register to access the full AI trading platform',
     registerNewAccount: 'Register New Account',
@@ -622,7 +636,7 @@ export const translations = {
 
     // FAQ Page
     faqTitle: 'Frequently Asked Questions',
-    faqSubtitle: 'Find answers to common questions about NOFX',
+    faqSubtitle: 'Find answers to common questions about Nexus',
     faqStillHaveQuestions: 'Still Have Questions?',
     faqContactUs: 'Join our community or check our GitHub for more help',
 
@@ -636,30 +650,30 @@ export const translations = {
     faqCategoryData: 'Data & Privacy',
 
     // FAQ Questions & Answers - General
-    faqWhatIsNOFX: 'What is NOFX?',
-    faqWhatIsNOFXAnswer:
-      'NOFX is an AI-powered cryptocurrency trading bot that uses large language models (LLMs) to make trading decisions on futures markets.',
+    faqWhatIsNexus: 'What is Nexus?',
+    faqWhatIsNexusAnswer:
+      'Nexus is an AI-powered cryptocurrency trading bot that uses large language models (LLMs) to make trading decisions on futures markets.',
 
     faqSupportedExchanges: 'Which exchanges are supported?',
     faqSupportedExchangesAnswer:
       'Binance Futures, Hyperliquid, and Aster DEX are supported. More exchanges coming soon.',
 
-    faqIsProfitable: 'Is NOFX profitable?',
+    faqIsProfitable: 'Is Nexus profitable?',
     faqIsProfitableAnswer:
       'AI trading is experimental and not guaranteed to be profitable. Always start with small amounts and never invest more than you can afford to lose.',
 
     faqMultipleTraders: 'Can I run multiple traders simultaneously?',
     faqMultipleTradersAnswer:
-      'Yes! NOFX supports running multiple traders with different configurations, AI models, and trading strategies.',
+      'Yes! Nexus supports running multiple traders with different configurations, AI models, and trading strategies.',
 
     // Contributing & Community
     faqGithubProjectsTasks: 'How to use GitHub Projects and pick up tasks?',
     faqGithubProjectsTasksAnswer:
-      'Roadmap: https://github.com/orgs/NoFxAiOS/projects/3  • Task Dashboard: https://github.com/orgs/NoFxAiOS/projects/5  • Steps: Open links → filter by labels (good first issue / help wanted / frontend / backend) → read Description & Acceptance Criteria → comment "assign me" or self-assign → Fork the repo → sync your fork\'s dev with upstream/dev → create a feature branch from your fork\'s dev → push to your fork → open PR (base: NoFxAiOS/nofx:dev ← compare: your-username/nofx:feat/your-topic) → reference Issue (Closes #123) and use the proper template.',
+      'Roadmap: https://github.com/orgs/NexusAiOS/projects/3  • Task Dashboard: https://github.com/orgs/NexusAiOS/projects/5  • Steps: Open links → filter by labels (good first issue / help wanted / frontend / backend) → read Description & Acceptance Criteria → comment "assign me" or self-assign → Fork the repo → sync your fork\'s dev with upstream/dev → create a feature branch from your fork\'s dev → push to your fork → open PR (base: NexusAiOS/Nexus:dev ← compare: your-username/Nexus:feat/your-topic) → reference Issue (Closes #123) and use the proper template.',
 
     faqContributePR: 'How to properly submit PRs and contribute?',
     faqContributePRAnswer:
-      "Guidelines: • Fork first; branch from your fork's dev (avoid direct commits to upstream main) • Branch naming: feat/..., fix/..., docs/...; Conventional Commits • Run checks before PR: npm --prefix web run lint && npm --prefix web run build • For UI changes, attach screenshots or a short video • Choose the proper PR template (frontend/backend/docs/general) • Open PR from your fork to NoFxAiOS/nofx:dev and link Issue (Closes #123) • Keep rebasing onto upstream/dev; ensure CI passes; prefer small, focused PRs • Read CONTRIBUTING.md and .github/PR_TITLE_GUIDE.md",
+      "Guidelines: • Fork first; branch from your fork's dev (avoid direct commits to upstream main) • Branch naming: feat/..., fix/..., docs/...; Conventional Commits • Run checks before PR: npm --prefix web run lint && npm --prefix web run build • For UI changes, attach screenshots or a short video • Choose the proper PR template (frontend/backend/docs/general) • Open PR from your fork to NexusAiOS/Nexus:dev and link Issue (Closes #123) • Keep rebasing onto upstream/dev; ensure CI passes; prefer small, focused PRs • Read CONTRIBUTING.md and .github/PR_TITLE_GUIDE.md",
 
     // Setup & Configuration
     faqSystemRequirements: 'What are the system requirements?',
@@ -668,7 +682,7 @@ export const translations = {
 
     faqNeedCoding: 'Do I need coding experience?',
     faqNeedCodingAnswer:
-      'No! NOFX has a web UI for all configuration. However, basic command line knowledge helps with setup and troubleshooting.',
+      'No! Nexus has a web UI for all configuration. However, basic command line knowledge helps with setup and troubleshooting.',
 
     faqGetApiKeys: 'How do I get API keys?',
     faqGetApiKeysAnswer:
@@ -676,7 +690,7 @@ export const translations = {
 
     faqUseSubaccount: 'Should I use a subaccount?',
     faqUseSubaccountAnswer:
-      'Recommended: Yes, use a subaccount dedicated to NOFX for better risk isolation. However, note that some subaccounts have restrictions (e.g., 5x max leverage on Binance).',
+      'Recommended: Yes, use a subaccount dedicated to Nexus for better risk isolation. However, note that some subaccounts have restrictions (e.g., 5x max leverage on Binance).',
 
     faqDockerDeployment: 'Docker deployment keeps failing',
     faqDockerDeploymentAnswer:
@@ -713,7 +727,7 @@ export const translations = {
 
     faqHighFees: 'Trading fees are too high',
     faqHighFeesAnswer:
-      'NOFX default 3-minute scan interval can cause frequent trading. Solutions: Increase decision interval to 5-10 minutes; Optimize system prompt to reduce overtrading; Adjust leverage to reduce position sizes.',
+      'Nexus default 3-minute scan interval can cause frequent trading. Solutions: Increase decision interval to 5-10 minutes; Optimize system prompt to reduce overtrading; Adjust leverage to reduce position sizes.',
 
     faqNoTakeProfit: "AI doesn't close profitable positions",
     faqNoTakeProfitAnswer:
@@ -730,7 +744,7 @@ export const translations = {
 
     faqPortInUse: "Backend won't start / Port already in use",
     faqPortInUseAnswer:
-      'Check what\'s using port 8080 with "lsof -i :8080" and change the port in your .env file with NOFX_BACKEND_PORT=8081.',
+      'Check what\'s using port 8080 with "lsof -i :8080" and change the port in your .env file with Nexus_BACKEND_PORT=8081.',
 
     faqFrontendLoading: 'Frontend shows "Loading..." forever',
     faqFrontendLoadingAnswer:
@@ -738,7 +752,7 @@ export const translations = {
 
     faqDatabaseLocked: 'Database locked error',
     faqDatabaseLockedAnswer:
-      'Stop all NOFX processes with "docker compose down" or "pkill nofx", then restart with "docker compose up -d".',
+      'Stop all Nexus processes with "docker compose down" or "pkill Nexus", then restart with "docker compose up -d".',
 
     faqAiLearningFailed: 'AI learning data failed to load',
     faqAiLearningFailedAnswer:
@@ -763,7 +777,7 @@ export const translations = {
 
     faqAiLearning: 'Does the AI learn from its mistakes?',
     faqAiLearningAnswer:
-      'Yes, to some extent. NOFX provides historical performance feedback in each decision prompt, allowing the AI to adjust its strategy.',
+      'Yes, to some extent. Nexus provides historical performance feedback in each decision prompt, allowing the AI to adjust its strategy.',
 
     faqOnlyShort: 'AI only opens short positions, no long positions',
     faqOnlyShortAnswer:
@@ -811,7 +825,7 @@ export const translations = {
         'Avoid embedding the app in insecure HTTP iframes or reverse proxies that strip HTTPS.',
       unsupportedTitle: 'Browser does not expose Web Crypto',
       unsupportedDesc:
-        'Open NOFX over HTTPS (or http://localhost during development) and avoid insecure iframes/reverse proxies so the browser can enable Web Crypto.',
+        'Open Nexus over HTTPS (or http://localhost during development) and avoid insecure iframes/reverse proxies so the browser can enable Web Crypto.',
       summary: 'Current origin: {origin} • Protocol: {protocol}',
     },
 
@@ -851,8 +865,8 @@ export const translations = {
   },
   zh: {
     // Header
-    appTitle: 'NOFX',
-    subtitle: '多AI模型交易平台',
+    appTitle: 'Nexus',
+    subtitle: '智能体交易的数据底座',
     aiTraders: 'AI交易员',
     details: '详情',
     tradingPanel: '交易面板',
@@ -871,8 +885,8 @@ export const translations = {
     faqNav: '常见问题',
 
     // Footer
-    footerTitle: 'NOFX - AI交易系统',
-    footerWarning: '⚠️ 交易有风险，请谨慎使用。',
+    footerTitle: 'Nexus - 智能体交易中枢',
+    footerWarning: '⚠️ 交易有风险。Nexus 为非托管方案，请妥善保管密钥。',
 
     // Stats Cards
     totalEquity: '总净值',
@@ -929,6 +943,11 @@ export const translations = {
     dataPoints: '数据点数',
     currentGap: '当前差距',
     count: '{count} 个',
+    assetCurve: '资产净值曲线',
+    assetCurveDescription: '实时跟踪每个 Nexus 智能体的账户净值',
+    assetRanking: '账户资产排名',
+    loadingAssetCurve: '正在加载 Nexus 竞技场数据…',
+    noAssetCurveData: '收到数据后将显示资产曲线。',
 
     // Competition Page
     aiCompetition: 'AI竞赛',
@@ -1197,6 +1216,13 @@ export const translations = {
     exchangeConfigWarning1: '• API密钥将被加密存储，建议使用只读或期货交易权限',
     exchangeConfigWarning2: '• 不要授予提现权限，确保资金安全',
     exchangeConfigWarning3: '• 删除配置后，相关交易员将无法正常交易',
+    duplicateExchangeTypeWarning: '检测到重复的交易所类型',
+    duplicateExchangeTypeDesc:
+      '您正在添加相同类型的新交易所。现有交易员将继续使用之前的交易所密钥，只有新交易员才会使用这个新交易所。',
+    existingTradersUsingOldExchange: '使用之前交易所的交易员',
+    stopTradersBeforeAdding: '在添加相同类型的新交易所之前，请先停止这些交易员',
+    tradersWillUseOldKey: '这些交易员将继续使用旧的交易所密钥',
+    noTradersUsingOldExchange: '当前没有交易员使用此类型的交易所',
     edit: '编辑',
     viewGuide: '查看教程',
     binanceSetupGuide: '币安配置教程',
@@ -1314,23 +1340,23 @@ export const translations = {
     registrationClosedMessage: '平台当前不开放新用户注册，如需访问请联系管理员获取账号。',
 
     // Hero Section
-    githubStarsInDays: '3 天内 2.5K+ GitHub Stars',
-    heroTitle1: 'Read the Market.',
-    heroTitle2: 'Write the Trade.',
+    githubStarsInDays: '开源社区持续加速',
+    heroTitle1: '感知市场脉搏，',
+    heroTitle2: '驱动智能体行动。',
     heroDescription:
-      'NOFX 是 AI 交易的未来标准——一个开放、社区驱动的代理式交易操作系统。支持 Binance、Aster DEX 等交易所，自托管、多代理竞争，让 AI 为你自动决策、执行和优化交易。',
-    poweredBy: '由 Aster DEX 和 Binance 提供支持，Amber.ac 战略投资。',
+      'Nexus 是智能体交易的数据底座，提供预处理、可验证的数据与执行能力，让你专注构建自治智能体、编排策略，并在多交易所安全、实时地部署。',
+    poweredBy: '由 olaxbt 集体驱动，融合链上遥测与机构级执行能力。',
 
     // Landing Page CTA
-    readyToDefine: '准备好定义 AI 交易的未来吗？',
+    readyToDefine: '一起构建下一代自治交易智能体。',
     startWithCrypto:
-      '从加密市场起步，扩展到 TradFi。NOFX 是 AgentFi 的基础架构。',
+      '从加密市场起步，延伸至 TradFi。Nexus 是 AgentFi 的核心基础设施。',
     getStartedNow: '立即开始',
     viewSourceCode: '查看源码',
 
     // Features Section
     coreFeatures: '核心功能',
-    whyChooseNofx: '为什么选择 NOFX？',
+    whyChooseNexus: '为什么选择 Nexus？',
     openCommunityDriven: '开源、透明、社区驱动的 AI 交易操作系统',
     openSourceSelfHosted: '100% 开源与自托管',
     openSourceDesc: '你的框架，你的规则。非黑箱，支持自定义提示词和多模型。',
@@ -1352,16 +1378,16 @@ export const translations = {
     secureFeatures4: '交易日志审计',
 
     // About Section
-    aboutNofx: '关于 NOFX',
-    whatIsNofx: '什么是 NOFX？',
-    nofxNotAnotherBot: "NOFX 不是另一个交易机器人，而是 AI 交易的 'Linux' ——",
-    nofxDescription1: "一个透明、可信任的开源 OS，提供统一的 '决策-风险-执行'",
-    nofxDescription2: '层，支持所有资产类别。',
-    nofxDescription3:
+    aboutNexus: '关于 Nexus',
+    whatIsNexus: '什么是 Nexus？',
+    NexusNotAnotherBot: "Nexus 不是另一个交易机器人，而是 AI 交易的 'Linux' ——",
+    NexusDescription1: "一个透明、可信任的开源 OS，提供统一的 '决策-风险-执行'",
+    NexusDescription2: '层，支持所有资产类别。',
+    NexusDescription3:
       '从加密市场起步（24/7、高波动性完美测试场），未来扩展到股票、期货、外汇。核心：开放架构、AI',
-    nofxDescription4:
+    NexusDescription4:
       '达尔文主义（多代理自竞争、策略进化）、CodeFi 飞轮（开发者 PR',
-    nofxDescription5: '贡献获积分奖励）。',
+    NexusDescription5: '贡献获积分奖励）。',
     youFullControl: '你 100% 掌控',
     fullControlDesc: '完全掌控 AI 提示词和资金',
     startupMessages1: '启动自动交易系统...',
@@ -1369,11 +1395,11 @@ export const translations = {
     startupMessages3: 'Web 控制台 http://localhost:3000',
 
     // How It Works Section
-    howToStart: '如何开始使用 NOFX',
+    howToStart: '如何开始使用 Nexus',
     fourSimpleSteps: '四个简单步骤，开启 AI 自动交易之旅',
     step1Title: '拉取 GitHub 仓库',
     step1Desc:
-      'git clone https://github.com/tinkle-community/nofx 并切换到 dev 分支测试新功能。',
+      'git clone https://github.com/tinkle-community/Nexus 并切换到 dev 分支测试新功能。',
     step2Title: '配置环境',
     step2Desc:
       '前端设置交易所 API（如 Binance、Hyperliquid）、AI 模型和自定义提示词。',
@@ -1384,12 +1410,12 @@ export const translations = {
     step4Desc: '监控交易，提交 PR 改进框架。加入 Telegram 分享策略。',
     importantRiskWarning: '重要风险提示',
     riskWarningText:
-      'dev 分支不稳定，勿用无法承受损失的资金。NOFX 非托管，无官方策略。交易有风险，投资需谨慎。',
+      'dev 分支不稳定，勿用无法承受损失的资金。Nexus 非托管，无官方策略。交易有风险，投资需谨慎。',
 
     // Community Section (testimonials are kept as-is since they are quotes)
 
     // Footer Section
-    futureStandardAI: 'AI 交易的未来标准',
+    futureStandardAI: '智能体金融的数据与执行底座',
     links: '链接',
     resources: '资源',
     documentation: '文档',
@@ -1397,7 +1423,7 @@ export const translations = {
     strategicInvestment: '(战略投资)',
 
     // Login Modal
-    accessNofxPlatform: '访问 NOFX 平台',
+    accessNexusPlatform: '访问 Nexus 平台',
     loginRegisterPrompt: '请选择登录或注册以访问完整的 AI 交易平台',
     registerNewAccount: '注册新账号',
 
@@ -1419,7 +1445,7 @@ export const translations = {
 
     // FAQ Page
     faqTitle: '常见问题',
-    faqSubtitle: '查找关于 NOFX 的常见问题解答',
+    faqSubtitle: '查找关于 Nexus 的常见问题解答',
     faqStillHaveQuestions: '还有其他问题？',
     faqContactUs: '加入我们的社区或查看 GitHub 获取更多帮助',
 
@@ -1433,30 +1459,30 @@ export const translations = {
     faqCategoryData: '数据与隐私',
 
     // FAQ Questions & Answers - General
-    faqWhatIsNOFX: 'NOFX 是什么？',
-    faqWhatIsNOFXAnswer:
-      'NOFX 是一个 AI 驱动的加密货币交易机器人，使用大语言模型（LLM）在期货市场进行交易决策。',
+    faqWhatIsNexus: 'Nexus 是什么？',
+    faqWhatIsNexusAnswer:
+      'Nexus 是一个 AI 驱动的加密货币交易机器人，使用大语言模型（LLM）在期货市场进行交易决策。',
 
     faqSupportedExchanges: '支持哪些交易所？',
     faqSupportedExchangesAnswer:
       '支持币安合约（Binance Futures）、Hyperliquid 和 Aster DEX。更多交易所开发中。',
 
-    faqIsProfitable: 'NOFX 能盈利吗？',
+    faqIsProfitable: 'Nexus 能盈利吗？',
     faqIsProfitableAnswer:
       'AI 交易是实验性的，不保证盈利。请始终用小额资金测试，不要投入超过您承受能力的资金。',
 
     faqMultipleTraders: '可以同时运行多个交易员吗？',
     faqMultipleTradersAnswer:
-      '可以！NOFX 支持运行多个交易员，每个可配置不同的 AI 模型和交易策略。',
+      '可以！Nexus 支持运行多个交易员，每个可配置不同的 AI 模型和交易策略。',
 
     // Contributing & Community
     faqGithubProjectsTasks: '如何在 GitHub Projects 中领取任务？',
     faqGithubProjectsTasksAnswer:
-      '路线图：https://github.com/orgs/NoFxAiOS/projects/3 ｜ 任务看板：https://github.com/orgs/NoFxAiOS/projects/5 ｜ 步骤：打开链接 → 按标签筛选（good first issue / help wanted / frontend / backend）→ 阅读描述与验收标准 → 评论“assign me”或自助分配 → Fork 仓库 → 同步你 fork 的 dev 与 upstream/dev → 从你 fork 的 dev 创建特性分支 → 推送到你的 fork → 打开 PR（base：NoFxAiOS/nofx:dev ← compare：你的用户名/nofx:feat/your-topic）→ 关联 Issue（Closes #123）并选择正确模板。',
+      '路线图：https://github.com/orgs/NexusAiOS/projects/3 ｜ 任务看板：https://github.com/orgs/NexusAiOS/projects/5 ｜ 步骤：打开链接 → 按标签筛选（good first issue / help wanted / frontend / backend）→ 阅读描述与验收标准 → 评论“assign me”或自助分配 → Fork 仓库 → 同步你 fork 的 dev 与 upstream/dev → 从你 fork 的 dev 创建特性分支 → 推送到你的 fork → 打开 PR（base：NexusAiOS/Nexus:dev ← compare：你的用户名/Nexus:feat/your-topic）→ 关联 Issue（Closes #123）并选择正确模板。',
 
     faqContributePR: '如何规范地提交 PR 并参与贡献？',
     faqContributePRAnswer:
-      '规范：• 先 Fork；在你的 fork 的 dev 分支上创建特性分支（避免直接向上游 main 提交）• 分支命名：feat/...、fix/...、docs/...；提交信息遵循 Conventional Commits • PR 前运行检查：npm --prefix web run lint && npm --prefix web run build • 涉及 UI 变更请附截图/短视频 • 选择正确 PR 模板（frontend/backend/docs/general）• 从你的 fork 发起到 NoFxAiOS/nofx:dev，并在 PR 中关联 Issue（Closes #123）• 持续 rebase 到 upstream/dev，确保 CI 通过；尽量保持 PR 小而聚焦 • 参考 CONTRIBUTING.md 与 .github/PR_TITLE_GUIDE.md',
+      '规范：• 先 Fork；在你的 fork 的 dev 分支上创建特性分支（避免直接向上游 main 提交）• 分支命名：feat/...、fix/...、docs/...；提交信息遵循 Conventional Commits • PR 前运行检查：npm --prefix web run lint && npm --prefix web run build • 涉及 UI 变更请附截图/短视频 • 选择正确 PR 模板（frontend/backend/docs/general）• 从你的 fork 发起到 NexusAiOS/Nexus:dev，并在 PR 中关联 Issue（Closes #123）• 持续 rebase 到 upstream/dev，确保 CI 通过；尽量保持 PR 小而聚焦 • 参考 CONTRIBUTING.md 与 .github/PR_TITLE_GUIDE.md',
 
     // Setup & Configuration
     faqSystemRequirements: '系统要求是什么？',
@@ -1465,7 +1491,7 @@ export const translations = {
 
     faqNeedCoding: '需要编程经验吗？',
     faqNeedCodingAnswer:
-      '不需要！NOFX 有 Web 界面进行所有配置。但基础的命令行知识有助于安装和故障排查。',
+      '不需要！Nexus 有 Web 界面进行所有配置。但基础的命令行知识有助于安装和故障排查。',
 
     faqGetApiKeys: '如何获取 API 密钥？',
     faqGetApiKeysAnswer:
@@ -1473,7 +1499,7 @@ export const translations = {
 
     faqUseSubaccount: '应该使用子账户吗？',
     faqUseSubaccountAnswer:
-      '推荐：是的，使用专门的子账户运行 NOFX 可以更好地隔离风险。但请注意，某些子账户有限制（例如币安子账户最高 5 倍杠杆）。',
+      '推荐：是的，使用专门的子账户运行 Nexus 可以更好地隔离风险。但请注意，某些子账户有限制（例如币安子账户最高 5 倍杠杆）。',
 
     faqDockerDeployment: 'Docker 部署一直失败',
     faqDockerDeploymentAnswer:
@@ -1510,7 +1536,7 @@ export const translations = {
 
     faqHighFees: '交易手续费太高',
     faqHighFeesAnswer:
-      'NOFX 默认 3 分钟扫描间隔会导致频繁交易。解决方案：将决策间隔增加到 5-10 分钟；优化系统提示词减少过度交易；调整杠杆降低仓位大小。',
+      'Nexus 默认 3 分钟扫描间隔会导致频繁交易。解决方案：将决策间隔增加到 5-10 分钟；优化系统提示词减少过度交易；调整杠杆降低仓位大小。',
 
     faqNoTakeProfit: 'AI 不平掉盈利的仓位',
     faqNoTakeProfitAnswer:
@@ -1527,7 +1553,7 @@ export const translations = {
 
     faqPortInUse: '后端无法启动 / 端口被占用',
     faqPortInUseAnswer:
-      '使用 "lsof -i :8080" 查看占用端口的进程，在 .env 中修改端口：NOFX_BACKEND_PORT=8081。',
+      '使用 "lsof -i :8080" 查看占用端口的进程，在 .env 中修改端口：Nexus_BACKEND_PORT=8081。',
 
     faqFrontendLoading: '前端一直显示"加载中..."',
     faqFrontendLoadingAnswer:
@@ -1535,7 +1561,7 @@ export const translations = {
 
     faqDatabaseLocked: '数据库锁定错误',
     faqDatabaseLockedAnswer:
-      '使用 "docker compose down" 或 "pkill nofx" 停止所有 NOFX 进程，然后使用 "docker compose up -d" 重启。',
+      '使用 "docker compose down" 或 "pkill Nexus" 停止所有 Nexus 进程，然后使用 "docker compose up -d" 重启。',
 
     faqAiLearningFailed: 'AI 学习数据加载失败',
     faqAiLearningFailedAnswer:
@@ -1560,7 +1586,7 @@ export const translations = {
 
     faqAiLearning: 'AI 会从错误中学习吗？',
     faqAiLearningAnswer:
-      '会的，在一定程度上。NOFX 在每次决策提示中提供历史表现反馈，允许 AI 调整策略。',
+      '会的，在一定程度上。Nexus 在每次决策提示中提供历史表现反馈，允许 AI 调整策略。',
 
     faqOnlyShort: 'AI 只开空单，不开多单',
     faqOnlyShortAnswer:
@@ -1605,7 +1631,7 @@ export const translations = {
         '避免把应用嵌入在不安全的 HTTP iframe 或会降级协议的反向代理中。',
       unsupportedTitle: '浏览器未提供 Web Crypto',
       unsupportedDesc:
-        '请通过 HTTPS 或本机 localhost 访问 NOFX，并避免嵌入不安全 iframe/反向代理，以符合浏览器的 Web Crypto 规则。',
+        '请通过 HTTPS 或本机 localhost 访问 Nexus，并避免嵌入不安全 iframe/反向代理，以符合浏览器的 Web Crypto 规则。',
       summary: '当前来源：{origin} · 协议：{protocol}',
     },
 

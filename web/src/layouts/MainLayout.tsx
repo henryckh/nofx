@@ -59,7 +59,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
           <p className="mt-1">{t('footerWarning', language)}</p>
           <div className="mt-4">
             <a
-              href="https://github.com/tinkle-community/nofx"
+            href="https://github.com/olaxbt"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-3 py-2 rounded text-sm font-semibold transition-all hover:scale-105"
@@ -71,7 +71,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = '#2B3139'
                 e.currentTarget.style.color = '#EAECEF'
-                e.currentTarget.style.borderColor = '#F0B90B'
+                e.currentTarget.style.borderColor = '#E781FD'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = '#1E2329'

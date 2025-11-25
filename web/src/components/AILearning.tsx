@@ -389,7 +389,7 @@ export default function AILearning({ traderId }: AILearningProps) {
                       : (performance.sharpe_ratio || 0) >= 1
                         ? '#22D3EE'
                         : (performance.sharpe_ratio || 0) >= 0
-                          ? '#F0B90B'
+                          ? '#E781FD'
                           : '#F87171',
                   textShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
                 }}
@@ -410,7 +410,7 @@ export default function AILearning({ traderId }: AILearningProps) {
                           : (performance.sharpe_ratio || 0) >= 1
                             ? '#22D3EE'
                             : (performance.sharpe_ratio || 0) >= 0
-                              ? '#F0B90B'
+                              ? '#E781FD'
                               : '#F87171',
                       background:
                         (performance.sharpe_ratio || 0) >= 2
@@ -418,7 +418,7 @@ export default function AILearning({ traderId }: AILearningProps) {
                           : (performance.sharpe_ratio || 0) >= 1
                             ? 'rgba(34, 211, 238, 0.2)'
                             : (performance.sharpe_ratio || 0) >= 0
-                              ? 'rgba(240, 185, 11, 0.2)'
+                              ? 'rgba(231, 129, 253, 0.2)'
                               : 'rgba(248, 113, 113, 0.2)',
                     }}
                   >
@@ -467,16 +467,16 @@ export default function AILearning({ traderId }: AILearningProps) {
           className="rounded-2xl p-6 relative overflow-hidden"
           style={{
             background:
-              'linear-gradient(135deg, rgba(240, 185, 11, 0.25) 0%, rgba(252, 213, 53, 0.15) 50%, rgba(30, 35, 41, 0.9) 100%)',
-            border: '2px solid rgba(240, 185, 11, 0.5)',
-            boxShadow: '0 12px 40px rgba(240, 185, 11, 0.3)',
+              'linear-gradient(135deg, rgba(231, 129, 253, 0.25) 0%, rgba(255, 137, 223, 0.15) 50%, rgba(30, 35, 41, 0.9) 100%)',
+            border: '2px solid rgba(231, 129, 253, 0.5)',
+            boxShadow: '0 12px 40px rgba(231, 129, 253, 0.3)',
           }}
         >
           <div
             className="absolute top-0 right-0 w-48 h-48 rounded-full opacity-20"
             style={{
               background:
-                'radial-gradient(circle, #F0B90B 0%, transparent 70%)',
+                'radial-gradient(circle, #E781FD 0%, transparent 70%)',
               filter: 'blur(40px)',
             }}
           />
@@ -485,8 +485,8 @@ export default function AILearning({ traderId }: AILearningProps) {
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center"
                 style={{
-                  background: 'rgba(240, 185, 11, 0.3)',
-                  border: '1px solid rgba(240, 185, 11, 0.5)',
+                  background: 'rgba(231, 129, 253, 0.3)',
+                  border: '1px solid rgba(231, 129, 253, 0.5)',
                 }}
               >
                 <Coins className="w-6 h-6" style={{ color: '#FCD34D' }} />
@@ -509,7 +509,7 @@ export default function AILearning({ traderId }: AILearningProps) {
                     (performance.profit_factor || 0) >= 2.0
                       ? '#10B981'
                       : (performance.profit_factor || 0) >= 1.5
-                        ? '#F0B90B'
+                        ? '#E781FD'
                         : (performance.profit_factor || 0) >= 1.0
                           ? '#FB923C'
                           : '#F87171',
@@ -529,13 +529,13 @@ export default function AILearning({ traderId }: AILearningProps) {
                       (performance.profit_factor || 0) >= 2.0
                         ? '#10B981'
                         : (performance.profit_factor || 0) >= 1.5
-                          ? '#F0B90B'
+                          ? '#E781FD'
                           : '#94A3B8',
                     background:
                       (performance.profit_factor || 0) >= 2.0
                         ? 'rgba(16, 185, 129, 0.2)'
                         : (performance.profit_factor || 0) >= 1.5
-                          ? 'rgba(240, 185, 11, 0.2)'
+                          ? 'rgba(231, 129, 253, 0.2)'
                           : 'rgba(148, 163, 184, 0.2)',
                   }}
                 >
@@ -558,7 +558,7 @@ export default function AILearning({ traderId }: AILearningProps) {
               className="rounded-xl p-4"
               style={{
                 background: 'rgba(0, 0, 0, 0.4)',
-                border: '1px solid rgba(240, 185, 11, 0.3)',
+                border: '1px solid rgba(231, 129, 253, 0.3)',
               }}
             >
               <div
@@ -813,15 +813,15 @@ export default function AILearning({ traderId }: AILearningProps) {
           className="rounded-2xl overflow-hidden"
           style={{
             background: 'rgba(30, 35, 41, 0.4)',
-            border: '1px solid rgba(240, 185, 11, 0.2)',
+            border: '1px solid rgba(231, 129, 253, 0.2)',
             maxHeight: 'calc(100vh - 200px)',
           }}
         >
           <div
             className="p-5 border-b sticky top-0 z-10"
             style={{
-              background: 'rgba(240, 185, 11, 0.1)',
-              borderColor: 'rgba(240, 185, 11, 0.3)',
+              background: 'rgba(231, 129, 253, 0.1)',
+              borderColor: 'rgba(231, 129, 253, 0.3)',
               backdropFilter: 'blur(10px)',
             }}
           >
@@ -899,7 +899,7 @@ export default function AILearning({ traderId }: AILearningProps) {
                             <span
                               className="text-xs px-2 py-0.5 rounded font-semibold"
                               style={{
-                                background: 'rgba(240, 185, 11, 0.2)',
+                                background: 'rgba(231, 129, 253, 0.2)',
                                 color: '#FCD34D',
                               }}
                             >
@@ -1067,17 +1067,17 @@ export default function AILearning({ traderId }: AILearningProps) {
         className="rounded-2xl p-6 backdrop-blur-sm"
         style={{
           background:
-            'linear-gradient(135deg, rgba(240, 185, 11, 0.1) 0%, rgba(252, 213, 53, 0.05) 100%)',
-          border: '1px solid rgba(240, 185, 11, 0.2)',
-          boxShadow: '0 4px 16px rgba(240, 185, 11, 0.1)',
+            'linear-gradient(135deg, rgba(231, 129, 253, 0.1) 0%, rgba(255, 137, 223, 0.05) 100%)',
+          border: '1px solid rgba(231, 129, 253, 0.2)',
+          boxShadow: '0 4px 16px rgba(231, 129, 253, 0.1)',
         }}
       >
         <div className="flex items-start gap-4">
           <div
             className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
             style={{
-              background: 'rgba(240, 185, 11, 0.2)',
-              border: '1px solid rgba(240, 185, 11, 0.3)',
+              background: 'rgba(231, 129, 253, 0.2)',
+              border: '1px solid rgba(231, 129, 253, 0.3)',
             }}
           >
             <Lightbulb className="w-5 h-5" style={{ color: '#FCD34D' }} />
@@ -1091,25 +1091,25 @@ export default function AILearning({ traderId }: AILearningProps) {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
               <div className="flex items-start gap-2">
-                <span style={{ color: '#F0B90B' }}>•</span>
+                <span style={{ color: '#E781FD' }}>•</span>
                 <span style={{ color: '#CBD5E1' }}>
                   {t('aiLearningPoint1', language)}
                 </span>
               </div>
               <div className="flex items-start gap-2">
-                <span style={{ color: '#F0B90B' }}>•</span>
+                <span style={{ color: '#E781FD' }}>•</span>
                 <span style={{ color: '#CBD5E1' }}>
                   {t('aiLearningPoint2', language)}
                 </span>
               </div>
               <div className="flex items-start gap-2">
-                <span style={{ color: '#F0B90B' }}>•</span>
+                <span style={{ color: '#E781FD' }}>•</span>
                 <span style={{ color: '#CBD5E1' }}>
                   {t('aiLearningPoint3', language)}
                 </span>
               </div>
               <div className="flex items-start gap-2">
-                <span style={{ color: '#F0B90B' }}>•</span>
+                <span style={{ color: '#E781FD' }}>•</span>
                 <span style={{ color: '#CBD5E1' }}>
                   {t('aiLearningPoint4', language)}
                 </span>

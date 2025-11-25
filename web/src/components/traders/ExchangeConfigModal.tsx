@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import type { Exchange } from '../../types'
+import React, { useState, useEffect, useMemo } from 'react'
+import type { Exchange, TraderInfo } from '../../types'
 import { t, type Language } from '../../i18n/translations'
 import { api } from '../../lib/api'
 import { getExchangeIcon } from '../ExchangeIcons'
@@ -11,7 +11,7 @@ import {
   WebCryptoEnvironmentCheck,
   type WebCryptoCheckStatus,
 } from '../WebCryptoEnvironmentCheck'
-import { BookOpen, Trash2, HelpCircle } from 'lucide-react'
+import { BookOpen, Trash2, HelpCircle, AlertTriangle } from 'lucide-react'
 import { toast } from 'sonner'
 import { Tooltip } from './Tooltip'
 import { getShortName } from './utils'
@@ -32,6 +32,8 @@ interface ExchangeConfigModalProps {
   onDelete: (exchangeId: string) => void
   onClose: () => void
   language: Language
+  traders?: TraderInfo[]
+  configuredExchanges?: Exchange[]
 }
 
 export function ExchangeConfigModal({
@@ -41,6 +43,8 @@ export function ExchangeConfigModal({
   onDelete,
   onClose,
   language,
+  traders = [],
+  configuredExchanges = [],
 }: ExchangeConfigModalProps) {
   const [selectedExchangeId, setSelectedExchangeId] = useState(
     editingExchangeId || ''
@@ -79,6 +83,28 @@ export function ExchangeConfigModal({
   const selectedExchange = allExchanges?.find(
     (e) => e.id === selectedExchangeId
   )
+
+  // 检测重复的交易所类型（仅在添加新交易所时）
+  const duplicateExchangeInfo = useMemo(() => {
+    if (editingExchangeId || !selectedExchange) return null
+
+    // 查找已配置的相同类型的交易所
+    const existingSameType = configuredExchanges.filter(
+      (ex) => ex.id === selectedExchange.id && ex.id !== editingExchangeId
+    )
+
+    if (existingSameType.length === 0) return null
+
+    // 查找使用这些交易所的交易员
+    const affectedTraders = traders.filter((trader) =>
+      existingSameType.some((ex) => trader.exchange_id === ex.id)
+    )
+
+    return {
+      existingExchanges: existingSameType,
+      affectedTraders,
+    }
+  }, [selectedExchange, configuredExchanges, traders, editingExchangeId])
 
   // 如果是编辑现有交易所，初始化表单数据
   useEffect(() => {
@@ -263,8 +289,8 @@ export function ExchangeConfigModal({
                 onClick={() => setShowGuide(true)}
                 className="px-3 py-2 rounded text-sm font-semibold transition-all hover:scale-105 flex items-center gap-2"
                 style={{
-                  background: 'rgba(240, 185, 11, 0.1)',
-                  color: '#F0B90B',
+                  background: 'rgba(231, 129, 253, 0.1)',
+                  color: '#E781FD',
                 }}
               >
                 <BookOpen className="w-4 h-4" />
@@ -298,7 +324,7 @@ export function ExchangeConfigModal({
                 <div className="space-y-2">
                   <div
                     className="text-xs font-semibold uppercase tracking-wide"
-                    style={{ color: '#F0B90B' }}
+                    style={{ color: '#E781FD' }}
                   >
                     {t('environmentSteps.checkTitle', language)}
                   </div>
@@ -311,7 +337,7 @@ export function ExchangeConfigModal({
                 <div className="space-y-2">
                   <div
                     className="text-xs font-semibold uppercase tracking-wide"
-                    style={{ color: '#F0B90B' }}
+                    style={{ color: '#E781FD' }}
                   >
                     {t('environmentSteps.selectTitle', language)}
                   </div>
@@ -366,6 +392,133 @@ export function ExchangeConfigModal({
                 </div>
               </div>
             )}
+
+            {/* Duplicate Exchange Type Warning */}
+            {duplicateExchangeInfo && duplicateExchangeInfo.affectedTraders.length > 0 && (
+              <div
+                className="p-4 rounded-lg border-2"
+                style={{
+                  background: 'rgba(255, 193, 7, 0.1)',
+                  borderColor: 'rgba(255, 193, 7, 0.3)',
+                }}
+              >
+                <div className="flex items-start gap-3 mb-3">
+                  <AlertTriangle
+                    className="w-5 h-5 flex-shrink-0 mt-0.5"
+                    style={{ color: '#FFC107' }}
+                  />
+                  <div className="flex-1">
+                    <div
+                      className="text-sm font-semibold mb-2"
+                      style={{ color: '#FFC107' }}
+                    >
+                      {t('duplicateExchangeTypeWarning', language)}
+                    </div>
+                    <div
+                      className="text-xs mb-3"
+                      style={{ color: '#848E9C', lineHeight: '1.5' }}
+                    >
+                      {t('duplicateExchangeTypeDesc', language)}
+                    </div>
+
+                    <div
+                      className="text-xs font-semibold mb-2"
+                      style={{ color: '#FFC107' }}
+                    >
+                      {t('existingTradersUsingOldExchange', language)} (
+                      {duplicateExchangeInfo.affectedTraders.length})
+                    </div>
+
+                    <div
+                      className="space-y-2 max-h-48 overflow-y-auto mb-3"
+                      style={{
+                        background: 'rgba(0, 0, 0, 0.2)',
+                        borderRadius: '6px',
+                        padding: '8px',
+                      }}
+                    >
+                      {duplicateExchangeInfo.affectedTraders.map((trader) => (
+                        <div
+                          key={trader.trader_id}
+                          className="flex items-center justify-between p-2 rounded"
+                          style={{
+                            background: trader.is_running
+                              ? 'rgba(246, 70, 93, 0.1)'
+                              : 'rgba(132, 142, 156, 0.1)',
+                            border: `1px solid ${
+                              trader.is_running
+                                ? 'rgba(246, 70, 93, 0.3)'
+                                : 'rgba(132, 142, 156, 0.2)'
+                            }`,
+                          }}
+                        >
+                          <div className="flex items-center gap-2 flex-1">
+                            <div
+                              className={`w-2 h-2 rounded-full ${
+                                trader.is_running ? 'bg-red-500' : 'bg-gray-500'
+                              }`}
+                            />
+                            <span
+                              className="text-xs font-medium"
+                              style={{ color: '#EAECEF' }}
+                            >
+                              {trader.trader_name}
+                            </span>
+                            {trader.is_running && (
+                              <span
+                                className="text-xs px-1.5 py-0.5 rounded"
+                                style={{
+                                  background: 'rgba(246, 70, 93, 0.2)',
+                                  color: '#F6465D',
+                                }}
+                              >
+                                {t('running', language)}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div
+                      className="text-xs p-2 rounded"
+                      style={{
+                        background: 'rgba(255, 193, 7, 0.1)',
+                        border: '1px solid rgba(255, 193, 7, 0.2)',
+                        color: '#FFC107',
+                      }}
+                    >
+                      <strong>⚠️ {t('tradersWillUseOldKey', language)}</strong>
+                      <br />
+                      {t('stopTradersBeforeAdding', language)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Show message if no traders are using old exchange */}
+            {duplicateExchangeInfo &&
+              duplicateExchangeInfo.affectedTraders.length === 0 && (
+                <div
+                  className="p-3 rounded"
+                  style={{
+                    background: 'rgba(231, 129, 253, 0.1)',
+                    border: '1px solid rgba(231, 129, 253, 0.2)',
+                  }}
+                >
+                  <div
+                    className="text-xs"
+                    style={{ color: '#848E9C', lineHeight: '1.5' }}
+                  >
+                    {t('duplicateExchangeTypeDesc', language)}
+                    <br />
+                    <span style={{ color: '#E781FD' }}>
+                      {t('noTradersUsingOldExchange', language)}
+                    </span>
+                  </div>
+                </div>
+              )}
 
             {selectedExchange && (
               <>
@@ -547,13 +700,13 @@ export function ExchangeConfigModal({
                         <div
                           className="p-4 rounded"
                           style={{
-                            background: 'rgba(240, 185, 11, 0.1)',
-                            border: '1px solid rgba(240, 185, 11, 0.2)',
+                            background: 'rgba(231, 129, 253, 0.1)',
+                            border: '1px solid rgba(231, 129, 253, 0.2)',
                           }}
                         >
                           <div
                             className="text-sm font-semibold mb-2"
-                            style={{ color: '#F0B90B' }}
+                            style={{ color: '#E781FD' }}
                           >
                             {t('whitelistIP', language)}
                           </div>
@@ -578,7 +731,7 @@ export function ExchangeConfigModal({
                             >
                               <code
                                 className="flex-1 text-sm font-mono"
-                                style={{ color: '#F0B90B' }}
+                                style={{ color: '#E781FD' }}
                               >
                                 {serverIP.public_ip}
                               </code>
@@ -587,8 +740,8 @@ export function ExchangeConfigModal({
                                 onClick={() => handleCopyIP(serverIP.public_ip)}
                                 className="px-3 py-1 rounded text-xs font-semibold transition-all hover:scale-105"
                                 style={{
-                                  background: 'rgba(240, 185, 11, 0.2)',
-                                  color: '#F0B90B',
+                                  background: 'rgba(231, 129, 253, 0.2)',
+                                  color: '#E781FD',
                                 }}
                               >
                                 {copiedIP
@@ -614,7 +767,7 @@ export function ExchangeConfigModal({
                         <Tooltip content={t('asterUserDesc', language)}>
                           <HelpCircle
                             className="w-4 h-4 cursor-help"
-                            style={{ color: '#F0B90B' }}
+                            style={{ color: '#E781FD' }}
                           />
                         </Tooltip>
                       </label>
@@ -642,7 +795,7 @@ export function ExchangeConfigModal({
                         <Tooltip content={t('asterSignerDesc', language)}>
                           <HelpCircle
                             className="w-4 h-4 cursor-help"
-                            style={{ color: '#F0B90B' }}
+                            style={{ color: '#E781FD' }}
                           />
                         </Tooltip>
                       </label>
@@ -670,7 +823,7 @@ export function ExchangeConfigModal({
                         <Tooltip content={t('asterPrivateKeyDesc', language)}>
                           <HelpCircle
                             className="w-4 h-4 cursor-help"
-                            style={{ color: '#F0B90B' }}
+                            style={{ color: '#E781FD' }}
                           />
                         </Tooltip>
                       </label>
@@ -698,18 +851,18 @@ export function ExchangeConfigModal({
                     <div
                       className="p-3 rounded mb-4"
                       style={{
-                        background: 'rgba(240, 185, 11, 0.1)',
-                        border: '1px solid rgba(240, 185, 11, 0.3)',
+                        background: 'rgba(231, 129, 253, 0.1)',
+                        border: '1px solid rgba(231, 129, 253, 0.3)',
                       }}
                     >
                       <div className="flex items-start gap-2">
-                        <span style={{ color: '#F0B90B', fontSize: '16px' }}>
+                        <span style={{ color: '#E781FD', fontSize: '16px' }}>
                           🔐
                         </span>
                         <div className="flex-1">
                           <div
                             className="text-sm font-semibold mb-1"
-                            style={{ color: '#F0B90B' }}
+                            style={{ color: '#E781FD' }}
                           >
                             {t('hyperliquidAgentWalletTitle', language)}
                           </div>
@@ -753,7 +906,7 @@ export function ExchangeConfigModal({
                             onClick={() => setSecureInputTarget('hyperliquid')}
                             className="px-3 py-2 rounded text-xs font-semibold transition-all hover:scale-105"
                             style={{
-                              background: '#F0B90B',
+                              background: '#E781FD',
                               color: '#000',
                               whiteSpace: 'nowrap',
                             }}
@@ -866,7 +1019,7 @@ export function ExchangeConfigModal({
                   (!apiKey.trim() || !secretKey.trim()))
               }
               className="flex-1 px-4 py-2 rounded text-sm font-semibold disabled:opacity-50"
-              style={{ background: '#F0B90B', color: '#000' }}
+              style={{ background: '#E781FD', color: '#000' }}
             >
               {t('saveConfig', language)}
             </button>
@@ -890,7 +1043,7 @@ export function ExchangeConfigModal({
                 className="text-xl font-bold flex items-center gap-2"
                 style={{ color: '#EAECEF' }}
               >
-                <BookOpen className="w-6 h-6" style={{ color: '#F0B90B' }} />
+                <BookOpen className="w-6 h-6" style={{ color: '#E781FD' }} />
                 {t('binanceSetupGuide', language)}
               </h3>
               <button

@@ -49,9 +49,9 @@ export function TraderConfigViewModal({
         background:
           copiedField === fieldName
             ? 'rgba(14, 203, 129, 0.1)'
-            : 'rgba(240, 185, 11, 0.1)',
-        color: copiedField === fieldName ? '#0ECB81' : '#F0B90B',
-        border: `1px solid ${copiedField === fieldName ? 'rgba(14, 203, 129, 0.3)' : 'rgba(240, 185, 11, 0.3)'}`,
+            : 'rgba(231, 129, 253, 0.1)',
+        color: copiedField === fieldName ? '#0ECB81' : '#E781FD',
+        border: `1px solid ${copiedField === fieldName ? 'rgba(14, 203, 129, 0.3)' : 'rgba(231, 129, 253, 0.3)'}`,
       }}
     >
       {copiedField === fieldName ? '✓ 已复制' : '📋 复制'}
@@ -91,7 +91,7 @@ export function TraderConfigViewModal({
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-[#2B3139] bg-gradient-to-r from-[#1E2329] to-[#252B35]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#F0B90B] to-[#E1A706] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#E781FD] to-[#D821FF] flex items-center justify-center">
               <span className="text-lg">👁️</span>
             </div>
             <div>
@@ -263,7 +263,7 @@ export function TraderConfigViewModal({
                 'full_config'
               )
             }
-            className="px-6 py-3 bg-gradient-to-r from-[#F0B90B] to-[#E1A706] text-black rounded-lg hover:from-[#E1A706] hover:to-[#D4951E] transition-all duration-200 font-medium shadow-lg"
+            className="px-6 py-3 bg-gradient-to-r from-[#E781FD] to-[#D821FF] text-black rounded-lg hover:from-[#D821FF] hover:to-[#D00CFA] transition-all duration-200 font-medium shadow-lg"
           >
             {copiedField === 'full_config' ? '✓ 已复制配置' : '📋 复制完整配置'}
           </button>

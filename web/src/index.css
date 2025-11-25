@@ -11,56 +11,58 @@ html {
 }
 
 :root {
-  /* Binance Brand Colors */
-  --brand-yellow: #f0b90b;
-  --brand-black: #000000;
-  --brand-dark-gray: #0a0a0a;
-  --brand-light-gray: #eaecef;
-  --brand-almost-white: #fafafa;
+  /* Nexus Brand Colors */
+  --brand-accent: #E781FD;
+  --brand-accent-strong: #ff89df;
+  --brand-accent-muted: #ffb0ea;
+  --brand-black: #040108;
+  --brand-dark-gray: #08040f;
+  --brand-light-gray: #f5edff;
+  --brand-almost-white: #fdf7ff;
   --brand-white: #ffffff;
 
-  /* Binance Theme Colors */
-  --binance-yellow: #f0b90b;
-  --binance-yellow-dark: #c99400;
-  --binance-yellow-light: #fcd535;
-  --binance-yellow-glow: rgba(240, 185, 11, 0.2);
+  /* Compatibility with previous variable names */
+  --brand-yellow: var(--brand-accent);
+  --binance-yellow: var(--brand-accent);
+  --binance-yellow-dark: #d957bc;
+  --binance-yellow-light: var(--brand-accent-muted);
+  --binance-yellow-glow: rgba(255, 113, 213, 0.3);
 
-  --background: #000000; /* Binance body bg */
-  --header-bg: #000000; /* Binance header bg */
-  --background-elevated: #000000;
-  --foreground: #eaecef;
-  --panel-bg: #0a0a0a;
-  --panel-bg-hover: #111111;
-  --panel-border: #1a1a1a;
-  --panel-border-hover: #2a2a2a;
+  --background: #030009;
+  --header-bg: rgba(6, 3, 14, 0.85);
+  --background-elevated: #05010d;
+  --foreground: var(--brand-light-gray);
+  --panel-bg: rgba(10, 6, 18, 0.95);
+  --panel-bg-hover: rgba(17, 10, 27, 0.95);
+  --panel-border: rgba(255, 255, 255, 0.06);
+  --panel-border-hover: rgba(255, 255, 255, 0.12);
 
-  /* Binance Signature Colors */
-  --binance-green: #0ecb81;
-  --binance-green-bg: rgba(14, 203, 129, 0.1);
-  --binance-green-border: rgba(14, 203, 129, 0.2);
-  --binance-red: #f6465d;
-  --binance-red-bg: rgba(246, 70, 93, 0.1);
-  --binance-red-border: rgba(246, 70, 93, 0.2);
+  --binance-green: #2de8b3;
+  --binance-green-bg: rgba(45, 232, 179, 0.12);
+  --binance-green-border: rgba(45, 232, 179, 0.32);
+  --binance-red: #ff6b7f;
+  --binance-red-bg: rgba(255, 107, 127, 0.12);
+  --binance-red-border: rgba(255, 107, 127, 0.32);
 
   /* UI Colors */
-  --text-primary: #eaecef;
-  --text-secondary: #848e9c;
-  --text-tertiary: #5e6673;
-  --text-disabled: #474d57;
+  --text-primary: var(--brand-light-gray);
+  --text-secondary: #c8bade;
+  --text-tertiary: #9e8fb7;
+  --text-disabled: #6f6584;
 
   /* Chart Colors */
-  --grid-stroke: #1a1a1a;
-  --axis-tick: #5e6673;
-  --ref-line: #474d57;
+  --grid-stroke: rgba(255, 255, 255, 0.06);
+  --axis-tick: #9e8fb7;
+  --ref-line: rgba(255, 255, 255, 0.2);
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 2px 0 rgba(3, 0, 10, 0.45);
   --shadow-md:
-    0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    0 8px 24px rgba(15, 5, 27, 0.45), 0 4px 10px rgba(2, 0, 6, 0.6);
   --shadow-lg:
-    0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+    0 18px 45px rgba(10, 0, 18, 0.55), 0 10px 25px rgba(2, 0, 6, 0.65);
   --shadow-xl:
-    0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+    0 30px 70px rgba(2, 0, 6, 0.75), 0 10px 20px rgba(255, 113, 213, 0.15);
 
   font-family:
     'Inter',
@@ -85,7 +87,22 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: var(--background);
+  background: radial-gradient(
+      circle at top left,
+      rgba(255, 113, 213, 0.2),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 20% 50%,
+      rgba(126, 90, 255, 0.18),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 183, 255, 0.15),
+      transparent 60%
+    ),
+    var(--background);
 }
 
 #root {
@@ -371,9 +388,9 @@ button:disabled {
 }
 
 .dev-toast-controller__actions button:first-child {
-  background: rgba(240, 185, 11, 0.15);
+  background: rgba(231, 129, 253, 0.15);
   color: var(--binance-yellow);
-  border: 1px solid rgba(240, 185, 11, 0.4);
+  border: 1px solid rgba(231, 129, 253, 0.4);
 }
 
 .dev-toast-controller__actions button:last-child {
@@ -389,7 +406,7 @@ button:disabled {
 .dev-custom-toast {
   padding: 12px 18px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #f0b90b, #df8c0c);
+  background: linear-gradient(135deg, #e781fd, #d957bc);
   color: #0a0a0a;
   font-weight: 600;
 }
@@ -430,10 +447,10 @@ button:disabled {
 .binance-gradient-subtle {
   background: linear-gradient(
     135deg,
-    rgba(240, 185, 11, 0.15) 0%,
-    rgba(252, 213, 53, 0.05) 100%
+    rgba(231, 129, 253, 0.15) 0%,
+    rgba(255, 137, 223, 0.05) 100%
   );
-  border: 1px solid rgba(240, 185, 11, 0.2);
+  border: 1px solid rgba(231, 129, 253, 0.2);
 }
 
 .binance-glow {
@@ -469,7 +486,7 @@ button:disabled {
   background-image: linear-gradient(
     90deg,
     transparent,
-    rgba(240, 185, 11, 0.05),
+    rgba(231, 129, 253, 0.05),
     transparent
   );
   background-size: 200% 100%;
@@ -487,12 +504,12 @@ button:disabled {
   padding: 0.625rem 1.25rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(240, 185, 11, 0.3);
+  box-shadow: 0 2px 4px rgba(231, 129, 253, 0.3);
 }
 
 .btn-binance:hover {
   background: var(--binance-yellow-light);
-  box-shadow: 0 4px 8px rgba(240, 185, 11, 0.4);
+  box-shadow: 0 4px 8px rgba(231, 129, 253, 0.4);
   transform: translateY(-2px);
 }
 
@@ -513,7 +530,7 @@ button:disabled {
 }
 
 .btn-outline:hover {
-  background: rgba(240, 185, 11, 0.1);
+  background: rgba(231, 129, 253, 0.1);
   border-color: var(--binance-yellow-light);
 }
 
@@ -547,7 +564,7 @@ tr:last-child {
 }
 
 tr:hover {
-  background: rgba(240, 185, 11, 0.03);
+  background: rgba(231, 129, 253, 0.03);
 }
 
 /* Badge/Chip styles */
@@ -563,8 +580,8 @@ tr:hover {
 }
 
 .badge-yellow {
-  background: rgba(240, 185, 11, 0.1);
-  border-color: rgba(240, 185, 11, 0.3);
+  background: rgba(231, 129, 253, 0.1);
+  border-color: rgba(231, 129, 253, 0.3);
   color: var(--binance-yellow);
 }
 
@@ -659,7 +676,7 @@ tr:hover {
 }
 
 .stat-card:hover {
-  border-color: rgba(240, 185, 11, 0.3);
+  border-color: rgba(231, 129, 253, 0.3);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   transform: translateY(-2px);
 }
@@ -671,6 +688,91 @@ tr:hover {
   border-radius: 4px;
   padding: 1.25rem;
   box-shadow: var(--shadow-sm);
+}
+
+@keyframes rotate {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+.animate-spin-slow {
+  animation: rotate 180s linear infinite;
+}
+.abstract-graphic:hover img {
+  animation-play-state: paused;
+}
+
+/* Nexus Landing */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(
+      circle at 10% 20%,
+      rgba(255, 113, 213, 0.15),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 80% 0%,
+      rgba(126, 90, 255, 0.15),
+      transparent 50%
+    ),
+    #05010d;
+}
+
+.hero-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 70% 20%,
+    rgba(255, 255, 255, 0.08),
+    transparent 50%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.hero-badge {
+  background: rgba(255, 113, 213, 0.12);
+  border: 1px solid rgba(255, 113, 213, 0.35);
+  border-radius: 999px;
+  padding: 0.4rem 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--brand-accent);
+  font-size: 0.85rem;
+}
+
+.hero-social-list {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-social-list img {
+  width: 28px;
+  height: 28px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.hero-social-list img:hover {
+  transform: translateY(-2px) scale(1.05);
+  opacity: 0.9;
+}
+
+.nexus-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow-lg);
 }
 
 /* Responsive utilities */

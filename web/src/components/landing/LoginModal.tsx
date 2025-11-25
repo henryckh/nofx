@@ -11,10 +11,9 @@ interface LoginModalProps {
 export default function LoginModal({ onClose, language }: LoginModalProps) {
   const { config: systemConfig } = useSystemConfig()
   const registrationEnabled = systemConfig?.registration_enabled !== false
-
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className='fixed inset-0 z-50 flex items-center justify-center p-4'
       style={{ background: 'rgba(0, 0, 0, 0.8)' }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -22,10 +21,10 @@ export default function LoginModal({ onClose, language }: LoginModalProps) {
       onClick={onClose}
     >
       <motion.div
-        className="relative max-w-md w-full rounded-2xl p-8"
+        className='relative max-w-md w-full rounded-2xl p-8'
         style={{
           background: 'var(--brand-dark-gray)',
-          border: '1px solid rgba(240, 185, 11, 0.2)',
+          border: '1px solid rgba(231, 129, 253, 0.2)',
         }}
         initial={{ scale: 0.9, y: 50 }}
         animate={{ scale: 1, y: 0 }}
@@ -34,23 +33,23 @@ export default function LoginModal({ onClose, language }: LoginModalProps) {
       >
         <motion.button
           onClick={onClose}
-          className="absolute top-4 right-4"
+          className='absolute top-4 right-4'
           style={{ color: 'var(--text-secondary)' }}
           whileHover={{ scale: 1.1, rotate: 90 }}
           whileTap={{ scale: 0.9 }}
         >
-          <X className="w-6 h-6" />
+          <X className='w-6 h-6' />
         </motion.button>
         <h2
-          className="text-2xl font-bold mb-6"
+          className='text-2xl font-bold mb-6'
           style={{ color: 'var(--brand-light-gray)' }}
         >
-          {t('accessNofxPlatform', language)}
+          {t('accessNexusPlatform', language)}
         </h2>
-        <p className="text-sm mb-6" style={{ color: 'var(--text-secondary)' }}>
+        <p className='text-sm mb-6' style={{ color: 'var(--text-secondary)' }}>
           {t('loginRegisterPrompt', language)}
         </p>
-        <div className="space-y-3">
+        <div className='space-y-3'>
           <motion.button
             onClick={() => {
               window.history.pushState({}, '', '/login')
@@ -64,7 +63,7 @@ export default function LoginModal({ onClose, language }: LoginModalProps) {
             }}
             whileHover={{
               scale: 1.05,
-              boxShadow: '0 10px 30px rgba(240, 185, 11, 0.4)',
+              boxShadow: '0 10px 30px rgba(231, 129, 253, 0.4)',
             }}
             whileTap={{ scale: 0.95 }}
           >
@@ -77,11 +76,11 @@ export default function LoginModal({ onClose, language }: LoginModalProps) {
                 window.dispatchEvent(new PopStateEvent('popstate'))
                 onClose()
               }}
-              className="block w-full px-6 py-3 rounded-lg font-semibold text-center"
+              className='block w-full px-6 py-3 rounded-lg font-semibold text-center'
               style={{
                 background: 'var(--brand-dark-gray)',
                 color: 'var(--brand-light-gray)',
-                border: '1px solid rgba(240, 185, 11, 0.2)',
+                border: '1px solid rgba(231, 129, 253, 0.2)',
               }}
               whileHover={{ scale: 1.05, borderColor: 'var(--brand-yellow)' }}
               whileTap={{ scale: 0.95 }}
@@ -94,3 +93,4 @@ export default function LoginModal({ onClose, language }: LoginModalProps) {
     </motion.div>
   )
 }
+

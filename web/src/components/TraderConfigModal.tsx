@@ -70,6 +70,11 @@ export function TraderConfigModal({
   const [selectedCoins, setSelectedCoins] = useState<string[]>([])
   const [showCoinSelector, setShowCoinSelector] = useState(false)
   const [promptTemplates, setPromptTemplates] = useState<{ name: string }[]>([])
+  const [templateContent, setTemplateContent] = useState<string>('')
+  const [loadingTemplate, setLoadingTemplate] = useState<boolean>(false)
+  const [templateError, setTemplateError] = useState<string | null>(null)
+  const [isExpanded, setIsExpanded] = useState<boolean>(false)
+  const [previousCustomPrompt, setPreviousCustomPrompt] = useState<string>('')
   const [isFetchingBalance, setIsFetchingBalance] = useState(false)
   const [balanceFetchError, setBalanceFetchError] = useState<string>('')
 
@@ -155,6 +160,36 @@ export function TraderConfigModal({
     fetchPromptTemplates()
   }, [])
 
+  // 加载选中的模板内容
+  useEffect(() => {
+    const selectedTemplate = formData.system_prompt_template;
+    if (selectedTemplate && selectedTemplate !== 'custom') {
+      setLoadingTemplate(true);
+      setTemplateError(null);
+      fetch(`/api/prompt-templates/${encodeURIComponent(selectedTemplate)}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setTemplateContent(data.content || data.prompt || data.template || ''); // 假设API返回content, prompt 或 template 字段
+          setLoadingTemplate(false);
+        })
+        .catch((error) => {
+          console.error('Failed to fetch prompt template:', error);
+          setTemplateContent('');
+          setTemplateError('Failed to load template, please try again later');
+          setLoadingTemplate(false);
+        });
+    } else {
+      setTemplateContent('');
+      setTemplateError(null);
+      setLoadingTemplate(false);
+    }
+  }, [formData.system_prompt_template]);
+
   if (!isOpen) return null
 
   const handleInputChange = (field: keyof TraderConfigData, value: any) => {
@@ -183,6 +218,32 @@ export function TraderConfigModal({
       return newCoins
     })
   }
+
+  const handleEditTemplate = () => {
+    if (templateContent && !isExpanded) {
+      setPreviousCustomPrompt(formData.custom_prompt);
+      setFormData(prev => ({
+        ...prev,
+        custom_prompt: templateContent,
+        override_base_prompt: true
+      }));
+      setIsExpanded(true);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setFormData(prev => ({
+      ...prev,
+      custom_prompt: previousCustomPrompt,
+      override_base_prompt: previousCustomPrompt.length > 0
+    }));
+    setIsExpanded(false);
+  };
+
+  const handleSavePrompt = () => {
+    // 状态已更新，关闭展开模式
+    setIsExpanded(false);
+  };
 
   const handleFetchCurrentBalance = async () => {
     if (!isEditMode || !traderData?.trader_id) {
@@ -262,17 +323,19 @@ export function TraderConfigModal({
     }
   }
 
+  const modalWidthClass = isExpanded ? 'max-w-7xl' : 'max-w-3xl';
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm p-4 overflow-y-auto">
       <div
-        className="bg-[#1E2329] border border-[#2B3139] rounded-xl shadow-2xl max-w-3xl w-full my-8"
+        className={`bg-[#1E2329] border border-[#2B3139] rounded-xl shadow-2xl ${modalWidthClass} w-full my-8`}
         style={{ maxHeight: 'calc(100vh - 4rem)' }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-[#2B3139] bg-gradient-to-r from-[#1E2329] to-[#252B35] sticky top-0 z-10 rounded-t-xl">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#F0B90B] to-[#E1A706] flex items-center justify-center text-black">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#E781FD] to-[#D821FF] flex items-center justify-center text-black">
               {isEditMode ? (
                 <Pencil className="w-5 h-5" />
               ) : (
@@ -289,7 +352,10 @@ export function TraderConfigModal({
             </div>
           </div>
           <button
-            onClick={onClose}
+            onClick={() => {
+              onClose()
+              setIsExpanded(false)
+            }}
             className="w-8 h-8 rounded-lg text-[#848E9C] hover:text-[#EAECEF] hover:bg-[#2B3139] transition-colors flex items-center justify-center"
           >
             <IconX className="w-4 h-4" />
@@ -302,7 +368,7 @@ export function TraderConfigModal({
           style={{ maxHeight: 'calc(100vh - 16rem)' }}
         >
           {/* Basic Info */}
-          <div className="bg-[#0B0E11] border border-[#2B3139] rounded-lg p-5">
+          {!isExpanded && <div className="bg-[#0B0E11] border border-[#2B3139] rounded-lg p-5">
             <h3 className="text-lg font-semibold text-[#EAECEF] mb-5 flex items-center gap-2">
               🤖 基础配置
             </h3>
@@ -317,7 +383,7 @@ export function TraderConfigModal({
                   onChange={(e) =>
                     handleInputChange('trader_name', e.target.value)
                   }
-                  className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#F0B90B] focus:outline-none"
+                  className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#E781FD] focus:outline-none"
                   placeholder="请输入交易员名称"
                 />
               </div>
@@ -331,7 +397,7 @@ export function TraderConfigModal({
                     onChange={(e) =>
                       handleInputChange('ai_model', e.target.value)
                     }
-                    className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#F0B90B] focus:outline-none"
+                    className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#E781FD] focus:outline-none"
                   >
                     {availableModels.map((model) => (
                       <option key={model.id} value={model.id}>
@@ -349,7 +415,7 @@ export function TraderConfigModal({
                     onChange={(e) =>
                       handleInputChange('exchange_id', e.target.value)
                     }
-                    className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#F0B90B] focus:outline-none"
+                    className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#E781FD] focus:outline-none"
                   >
                     {availableExchanges.map((exchange) => (
                       <option key={exchange.id} value={exchange.id}>
@@ -362,10 +428,10 @@ export function TraderConfigModal({
                 </div>
               </div>
             </div>
-          </div>
+          </div>}
 
           {/* Trading Configuration */}
-          <div className="bg-[#0B0E11] border border-[#2B3139] rounded-lg p-5">
+          {!isExpanded && <div className="bg-[#0B0E11] border border-[#2B3139] rounded-lg p-5">
             <h3 className="text-lg font-semibold text-[#EAECEF] mb-5 flex items-center gap-2">
               ⚖️ 交易配置
             </h3>
@@ -380,11 +446,10 @@ export function TraderConfigModal({
                     <button
                       type="button"
                       onClick={() => handleInputChange('is_cross_margin', true)}
-                      className={`flex-1 px-3 py-2 rounded text-sm ${
-                        formData.is_cross_margin
-                          ? 'bg-[#F0B90B] text-black'
-                          : 'bg-[#0B0E11] text-[#848E9C] border border-[#2B3139]'
-                      }`}
+                      className={`flex-1 px-3 py-2 rounded text-sm ${formData.is_cross_margin
+                        ? 'bg-[#E781FD] text-black'
+                        : 'bg-[#0B0E11] text-[#848E9C] border border-[#2B3139]'
+                        }`}
                     >
                       全仓
                     </button>
@@ -393,11 +458,10 @@ export function TraderConfigModal({
                       onClick={() =>
                         handleInputChange('is_cross_margin', false)
                       }
-                      className={`flex-1 px-3 py-2 rounded text-sm ${
-                        !formData.is_cross_margin
-                          ? 'bg-[#F0B90B] text-black'
-                          : 'bg-[#0B0E11] text-[#848E9C] border border-[#2B3139]'
-                      }`}
+                      className={`flex-1 px-3 py-2 rounded text-sm ${!formData.is_cross_margin
+                        ? 'bg-[#E781FD] text-black'
+                        : 'bg-[#0B0E11] text-[#848E9C] border border-[#2B3139]'
+                        }`}
                     >
                       逐仓
                     </button>
@@ -413,7 +477,7 @@ export function TraderConfigModal({
                         type="button"
                         onClick={handleFetchCurrentBalance}
                         disabled={isFetchingBalance}
-                        className="px-3 py-1 text-xs bg-[#F0B90B] text-black rounded hover:bg-[#E1A706] transition-colors disabled:bg-[#848E9C] disabled:cursor-not-allowed"
+                        className="px-3 py-1 text-xs bg-[#E781FD] text-black rounded hover:bg-[#D821FF] transition-colors disabled:bg-[#848E9C] disabled:cursor-not-allowed"
                       >
                         {isFetchingBalance ? '获取中...' : '获取当前余额'}
                       </button>
@@ -434,7 +498,7 @@ export function TraderConfigModal({
                           handleInputChange('initial_balance', 100)
                         }
                       }}
-                      className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#F0B90B] focus:outline-none"
+                      className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#E781FD] focus:outline-none"
                       min="100"
                       step="0.01"
                     />
@@ -456,7 +520,7 @@ export function TraderConfigModal({
                     <div className="w-full px-3 py-2 bg-[#1E2329] border border-[#2B3139] rounded text-[#848E9C] flex items-center gap-2">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="w-4 h-4 text-[#F0B90B]"
+                        className="w-4 h-4 text-[#E781FD]"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
@@ -492,7 +556,7 @@ export function TraderConfigModal({
                         : 3
                       handleInputChange('scan_interval_minutes', safeValue)
                     }}
-                    className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#F0B90B] focus:outline-none"
+                    className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#E781FD] focus:outline-none"
                     min="3"
                     max="60"
                     step="1"
@@ -519,7 +583,7 @@ export function TraderConfigModal({
                         Number(e.target.value)
                       )
                     }
-                    className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#F0B90B] focus:outline-none"
+                    className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#E781FD] focus:outline-none"
                     min="1"
                     max="125"
                   />
@@ -537,7 +601,7 @@ export function TraderConfigModal({
                         Number(e.target.value)
                       )
                     }
-                    className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#F0B90B] focus:outline-none"
+                    className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#E781FD] focus:outline-none"
                     min="1"
                     max="75"
                   />
@@ -553,7 +617,7 @@ export function TraderConfigModal({
                   <button
                     type="button"
                     onClick={() => setShowCoinSelector(!showCoinSelector)}
-                    className="px-3 py-1 text-xs bg-[#F0B90B] text-black rounded hover:bg-[#E1A706] transition-colors"
+                    className="px-3 py-1 text-xs bg-[#E781FD] text-black rounded hover:bg-[#D821FF] transition-colors"
                   >
                     {showCoinSelector ? '收起选择' : '快速选择'}
                   </button>
@@ -564,7 +628,7 @@ export function TraderConfigModal({
                   onChange={(e) =>
                     handleInputChange('trading_symbols', e.target.value)
                   }
-                  className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#F0B90B] focus:outline-none"
+                  className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#E781FD] focus:outline-none"
                   placeholder="例如: BTCUSDT,ETHUSDT,ADAUSDT"
                 />
 
@@ -580,11 +644,10 @@ export function TraderConfigModal({
                           key={coin}
                           type="button"
                           onClick={() => handleCoinToggle(coin)}
-                          className={`px-2 py-1 text-xs rounded transition-colors ${
-                            selectedCoins.includes(coin)
-                              ? 'bg-[#F0B90B] text-black'
-                              : 'bg-[#1E2329] text-[#848E9C] border border-[#2B3139] hover:border-[#F0B90B]'
-                          }`}
+                          className={`px-2 py-1 text-xs rounded transition-colors ${selectedCoins.includes(coin)
+                            ? 'bg-[#E781FD] text-black'
+                            : 'bg-[#1E2329] text-[#848E9C] border border-[#2B3139] hover:border-[#E781FD]'
+                            }`}
                         >
                           {coin.replace('USDT', '')}
                         </button>
@@ -594,10 +657,10 @@ export function TraderConfigModal({
                 )}
               </div>
             </div>
-          </div>
+          </div>}
 
           {/* Signal Sources */}
-          <div className="bg-[#0B0E11] border border-[#2B3139] rounded-lg p-5">
+          {!isExpanded && <div className="bg-[#0B0E11] border border-[#2B3139] rounded-lg p-5">
             <h3 className="text-lg font-semibold text-[#EAECEF] mb-5 flex items-center gap-2">
               📡 信号源配置
             </h3>
@@ -629,7 +692,7 @@ export function TraderConfigModal({
                 </label>
               </div>
             </div>
-          </div>
+          </div>}
 
           {/* Trading Prompt */}
           <div className="bg-[#0B0E11] border border-[#2B3139] rounded-lg p-5">
@@ -647,7 +710,7 @@ export function TraderConfigModal({
                   onChange={(e) =>
                     handleInputChange('system_prompt_template', e.target.value)
                   }
-                  className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#F0B90B] focus:outline-none"
+                  className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#E781FD] focus:outline-none"
                 >
                   {promptTemplates.map((template) => {
                     // Template name mapping with i18n
@@ -678,13 +741,13 @@ export function TraderConfigModal({
                 <div
                   className="mt-2 p-3 rounded"
                   style={{
-                    background: 'rgba(240, 185, 11, 0.05)',
-                    border: '1px solid rgba(240, 185, 11, 0.15)',
+                    background: 'rgba(231, 129, 253, 0.05)',
+                    border: '1px solid rgba(231, 129, 253, 0.15)',
                   }}
                 >
                   <div
                     className="text-xs font-semibold mb-1"
-                    style={{ color: '#F0B90B' }}
+                    style={{ color: '#E781FD' }}
                   >
                     {(() => {
                       const titleKeyMap: Record<string, string> = {
@@ -723,6 +786,68 @@ export function TraderConfigModal({
                 </p>
               </div>
 
+              {/* 模板内容预览或展开编辑 */}
+              {(!isExpanded && (loadingTemplate || templateContent || templateError)) ? (
+                <div className="mt-4 p-3 bg-[#1E2329] border border-[#2B3139] rounded-lg">
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="text-sm text-[#EAECEF]">Current Template Content (Read-only)</label>
+                    {loadingTemplate ? (
+                      <span className="text-xs text-[var(--brand-accent)]">Loading...</span>
+                    ) : templateError ? (
+                      <span className="text-xs text-red-400">{templateError}</span>
+                    ) : null}
+                  </div>
+                  {loadingTemplate ? (
+                    <div className="h-24 flex items-center justify-center text-[#848E9C]">Loading template content...</div>
+                  ) : templateError ? (
+                    <div className="h-24 flex items-center justify-center text-red-400">{templateError}</div>
+                  ) : (
+                    <>
+                      <textarea
+                        value={templateContent}
+                        readOnly
+                        className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[var(--brand-accent)] focus:outline-none h-24 resize-none opacity-70 text-sm"
+                        placeholder="Template content will be displayed here"
+                      />
+                      <button
+                        onClick={handleEditTemplate}
+                        disabled={!templateContent}
+                        className="mt-2 px-4 py-2 bg-[var(--brand-accent)] text-black rounded text-sm hover:bg-[var(--brand-accent-strong)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Edit This Template (Copy to Custom Prompt)
+                      </button>
+                    </>
+                  )}
+                </div>
+              ) : null}
+
+              {/* 展开模式：并排编辑 */}
+              {isExpanded && (
+                <>
+                  <div className="w-full mt-4 grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-sm text-[#EAECEF] block mb-2">Template Content (Read-only)</label>
+                      <textarea
+                        value={templateContent}
+                        readOnly
+                        className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] h-[35rem] resize-none opacity-70 text-sm"
+                        placeholder="Template content"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm text-[#EAECEF] block mb-2">Custom Prompt Edit</label>
+                      <textarea
+                        value={formData.custom_prompt}
+                        onChange={(e) => handleInputChange('custom_prompt', e.target.value)}
+                        className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[var(--brand-accent)] focus:outline-none h-[35rem] resize-none"
+                        placeholder="Edit your custom prompt..."
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {!isExpanded && 
               <div className="flex items-center gap-3">
                 <input
                   type="checkbox"
@@ -733,7 +858,7 @@ export function TraderConfigModal({
                   className="w-4 h-4"
                 />
                 <label className="text-sm text-[#EAECEF]">覆盖默认提示词</label>
-                <span className="text-xs text-[#F0B90B] inline-flex items-center gap-1">
+                <span className="text-xs text-[#E781FD] inline-flex items-center gap-1">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-3.5 h-3.5"
@@ -750,8 +875,8 @@ export function TraderConfigModal({
                   </svg>{' '}
                   启用后将完全替换默认策略
                 </span>
-              </div>
-              <div>
+              </div>}
+              {!isExpanded && <div>
                 <label className="text-sm text-[#EAECEF] block mb-2">
                   {formData.override_base_prompt
                     ? '自定义提示词'
@@ -762,20 +887,37 @@ export function TraderConfigModal({
                   onChange={(e) =>
                     handleInputChange('custom_prompt', e.target.value)
                   }
-                  className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#F0B90B] focus:outline-none h-24 resize-none"
+                  className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#E781FD] focus:outline-none h-24 resize-none"
                   placeholder={
                     formData.override_base_prompt
                       ? '输入完整的交易策略提示词...'
                       : '输入额外的交易策略提示...'
                   }
                 />
-              </div>
+              </div>}
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="flex justify-end gap-3 p-6 border-t border-[#2B3139] bg-gradient-to-r from-[#1E2329] to-[#252B35] sticky bottom-0 z-10 rounded-b-xl">
+        {isExpanded ?  
+        (<div className="flex justify-end gap-3 p-6 border-t border-[#2B3139] bg-gradient-to-r from-[#1E2329] to-[#252B35] sticky bottom-0 z-10 rounded-b-xl">
+          <div className="flex justify-end gap-3 mt-4">
+            <button
+              onClick={handleCancelEdit}
+              className="px-6 py-3 bg-[#2B3139] text-[#EAECEF] rounded-lg hover:bg-[#404750] transition-all duration-200 border border-[#404750]"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSavePrompt}
+              className="px-8 py-3 bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-accent-strong)] text-black rounded-lg hover:from-[var(--brand-accent-strong)] hover:to-[var(--brand-accent-strong)] transition-all duration-200 font-medium shadow-lg"
+            >
+              Save Prompt
+            </button>
+          </div>
+        </div>) :
+        (<div className="flex justify-end gap-3 p-6 border-t border-[#2B3139] bg-gradient-to-r from-[#1E2329] to-[#252B35] sticky bottom-0 z-10 rounded-b-xl">
           <button
             onClick={onClose}
             className="px-6 py-3 bg-[#2B3139] text-[#EAECEF] rounded-lg hover:bg-[#404750] transition-all duration-200 border border-[#404750]"
@@ -791,12 +933,12 @@ export function TraderConfigModal({
                 !formData.ai_model ||
                 !formData.exchange_id
               }
-              className="px-8 py-3 bg-gradient-to-r from-[#F0B90B] to-[#E1A706] text-black rounded-lg hover:from-[#E1A706] hover:to-[#D4951E] transition-all duration-200 disabled:bg-[#848E9C] disabled:cursor-not-allowed font-medium shadow-lg"
+              className="px-8 py-3 bg-gradient-to-r from-[#E781FD] to-[#D821FF] text-black rounded-lg hover:from-[#D821FF] hover:to-[#D821FF] transition-all duration-200 disabled:bg-[#848E9C] disabled:cursor-not-allowed font-medium shadow-lg"
             >
               {isSaving ? '保存中...' : isEditMode ? '保存修改' : '创建交易员'}
             </button>
           )}
-        </div>
+        </div>)}
       </div>
     </div>
   )

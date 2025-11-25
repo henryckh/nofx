@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useLanguage } from '../contexts/LanguageContext'
 import { t } from '../i18n/translations'
-import { Header } from './Header'
 import { ArrowLeft, KeyRound, Eye, EyeOff } from 'lucide-react'
 import PasswordChecklist from 'react-password-checklist'
 import { Input } from './ui/input'
@@ -56,7 +55,6 @@ export function ResetPasswordPage() {
 
   return (
     <div className="min-h-screen" style={{ background: '#0B0E11' }}>
-      <Header simple />
 
       <div
         className="flex items-center justify-center"
@@ -69,7 +67,7 @@ export function ResetPasswordPage() {
               window.history.pushState({}, '', '/login')
               window.dispatchEvent(new PopStateEvent('popstate'))
             }}
-            className="flex items-center gap-2 mb-6 text-sm hover:text-[#F0B90B] transition-colors"
+            className="flex items-center gap-2 mb-6 text-sm hover:text-[#E781FD] transition-colors"
             style={{ color: '#848E9C' }}
           >
             <ArrowLeft className="w-4 h-4" />
@@ -80,9 +78,9 @@ export function ResetPasswordPage() {
           <div className="text-center mb-8">
             <div
               className="w-16 h-16 mx-auto mb-4 flex items-center justify-center rounded-full"
-              style={{ background: 'rgba(240, 185, 11, 0.1)' }}
+              style={{ background: 'rgba(231, 129, 253, 0.1)' }}
             >
-              <KeyRound className="w-8 h-8" style={{ color: '#F0B90B' }} />
+              <KeyRound className="w-8 h-8" style={{ color: 'var(--brand-yellow)' }} />
             </div>
             <h1 className="text-2xl font-bold" style={{ color: '#EAECEF' }}>
               {t('resetPasswordTitle', language)}
@@ -277,7 +275,7 @@ export function ResetPasswordPage() {
                   type="submit"
                   disabled={loading || otpCode.length !== 6 || !passwordValid}
                   className="w-full px-4 py-2 rounded text-sm font-semibold transition-all hover:scale-105 disabled:opacity-50"
-                  style={{ background: '#F0B90B', color: '#000' }}
+                  style={{ background: 'var(--brand-yellow)', color: '#000' }}
                 >
                   {loading
                     ? t('loading', language)

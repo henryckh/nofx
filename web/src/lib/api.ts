@@ -17,6 +17,7 @@ import { CryptoService } from './crypto'
 import { httpClient } from './httpClient'
 
 const API_BASE = '/api'
+const HYPER_ALPHA_ARENA_API_BASE = (import.meta.env?.VITE_HYPER_ALPHA_ARENA_API_BASE as string) || 'http://localhost:8802/api';
 
 // Helper function to get auth headers
 function getAuthHeaders(): Record<string, string> {
@@ -376,5 +377,93 @@ export const api = {
     const res = await httpClient.get(`${API_BASE}/server-ip`, getAuthHeaders())
     if (!res.ok) throw new Error('获取服务器IP失败')
     return res.json()
+  },
+
+  async getHyperAlphaArenaAssetCurve(params?: {
+    timeframe?: string;
+    trading_mode?: string;
+    environment?: string;
+    wallet_address?: string;
+  }): Promise<any[]> {
+    const searchParams = new URLSearchParams();
+    if (params?.timeframe) searchParams.append('timeframe', params.timeframe);
+    if (params?.trading_mode) searchParams.append('trading_mode', params.trading_mode);
+    if (params?.environment) searchParams.append('environment', params.environment);
+    if (params?.wallet_address) searchParams.append('wallet_address', params.wallet_address);
+
+    const query = searchParams.toString();
+    const url = `${HYPER_ALPHA_ARENA_API_BASE}/account/asset-curve${query ? `?${query}` : ''}`;
+
+    const res = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!res.ok) throw new Error('Failed to fetch asset curve data from Hyper-Alpha-Arena');
+    return res.json();
+  },
+
+  async getHyperAlphaArenaTrades(params?: {
+    limit?: number;
+    account_id?: number;
+    trading_mode?: string;
+  }): Promise<any> {
+    const searchParams = new URLSearchParams();
+    if (params?.limit) searchParams.append('limit', params.limit.toString());
+    if (params?.account_id) searchParams.append('account_id', params.account_id.toString());
+    if (params?.trading_mode) searchParams.append('trading_mode', params.trading_mode);
+
+    const query = searchParams.toString();
+    const url = `${HYPER_ALPHA_ARENA_API_BASE}/arena/trades${query ? `?${query}` : ''}`;
+
+    const res = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!res.ok) throw new Error('Failed to fetch trades from Hyper-Alpha-Arena');
+    return res.json();
+  },
+
+  async getHyperAlphaArenaModelChat(params?: {
+    limit?: number;
+    account_id?: number;
+    trading_mode?: string;
+  }): Promise<any> {
+    const searchParams = new URLSearchParams();
+    if (params?.limit) searchParams.append('limit', params.limit.toString());
+    if (params?.account_id) searchParams.append('account_id', params.account_id.toString());
+    if (params?.trading_mode) searchParams.append('trading_mode', params.trading_mode);
+
+    const query = searchParams.toString();
+    const url = `${HYPER_ALPHA_ARENA_API_BASE}/arena/model-chat${query ? `?${query}` : ''}`;
+
+    const res = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!res.ok) throw new Error('Failed to fetch model chat from Hyper-Alpha-Arena');
+    return res.json();
+  },
+
+  async getHyperAlphaArenaPositions(params?: {
+    account_id?: number;
+    trading_mode?: string;
+  }): Promise<any> {
+    const searchParams = new URLSearchParams();
+    if (params?.account_id) searchParams.append('account_id', params.account_id.toString());
+    if (params?.trading_mode) searchParams.append('trading_mode', params.trading_mode);
+
+    const query = searchParams.toString();
+    const url = `${HYPER_ALPHA_ARENA_API_BASE}/arena/positions${query ? `?${query}` : ''}`;
+
+    const res = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!res.ok) throw new Error('Failed to fetch positions from Hyper-Alpha-Arena');
+    return res.json();
   },
 }
