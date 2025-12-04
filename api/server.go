@@ -63,12 +63,26 @@ func NewServer(traderManager *manager.TraderManager, database *config.Database, 
 // corsMiddleware CORS中间件
 func corsMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		origin := c.Request.Header.Get("Origin")
+		
+		// 如果请求包含Origin头，则允许该来源
+		// 否则允许所有来源（用于非CORS请求）
+		if origin != "" {
+			c.Writer.Header().Set("Access-Control-Allow-Origin", origin)
+			// 只有在有具体origin时才设置credentials，因为浏览器不允许credentials与*同时使用
+			c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		} else {
+			c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		}
+		
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, Accept, Origin")
+		c.Writer.Header().Set("Access-Control-Expose-Headers", "Content-Length, Content-Type")
+		c.Writer.Header().Set("Access-Control-Max-Age", "86400") // 24 hours
 
+		// 处理预检请求
 		if c.Request.Method == "OPTIONS" {
-			c.AbortWithStatus(http.StatusOK)
+			c.AbortWithStatus(http.StatusNoContent)
 			return
 		}
 
@@ -118,6 +132,11 @@ func (s *Server) setupRoutes() {
 		// 需要认证的路由
 		protected := api.Group("/", s.authMiddleware())
 		{
+			if s.backtestManager != nil {
+				backtestGroup := protected.Group("/backtest")
+				s.registerBacktestRoutes(backtestGroup)
+			}
+
 			// 注销（加入黑名单）
 			protected.POST("/logout", s.handleLogout)
 
