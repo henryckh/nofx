@@ -32,6 +32,7 @@ type Server struct {
 	database        *config.Database
 	cryptoHandler   *CryptoHandler
 	backtestManager *backtest.Manager
+	creditService   *CreditService
 	port            int
 }
 

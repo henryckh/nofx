@@ -205,12 +205,15 @@ func (s *Server) RegisterCreditRoutes() {
 		return
 	}
 
-	creditService := NewCreditService(s.database)
-	
-	// Initialize credits table
-	if err := creditService.InitializeCreditsTable(); err != nil {
-		log.Printf("Warning: Failed to initialize credits table: %v", err)
+	// Initialize credit service if not already set
+	if s.creditService == nil {
+		s.creditService = NewCreditService(s.database)
+		if err := s.creditService.InitializeCreditsTable(); err != nil {
+			log.Printf("Warning: Failed to initialize credits table: %v", err)
+		}
 	}
+	
+	creditService := s.creditService
 
 	api := s.router.Group("/api")
 	{
