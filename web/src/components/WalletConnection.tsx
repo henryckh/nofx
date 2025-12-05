@@ -2,67 +2,7 @@ import { useState, useEffect } from 'react'
 import { Wallet, ChevronDown, Copy, ExternalLink, Check } from 'lucide-react'
 import { getMockCredits, initMockCredits } from '../lib/mockCredits'
 
-interface WalletOption {
-  id: string
-  name: string
-  icon: string
-  connector: string
-  installed?: boolean
-  recent?: boolean
-}
 
-const WALLET_OPTIONS: WalletOption[] = [
-  {
-    id: 'metamask',
-    name: 'MetaMask',
-    icon: '🦊',
-    connector: 'injected',
-    installed: true,
-    recent: true,
-  },
-  {
-    id: 'bitget',
-    name: 'Bitget Wallet',
-    icon: '🔷',
-    connector: 'injected',
-    installed: true,
-    recent: true,
-  },
-  {
-    id: 'okx',
-    name: 'OKX Wallet',
-    icon: '⚫',
-    connector: 'injected',
-    installed: true,
-  },
-  {
-    id: 'phantom',
-    name: 'Phantom',
-    icon: '👻',
-    connector: 'injected',
-    installed: true,
-  },
-  {
-    id: 'gate',
-    name: 'Gate Wallet',
-    icon: '🚪',
-    connector: 'injected',
-    installed: true,
-  },
-  {
-    id: 'binance',
-    name: 'Binance Wallet',
-    icon: '💎',
-    connector: 'injected',
-    recent: true,
-  },
-  {
-    id: 'walletconnect',
-    name: 'WalletConnect',
-    icon: '🔗',
-    connector: 'walletConnect',
-  },
-]
 
 interface WalletConnectionProps {
   onConnect?: (address: string) => void
@@ -74,14 +14,12 @@ export function WalletConnection({ onConnect, onDisconnect }: WalletConnectionPr
   const [walletAddress, setWalletAddress] = useState<string>('')
   const [credits, setCredits] = useState(0)
   const [showDropdown, setShowDropdown] = useState(false)
-  const [showWalletModal, setShowWalletModal] = useState(false)
   const [isConnecting, setIsConnecting] = useState(false)
   const [copied, setCopied] = useState(false)
 
   // Check for existing connection
   useEffect(() => {
     const stored = localStorage.getItem('wallet_address')
-    const storedWallet = localStorage.getItem('wallet_name')
     
     // Validate stored address is proper format (0x + 40 hex chars)
     // Also check for old demo_wallet format and clear it
@@ -114,31 +52,6 @@ export function WalletConnection({ onConnect, onDisconnect }: WalletConnectionPr
   const loadCredits = () => {
     const mockCredits = getMockCredits(walletAddress)
     setCredits(mockCredits?.credits || 0)
-  }
-
-  const handleConnect = async (wallet: WalletOption) => {
-    setIsConnecting(true)
-    setShowWalletModal(false)
-    
-    // Simulate wallet connection delay
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    
-    // Generate a realistic wallet address (0x + 40 hex characters, mixed case for checksum)
-    const hexChars = '0123456789abcdef'
-    const address = '0x' + Array.from({ length: 40 }, () => {
-      const char = hexChars[Math.floor(Math.random() * 16)]
-      // Randomly uppercase some characters for realistic checksum format
-      return Math.random() > 0.5 ? char.toUpperCase() : char
-    }).join('')
-    
-    setWalletAddress(address)
-    setIsConnected(true)
-    localStorage.setItem('wallet_address', address)
-    localStorage.setItem('wallet_name', wallet.name)
-    initMockCredits(address)
-    loadCredits()
-    onConnect?.(address)
-    setIsConnecting(false)
   }
 
   const handleDisconnect = () => {

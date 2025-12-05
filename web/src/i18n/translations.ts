@@ -1832,7 +1832,6 @@ export const translations = {
     backtestPage: {
       title: '策略模拟器',
       subtitle: '使用历史市场数据测试和验证AI交易策略。',
-      subtitle: '选择模型与时间范围，快速复盘 AI 决策链路。',
       start: '启动回测',
       starting: '启动中...',
       quickRanges: {

@@ -1,32 +1,18 @@
 import { useState, useEffect } from 'react'
 import { CreditDisplay } from './CreditDisplay'
 import { MockCreditPurchase } from './MockCreditPurchase'
-import { getMockCredits, initMockCredits, deductMockCredits } from '../lib/mockCredits'
+import { initMockCredits, deductMockCredits } from '../lib/mockCredits'
 
 export function DemoCreditsPage() {
   const [walletAddress, setWalletAddress] = useState<string>('')
-  const [credits, setCredits] = useState(0)
 
   useEffect(() => {
     const stored = localStorage.getItem('wallet_address')
     if (stored) {
       setWalletAddress(stored)
       initMockCredits(stored)
-      loadCredits()
     }
   }, [])
-
-  const loadCredits = () => {
-    if (!walletAddress) return
-    const mockCredits = getMockCredits(walletAddress)
-    setCredits(mockCredits?.credits || 0)
-  }
-
-  useEffect(() => {
-    if (walletAddress) {
-      loadCredits()
-    }
-  }, [walletAddress])
 
   const handleTestDeduction = () => {
     if (!walletAddress) {
@@ -36,7 +22,6 @@ export function DemoCreditsPage() {
     const result = deductMockCredits(1.0)
     if (result.success) {
       alert(`Deducted 1 credit! Remaining: ${result.remaining}`)
-      loadCredits()
     } else {
       alert(`Insufficient credits! Current: ${result.remaining}`)
     }
@@ -82,7 +67,7 @@ export function DemoCreditsPage() {
           <h3 className="text-lg font-semibold mb-4">Purchase Credits</h3>
           <MockCreditPurchase 
             walletAddress={walletAddress}
-            onPurchaseSuccess={loadCredits}
+            onPurchaseSuccess={() => {}}
           />
         </div>
         </div>

@@ -134,14 +134,6 @@ export function DecisionCard({ decision, language }: DecisionCardProps) {
               >
                 {action.action}
               </span>
-              {action.reasoning && (
-                <span
-                  className="text-xs"
-                  style={{ color: '#848E9C', flex: 1 }}
-                >
-                  {action.reasoning}
-                </span>
-              )}
             </div>
           ))}
         </div>

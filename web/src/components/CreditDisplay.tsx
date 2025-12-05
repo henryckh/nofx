@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getMockCredits, addMockCredits, hasEnoughCredits } from '../lib/mockCredits'
+import { getMockCredits, hasEnoughCredits } from '../lib/mockCredits'
 
 interface CreditDisplayProps {
   walletAddress?: string
@@ -33,11 +33,6 @@ export function CreditDisplay({
         onInsufficientCredits?.()
       }
     }
-  }
-
-  const handleQuickAdd = () => {
-    addMockCredits(100)
-    loadCredits()
   }
 
   if (isLoading) {
