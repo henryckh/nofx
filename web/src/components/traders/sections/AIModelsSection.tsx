@@ -27,6 +27,34 @@ export function AIModelsSection({
         {t('aiModels', language)}
       </h3>
       <div className="space-y-2 md:space-y-3">
+        {/* Subscription - System Default Option */}
+        <div
+          className="flex items-center justify-between p-2 md:p-3 rounded transition-all cursor-pointer hover:bg-gray-700 border-2"
+          style={{ background: '#0B0E11', border: '2px solid #E781FD' }}
+          onClick={() => onModelClick('system_default')}
+          title="Subscription plan - System default API (requires credits)"
+        >
+          <div className="flex items-center gap-2 md:gap-3">
+            <div className="w-7 h-7 md:w-8 md:h-8 flex items-center justify-center flex-shrink-0 rounded-full"
+              style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}
+            >
+              <span className="text-white text-xs font-bold">S</span>
+            </div>
+            <div className="min-w-0">
+              <div
+                className="font-semibold text-sm md:text-base truncate"
+                style={{ color: '#EAECEF' }}
+              >
+                Subscription - System Default
+              </div>
+              <div className="text-xs" style={{ color: '#848E9C' }}>
+                Managed API • 1.0 credit per call
+              </div>
+            </div>
+          </div>
+          <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full flex-shrink-0 bg-green-400" />
+        </div>
+
         {configuredModels.map((model) => {
           const inUse = isModelInUse(model.id)
           return (

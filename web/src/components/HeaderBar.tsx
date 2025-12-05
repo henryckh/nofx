@@ -5,6 +5,7 @@ import { Menu, X, ChevronDown } from 'lucide-react'
 import { t, type Language } from '../i18n/translations'
 import { Container } from './Container'
 import { useSystemConfig } from '../hooks/useSystemConfig'
+import { WalletConnection } from './WalletConnection'
 
 interface HeaderBarProps {
   onLoginClick?: () => void
@@ -195,6 +196,44 @@ export default function HeaderBar({
                   {t('dashboardNav', language)}
                 </button>
 
+                <button
+                  onClick={() => {
+                    navigate('/backtest')
+                  }}
+                  className="text-sm font-bold transition-all duration-300 relative focus:outline-2 focus:outline-yellow-500"
+                  style={{
+                    color:
+                      currentPage === 'backtest'
+                        ? 'var(--brand-yellow)'
+                        : 'var(--brand-light-gray)',
+                    padding: '8px 16px',
+                    borderRadius: '8px',
+                    position: 'relative',
+                  }}
+                  onMouseEnter={(e) => {
+                    if (currentPage !== 'backtest') {
+                      e.currentTarget.style.color = 'var(--brand-yellow)'
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (currentPage !== 'backtest') {
+                      e.currentTarget.style.color = 'var(--brand-light-gray)'
+                    }
+                  }}
+                >
+                  {/* Background for selected state */}
+                  {currentPage === 'backtest' && (
+                    <span
+                      className="absolute inset-0 rounded-lg"
+                      style={{
+                        background: 'rgba(231, 129, 253, 0.15)',
+                        zIndex: -1,
+                      }}
+                    />
+                  )}
+
+                  {t('backtest', language)}
+                </button>
 
               </>
             ) : (
@@ -241,7 +280,7 @@ export default function HeaderBar({
           </div>
 
           {/* Right Side - Original Navigation Items and Login */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4">
             {/* Only show original navigation items on home page */}
             {isHomePage &&
               [
@@ -279,6 +318,9 @@ export default function HeaderBar({
                   />
                 </a>
               ))}
+
+            {/* Wallet Connection - Always show */}
+            <WalletConnection />
 
             {/* User Info and Actions */}
             {isLoggedIn && user ? (
@@ -346,6 +388,14 @@ export default function HeaderBar({
                           {user.email}
                         </div>
                       </div>
+                      <a
+                        href="/credits"
+                        className="block px-3 py-2 text-sm transition-colors hover:opacity-80"
+                        style={{ color: 'var(--brand-light-gray)' }}
+                        onClick={() => setUserDropdownOpen(false)}
+                      >
+                        💳 Manage Credits
+                      </a>
                       {onLogout && (
                         <button
                           onClick={() => {
@@ -716,6 +766,11 @@ export default function HeaderBar({
             </div>
           </div> */}
 
+          {/* Wallet Connection for Mobile */}
+          <div className="mt-4 pt-4" style={{ borderTop: '1px solid var(--panel-border)' }}>
+            <WalletConnection />
+          </div>
+
           {/* User info and logout for mobile when logged in */}
           {isLoggedIn && user && (
             <div
@@ -750,6 +805,18 @@ export default function HeaderBar({
                   </div>
                 </div>
               </div>
+              <a
+                href="/credits"
+                className="block w-full px-4 py-2 mb-2 rounded text-sm font-medium text-center transition-colors"
+                style={{
+                  background: 'var(--panel-bg)',
+                  color: 'var(--brand-light-gray)',
+                  border: '1px solid var(--panel-border)',
+                }}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                💳 Manage Credits
+              </a>
               {onLogout && (
                 <button
                   onClick={() => {

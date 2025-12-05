@@ -9,6 +9,7 @@ import (
 	"net"
 	"net/http"
 	"nofx/auth"
+	"nofx/backtest"
 	"nofx/config"
 	"nofx/crypto"
 	"nofx/decision"
@@ -25,16 +26,17 @@ import (
 
 // Server HTTP API服务器
 type Server struct {
-	router        *gin.Engine
-	httpServer    *http.Server
-	traderManager *manager.TraderManager
-	database      *config.Database
-	cryptoHandler *CryptoHandler
-	port          int
+	router          *gin.Engine
+	httpServer      *http.Server
+	traderManager   *manager.TraderManager
+	database        *config.Database
+	cryptoHandler   *CryptoHandler
+	backtestManager *backtest.Manager
+	port            int
 }
 
 // NewServer 创建API服务器
-func NewServer(traderManager *manager.TraderManager, database *config.Database, cryptoService *crypto.CryptoService, port int) *Server {
+func NewServer(traderManager *manager.TraderManager, database *config.Database, cryptoService *crypto.CryptoService, backtestManager *backtest.Manager, port int) *Server {
 	// 设置为Release模式（减少日志输出）
 	gin.SetMode(gin.ReleaseMode)
 
@@ -47,11 +49,12 @@ func NewServer(traderManager *manager.TraderManager, database *config.Database, 
 	cryptoHandler := NewCryptoHandler(cryptoService)
 
 	s := &Server{
-		router:        router,
-		traderManager: traderManager,
-		database:      database,
-		cryptoHandler: cryptoHandler,
-		port:          port,
+		router:          router,
+		traderManager:   traderManager,
+		database:        database,
+		cryptoHandler:   cryptoHandler,
+		backtestManager: backtestManager,
+		port:            port,
 	}
 
 	// 设置路由
@@ -128,6 +131,9 @@ func (s *Server) setupRoutes() {
 		api.POST("/login", s.handleLogin)
 		api.POST("/verify-otp", s.handleVerifyOTP)
 		api.POST("/complete-registration", s.handleCompleteRegistration)
+
+		// 注册信用系统路由
+		s.RegisterCreditRoutes()
 
 		// 需要认证的路由
 		protected := api.Group("/", s.authMiddleware())

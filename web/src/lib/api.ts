@@ -12,6 +12,13 @@ import type {
   UpdateModelConfigRequest,
   UpdateExchangeConfigRequest,
   CompetitionData,
+  BacktestRunsResponse,
+  BacktestStartConfig,
+  BacktestStatusPayload,
+  BacktestEquityPoint,
+  BacktestTradeEvent,
+  BacktestMetrics,
+  BacktestRunMetadata,
 } from '../types'
 import { CryptoService } from './crypto'
 import { httpClient } from './httpClient'
@@ -119,6 +126,24 @@ export const api = {
   },
 
   // AI模型配置接口
+  async getPromptTemplates(): Promise<string[]> {
+    const res = await httpClient.get(`${API_BASE}/prompt-templates`, getAuthHeaders())
+    if (!res.ok) throw new Error('获取提示词模板失败')
+    const data = await res.json()
+    // Backend returns { templates: [{ name: "..." }, ...] }
+    if (Array.isArray(data.templates)) {
+      return data.templates.map((item: { name: string }) => item.name)
+    }
+    return []
+  },
+
+  async getPromptTemplate(name: string): Promise<string> {
+    const res = await httpClient.get(`${API_BASE}/prompt-templates/${name}`, getAuthHeaders())
+    if (!res.ok) throw new Error(`获取提示词模板失败: ${name}`)
+    const data = await res.json()
+    return data.content || ''
+  },
+
   async getModelConfigs(): Promise<AIModel[]> {
     const res = await httpClient.get(`${API_BASE}/models`, getAuthHeaders())
     if (!res.ok) throw new Error('获取模型配置失败')
@@ -465,5 +490,274 @@ export const api = {
     });
     if (!res.ok) throw new Error('Failed to fetch positions from Hyper-Alpha-Arena');
     return res.json();
+  },
+
+  // Backtest APIs
+  async getBacktestRuns(params?: {
+    state?: string
+    search?: string
+    limit?: number
+    offset?: number
+  }): Promise<BacktestRunsResponse> {
+    const query = new URLSearchParams()
+    if (params?.state) query.set('state', params.state)
+    if (params?.search) query.set('search', params.search)
+    if (params?.limit) query.set('limit', String(params.limit))
+    if (params?.offset) query.set('offset', String(params.offset))
+    const res = await httpClient.get(
+      `${API_BASE}/backtest/runs${query.toString() ? `?${query}` : ''}`,
+      getAuthHeaders()
+    )
+    if (!res.ok) throw new Error('获取回测列表失败')
+    return res.json()
+  },
+
+  async startBacktest(config: BacktestStartConfig): Promise<BacktestRunMetadata> {
+    const res = await httpClient.post(
+      `${API_BASE}/backtest/start`,
+      { config },
+      getAuthHeaders()
+    )
+    if (!res.ok) {
+      const text = await res.text()
+      throw new Error(text || '启动回测失败')
+    }
+    return res.json()
+  },
+
+  async pauseBacktest(runId: string): Promise<BacktestRunMetadata> {
+    const res = await httpClient.post(
+      `${API_BASE}/backtest/pause`,
+      { run_id: runId },
+      getAuthHeaders()
+    )
+    if (!res.ok) {
+      const text = await res.text()
+      throw new Error(text || '暂停回测失败')
+    }
+    return res.json()
+  },
+
+  async resumeBacktest(runId: string): Promise<BacktestRunMetadata> {
+    const res = await httpClient.post(
+      `${API_BASE}/backtest/resume`,
+      { run_id: runId },
+      getAuthHeaders()
+    )
+    if (!res.ok) {
+      const text = await res.text()
+      throw new Error(text || '恢复回测失败')
+    }
+    return res.json()
+  },
+
+  async stopBacktest(runId: string): Promise<BacktestRunMetadata> {
+    const res = await httpClient.post(
+      `${API_BASE}/backtest/stop`,
+      { run_id: runId },
+      getAuthHeaders()
+    )
+    if (!res.ok) {
+      const text = await res.text()
+      throw new Error(text || '停止回测失败')
+    }
+    return res.json()
+  },
+
+  async updateBacktestLabel(
+    runId: string,
+    label: string
+  ): Promise<BacktestRunMetadata> {
+    const res = await httpClient.post(
+      `${API_BASE}/backtest/label`,
+      { run_id: runId, label },
+      getAuthHeaders()
+    )
+    if (!res.ok) {
+      const text = await res.text()
+      throw new Error(text || '更新标签失败')
+    }
+    return res.json()
+  },
+
+  async deleteBacktestRun(runId: string): Promise<void> {
+    const res = await httpClient.post(
+      `${API_BASE}/backtest/delete`,
+      { run_id: runId },
+      getAuthHeaders()
+    )
+    if (!res.ok) {
+      const text = await res.text()
+      throw new Error(text || '删除回测失败')
+    }
+  },
+
+  async getBacktestStatus(runId: string): Promise<BacktestStatusPayload> {
+    const res = await httpClient.get(
+      `${API_BASE}/backtest/status?run_id=${runId}`,
+      getAuthHeaders()
+    )
+    if (!res.ok) throw new Error('获取回测状态失败')
+    return res.json()
+  },
+
+  async getBacktestEquity(
+    runId: string,
+    timeframe?: string,
+    limit?: number
+  ): Promise<BacktestEquityPoint[]> {
+    const query = new URLSearchParams({ run_id: runId })
+    if (timeframe) query.set('tf', timeframe)
+    if (limit) query.set('limit', String(limit))
+    const res = await httpClient.get(
+      `${API_BASE}/backtest/equity?${query}`,
+      getAuthHeaders()
+    )
+    if (!res.ok) throw new Error('获取回测权益曲线失败')
+    return res.json()
+  },
+
+  async getBacktestTrades(
+    runId: string,
+    limit = 200
+  ): Promise<BacktestTradeEvent[]> {
+    const query = new URLSearchParams({
+      run_id: runId,
+      limit: String(limit),
+    })
+    const res = await httpClient.get(
+      `${API_BASE}/backtest/trades?${query}`,
+      getAuthHeaders()
+    )
+    if (!res.ok) throw new Error('获取回测交易记录失败')
+    return res.json()
+  },
+
+  async getBacktestMetrics(runId: string): Promise<BacktestMetrics> {
+    const res = await httpClient.get(
+      `${API_BASE}/backtest/metrics?run_id=${runId}`,
+      getAuthHeaders()
+    )
+    if (!res.ok) throw new Error('获取回测指标失败')
+    return res.json()
+  },
+
+  async getBacktestTrace(
+    runId: string,
+    cycle?: number
+  ): Promise<DecisionRecord> {
+    const query = new URLSearchParams({ run_id: runId })
+    if (cycle) query.set('cycle', String(cycle))
+    const res = await httpClient.get(
+      `${API_BASE}/backtest/trace?${query}`,
+      getAuthHeaders()
+    )
+    if (!res.ok) throw new Error('获取回测AI Trace失败')
+    return res.json()
+  },
+
+  async getBacktestDecisions(
+    runId: string,
+    limit = 20,
+    offset = 0
+  ): Promise<DecisionRecord[]> {
+    const query = new URLSearchParams({
+      run_id: runId,
+      limit: String(limit),
+      offset: String(offset),
+    })
+    const res = await httpClient.get(
+      `${API_BASE}/backtest/decisions?${query}`,
+      getAuthHeaders()
+    )
+    if (!res.ok) throw new Error('获取回测决策记录失败')
+    return res.json()
+  },
+
+  async exportBacktest(runId: string): Promise<Blob> {
+    const res = await fetch(`${API_BASE}/backtest/export?run_id=${runId}`, {
+      headers: getAuthHeaders(),
+    })
+    if (!res.ok) {
+      const text = await res.text()
+      try {
+        const data = text ? JSON.parse(text) : null
+        throw new Error(
+          data?.error || data?.message || text || '导出失败，请稍后再试'
+        )
+      } catch (err) {
+        if (err instanceof Error && err.message) {
+          throw err
+        }
+        throw new Error(text || '导出失败，请稍后再试')
+      }
+    }
+    return res.blob()
+  },
+
+  // Credit system APIs
+  async getUserCredits(walletAddress: string): Promise<{
+    wallet_address: string
+    credits: number
+    updated_at: string
+  }> {
+    const res = await httpClient.get(
+      `${API_BASE}/credits/${walletAddress}`,
+      getAuthHeaders()
+    )
+    if (!res.ok) throw new Error('获取用户积分失败')
+    return res.json()
+  },
+
+  async deductCredits(
+    walletAddress: string,
+    amount: number,
+    operation: string
+  ): Promise<{ message: string; remaining_credits: number }> {
+    const res = await httpClient.post(
+      `${API_BASE}/credits/deduct`,
+      {
+        wallet_address: walletAddress,
+        amount,
+        operation,
+      },
+      getAuthHeaders()
+    )
+    if (!res.ok) throw new Error('扣除积分失败')
+    return res.json()
+  },
+
+  async purchaseCredits(
+    walletAddress: string,
+    credits: number,
+    txHash?: string
+  ): Promise<{ message: string; total_credits: number; tx_hash?: string }> {
+    const res = await httpClient.post(
+      `${API_BASE}/credits/purchase`,
+      {
+        wallet_address: walletAddress,
+        credits,
+        tx_hash: txHash,
+      },
+      getAuthHeaders()
+    )
+    if (!res.ok) throw new Error('购买积分失败')
+    return res.json()
+  },
+
+  async checkCredits(
+    walletAddress: string,
+    amount: number
+  ): Promise<{
+    has_enough: boolean
+    current_credits: number
+    required: number
+  }> {
+    const res = await httpClient.get(
+      `${API_BASE}/credits/check/${walletAddress}/${amount}`,
+      getAuthHeaders()
+    )
+    if (!res.ok) throw new Error('检查积分失败')
+    return res.json()
   },
 }

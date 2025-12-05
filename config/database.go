@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"encoding/base32"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"nofx/crypto"
@@ -193,6 +194,99 @@ func (d *Database) createTables() error {
 			used_at DATETIME DEFAULT NULL,
 			created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 		)`,
+
+		// 回测运行主表
+		`CREATE TABLE IF NOT EXISTS backtest_runs (
+			run_id TEXT PRIMARY KEY,
+			user_id TEXT NOT NULL DEFAULT 'default',
+			config_json TEXT NOT NULL DEFAULT '',
+			state TEXT NOT NULL DEFAULT 'created',
+			label TEXT DEFAULT '',
+			symbol_count INTEGER DEFAULT 0,
+			decision_tf TEXT DEFAULT '',
+			processed_bars INTEGER DEFAULT 0,
+			progress_pct REAL DEFAULT 0,
+			equity_last REAL DEFAULT 0,
+			max_drawdown_pct REAL DEFAULT 0,
+			liquidated BOOLEAN DEFAULT 0,
+			liquidation_note TEXT DEFAULT '',
+			prompt_template TEXT DEFAULT '',
+			custom_prompt TEXT DEFAULT '',
+			override_prompt BOOLEAN DEFAULT 0,
+			ai_provider TEXT DEFAULT '',
+			ai_model TEXT DEFAULT '',
+			last_error TEXT DEFAULT '',
+			created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+		)`,
+
+		// 回测检查点
+		`CREATE TABLE IF NOT EXISTS backtest_checkpoints (
+			run_id TEXT PRIMARY KEY,
+			payload BLOB NOT NULL,
+			updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			FOREIGN KEY (run_id) REFERENCES backtest_runs(run_id) ON DELETE CASCADE
+		)`,
+
+		// 回测权益曲线
+		`CREATE TABLE IF NOT EXISTS backtest_equity (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			run_id TEXT NOT NULL,
+			ts INTEGER NOT NULL,
+			equity REAL NOT NULL,
+			available REAL NOT NULL,
+			pnl REAL NOT NULL,
+			pnl_pct REAL NOT NULL,
+			dd_pct REAL NOT NULL,
+			cycle INTEGER NOT NULL,
+			FOREIGN KEY (run_id) REFERENCES backtest_runs(run_id) ON DELETE CASCADE
+		)`,
+
+		// 回测交易记录
+		`CREATE TABLE IF NOT EXISTS backtest_trades (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			run_id TEXT NOT NULL,
+			ts INTEGER NOT NULL,
+			symbol TEXT NOT NULL,
+			action TEXT NOT NULL,
+			side TEXT DEFAULT '',
+			qty REAL DEFAULT 0,
+			price REAL DEFAULT 0,
+			fee REAL DEFAULT 0,
+			slippage REAL DEFAULT 0,
+			order_value REAL DEFAULT 0,
+			realized_pnl REAL DEFAULT 0,
+			leverage INTEGER DEFAULT 0,
+			cycle INTEGER DEFAULT 0,
+			position_after REAL DEFAULT 0,
+			liquidation BOOLEAN DEFAULT 0,
+			note TEXT DEFAULT '',
+			FOREIGN KEY (run_id) REFERENCES backtest_runs(run_id) ON DELETE CASCADE
+		)`,
+
+		// 回测指标
+		`CREATE TABLE IF NOT EXISTS backtest_metrics (
+			run_id TEXT PRIMARY KEY,
+			payload BLOB NOT NULL,
+			updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			FOREIGN KEY (run_id) REFERENCES backtest_runs(run_id) ON DELETE CASCADE
+		)`,
+
+		// 回测决策日志
+		`CREATE TABLE IF NOT EXISTS backtest_decisions (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			run_id TEXT NOT NULL,
+			cycle INTEGER NOT NULL,
+			payload BLOB NOT NULL,
+			created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			FOREIGN KEY (run_id) REFERENCES backtest_runs(run_id) ON DELETE CASCADE
+		)`,
+
+		// 索引
+		`CREATE INDEX IF NOT EXISTS idx_backtest_runs_state ON backtest_runs(state, updated_at)`,
+		`CREATE INDEX IF NOT EXISTS idx_backtest_equity_run_ts ON backtest_equity(run_id, ts)`,
+		`CREATE INDEX IF NOT EXISTS idx_backtest_trades_run_ts ON backtest_trades(run_id, ts)`,
+		`CREATE INDEX IF NOT EXISTS idx_backtest_decisions_run_cycle ON backtest_decisions(run_id, cycle)`,
 
 		// 触发器：自动更新 updated_at
 		`CREATE TRIGGER IF NOT EXISTS update_users_updated_at
@@ -645,6 +739,91 @@ func (d *Database) GetAIModels(userID string) ([]*AIModelConfig, error) {
 	}
 
 	return models, nil
+}
+
+// GetAIModel 获取指定用户的指定AI模型配置（支持回退到default用户）。
+func (d *Database) GetAIModel(userID, modelID string) (*AIModelConfig, error) {
+	if modelID == "" {
+		return nil, fmt.Errorf("模型ID不能为空")
+	}
+
+	candidates := []string{}
+	if userID != "" {
+		candidates = append(candidates, userID)
+	}
+	if userID != "default" {
+		candidates = append(candidates, "default")
+	}
+	if len(candidates) == 0 {
+		candidates = append(candidates, "default")
+	}
+
+	for _, uid := range candidates {
+		var model AIModelConfig
+		var createdAt, updatedAt string
+		err := d.db.QueryRow(`
+			SELECT id, user_id, name, provider, enabled, api_key,
+			       COALESCE(custom_api_url, ''), COALESCE(custom_model_name, ''), created_at, updated_at
+			FROM ai_models
+			WHERE user_id = ? AND id = ?
+			LIMIT 1
+		`, uid, modelID).Scan(
+			&model.ID,
+			&model.UserID,
+			&model.Name,
+			&model.Provider,
+			&model.Enabled,
+			&model.APIKey,
+			&model.CustomAPIURL,
+			&model.CustomModelName,
+			&createdAt,
+			&updatedAt,
+		)
+		if err == nil {
+			// 解析时间字符串
+			model.CreatedAt, _ = time.Parse("2006-01-02 15:04:05", createdAt)
+			model.UpdatedAt, _ = time.Parse("2006-01-02 15:04:05", updatedAt)
+			// 解密API Key
+			model.APIKey = d.decryptSensitiveData(model.APIKey)
+			return &model, nil
+		}
+		if !errors.Is(err, sql.ErrNoRows) {
+			return nil, err
+		}
+	}
+
+	return nil, sql.ErrNoRows
+}
+
+// GetDefaultAIModel 获取指定用户（或默认用户）的首个启用的AI模型。
+func (d *Database) GetDefaultAIModel(userID string) (*AIModelConfig, error) {
+	if userID == "" {
+		userID = "default"
+	}
+	
+	// 先尝试从指定用户获取
+	models, err := d.GetAIModels(userID)
+	if err == nil {
+		for _, model := range models {
+			if model.Enabled {
+				return model, nil
+			}
+		}
+	}
+	
+	// 如果指定用户没有启用的模型，尝试从default用户获取
+	if userID != "default" {
+		models, err := d.GetAIModels("default")
+		if err == nil {
+			for _, model := range models {
+				if model.Enabled {
+					return model, nil
+				}
+			}
+		}
+	}
+	
+	return nil, fmt.Errorf("未找到可用的AI模型")
 }
 
 // UpdateAIModel 更新AI模型配置，如果不存在则创建用户特定配置
@@ -1127,6 +1306,11 @@ func (d *Database) GetCustomCoins() []string {
 	return symbols
 }
 
+// Conn 返回底层数据库连接（用于需要直接访问数据库的场景，如回测模块）
+func (d *Database) Conn() *sql.DB {
+	return d.db
+}
+
 // Close 关闭数据库连接
 func (d *Database) Close() error {
 	return d.db.Close()
@@ -1272,4 +1456,20 @@ func (d *Database) decryptSensitiveData(encrypted string) string {
 	}
 
 	return decrypted
+}
+
+// ExecRaw executes raw SQL query (for table creation, etc.)
+func (d *Database) ExecRaw(query string) error {
+	_, err := d.db.Exec(query)
+	return err
+}
+
+// QueryRowRaw executes a raw query and returns a row
+func (d *Database) QueryRowRaw(query string, args ...interface{}) *sql.Row {
+	return d.db.QueryRow(query, args...)
+}
+
+// ExecRawWithArgs executes raw SQL with arguments
+func (d *Database) ExecRawWithArgs(query string, args ...interface{}) (sql.Result, error) {
+	return d.db.Exec(query, args...)
 }
