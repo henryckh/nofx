@@ -319,8 +319,8 @@ export default function HeaderBar({
                 </a>
               ))}
 
-            {/* Wallet Connection - Always show */}
-            <WalletConnection />
+            {/* Wallet Connection - Only show when logged in */}
+            {isLoggedIn && <WalletConnection />}
 
             {/* User Info and Actions */}
             {isLoggedIn && user ? (
@@ -766,10 +766,12 @@ export default function HeaderBar({
             </div>
           </div> */}
 
-          {/* Wallet Connection for Mobile */}
-          <div className="mt-4 pt-4" style={{ borderTop: '1px solid var(--panel-border)' }}>
-            <WalletConnection />
-          </div>
+          {/* Wallet Connection for Mobile - Only show when logged in */}
+          {isLoggedIn && (
+            <div className="mt-4 pt-4" style={{ borderTop: '1px solid var(--panel-border)' }}>
+              <WalletConnection />
+            </div>
+          )}
 
           {/* User info and logout for mobile when logged in */}
           {isLoggedIn && user && (
