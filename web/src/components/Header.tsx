@@ -40,7 +40,7 @@ export function Header({ simple = false }: HeaderProps) {
               className="px-3 py-1.5 rounded text-xs font-semibold transition-all"
               style={
                 language === 'zh'
-                  ? { background: '#F0B90B', color: '#000' }
+                  ? { background: '#E781FD', color: '#000' }
                   : { background: 'transparent', color: '#848E9C' }
               }
             >
@@ -51,7 +51,7 @@ export function Header({ simple = false }: HeaderProps) {
               className="px-3 py-1.5 rounded text-xs font-semibold transition-all"
               style={
                 language === 'en'
-                  ? { background: '#F0B90B', color: '#000' }
+                  ? { background: '#E781FD', color: '#000' }
                   : { background: 'transparent', color: '#848E9C' }
               }
             >

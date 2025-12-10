@@ -42,7 +42,7 @@ const HAIR_COLORS = [
 ]
 
 const ACCESSORY_COLORS = [
-  '#F0B90B', '#0ECB81', '#F6465D', '#60a5fa', '#a855f7',
+  '#E781FD', '#0ECB81', '#F6465D', '#60a5fa', '#a855f7',
   '#ec4899', '#14b8a6', '#f97316', '#84cc16', '#06b6d4',
 ]
 
@@ -141,10 +141,10 @@ export function PunkAvatar({ seed, size = 40, className = '' }: PunkAvatarProps)
       case 7: // Crown
         return (
           <>
-            <rect x={7*px} y={4*px} width={10*px} height={1*px} fill="#F0B90B" />
-            <rect x={8*px} y={2*px} width={2*px} height={2*px} fill="#F0B90B" />
-            <rect x={11*px} y={1*px} width={2*px} height={3*px} fill="#F0B90B" />
-            <rect x={14*px} y={2*px} width={2*px} height={2*px} fill="#F0B90B" />
+            <rect x={7*px} y={4*px} width={10*px} height={1*px} fill="#E781FD" />
+            <rect x={8*px} y={2*px} width={2*px} height={2*px} fill="#E781FD" />
+            <rect x={11*px} y={1*px} width={2*px} height={3*px} fill="#E781FD" />
+            <rect x={14*px} y={2*px} width={2*px} height={2*px} fill="#E781FD" />
           </>
         )
       default:
@@ -269,7 +269,7 @@ export function PunkAvatar({ seed, size = 40, className = '' }: PunkAvatarProps)
 
     if (hasEarring) {
       elements.push(
-        <circle key="earring" cx={5*px} cy={12*px} r={px} fill="#F0B90B" />
+        <circle key="earring" cx={5*px} cy={12*px} r={px} fill="#E781FD" />
       )
     }
 

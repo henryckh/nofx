@@ -64,7 +64,7 @@ export default function FeaturesSection({ language }: FeaturesSectionProps) {
       <div
         className="absolute inset-0 opacity-[0.02]"
         style={{
-          backgroundImage: `linear-gradient(#F0B90B 1px, transparent 1px), linear-gradient(90deg, #F0B90B 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(#E781FD 1px, transparent 1px), linear-gradient(90deg, #E781FD 1px, transparent 1px)`,
           backgroundSize: '40px 40px',
         }}
       />
@@ -102,10 +102,10 @@ export default function FeaturesSection({ language }: FeaturesSectionProps) {
               `}
               style={{
                 background: feature.highlight
-                  ? 'linear-gradient(135deg, rgba(240, 185, 11, 0.08) 0%, rgba(240, 185, 11, 0.02) 100%)'
+                  ? 'linear-gradient(135deg, rgba(231, 129, 253, 0.08) 0%, rgba(231, 129, 253, 0.02) 100%)'
                   : '#12161C',
                 border: feature.highlight
-                  ? '1px solid rgba(240, 185, 11, 0.2)'
+                  ? '1px solid rgba(231, 129, 253, 0.2)'
                   : '1px solid rgba(255, 255, 255, 0.06)',
               }}
             >
@@ -114,8 +114,8 @@ export default function FeaturesSection({ language }: FeaturesSectionProps) {
                 <div
                   className="absolute top-4 right-4 px-2 py-1 rounded text-xs font-medium"
                   style={{
-                    background: 'rgba(240, 185, 11, 0.15)',
-                    color: '#F0B90B',
+                    background: 'rgba(231, 129, 253, 0.15)',
+                    color: '#E781FD',
                   }}
                 >
                   {feature.badge}
@@ -127,15 +127,15 @@ export default function FeaturesSection({ language }: FeaturesSectionProps) {
                 className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
                 style={{
                   background: feature.highlight
-                    ? 'rgba(240, 185, 11, 0.15)'
-                    : 'rgba(240, 185, 11, 0.1)',
-                  border: '1px solid rgba(240, 185, 11, 0.2)',
+                    ? 'rgba(231, 129, 253, 0.15)'
+                    : 'rgba(231, 129, 253, 0.1)',
+                  border: '1px solid rgba(231, 129, 253, 0.2)',
                 }}
                 whileHover={{ scale: 1.1, rotate: 5 }}
               >
                 <feature.icon
                   className="w-6 h-6"
-                  style={{ color: '#F0B90B' }}
+                  style={{ color: '#E781FD' }}
                 />
               </motion.div>
 
@@ -156,7 +156,7 @@ export default function FeaturesSection({ language }: FeaturesSectionProps) {
               {/* Hover Glow */}
               <div
                 className="absolute -bottom-10 -right-10 w-32 h-32 rounded-full blur-3xl opacity-0 group-hover:opacity-30 transition-opacity duration-500"
-                style={{ background: '#F0B90B' }}
+                style={{ background: '#E781FD' }}
               />
             </motion.div>
           ))}
@@ -186,7 +186,7 @@ export default function FeaturesSection({ language }: FeaturesSectionProps) {
               <div
                 className="text-2xl font-bold mb-1"
                 style={{
-                  background: 'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)',
+                  background: 'linear-gradient(135deg, #E781FD 0%, #FF89DF 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                 }}

@@ -60,7 +60,7 @@ export function CoinSourceEditor({
 
   const sourceTypes = [
     { value: 'static', icon: List, color: '#848E9C' },
-    { value: 'coinpool', icon: Database, color: '#F0B90B' },
+    { value: 'coinpool', icon: Database, color: '#E781FD' },
     { value: 'oi_top', icon: TrendingUp, color: '#0ECB81' },
     { value: 'mixed', icon: Database, color: '#60a5fa' },
   ] as const
@@ -110,7 +110,7 @@ export function CoinSourceEditor({
               style={{
                 background:
                   config.source_type === value
-                    ? 'rgba(240, 185, 11, 0.1)'
+                    ? 'rgba(231, 129, 253, 0.1)'
                     : '#0B0E11',
                 borderColor: '#2B3139',
               }}
@@ -170,7 +170,7 @@ export function CoinSourceEditor({
               <button
                 onClick={handleAddCoin}
                 className="px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
-                style={{ background: '#F0B90B', color: '#0B0E11' }}
+                style={{ background: '#E781FD', color: '#0B0E11' }}
               >
                 <Plus className="w-4 h-4" />
                 {t('addCoin')}
@@ -184,7 +184,7 @@ export function CoinSourceEditor({
       {(config.source_type === 'coinpool' || config.source_type === 'mixed') && (
         <div className="space-y-4">
           <div className="flex items-center gap-2 mb-2">
-            <Link className="w-4 h-4" style={{ color: '#F0B90B' }} />
+            <Link className="w-4 h-4" style={{ color: '#E781FD' }} />
             <span className="text-sm font-medium" style={{ color: '#EAECEF' }}>
               {t('dataSourceConfig')} - AI500
             </span>
@@ -242,7 +242,7 @@ export function CoinSourceEditor({
                     type="button"
                     onClick={() => onChange({ ...config, coin_pool_api_url: DEFAULT_COIN_POOL_API_URL })}
                     className="text-xs px-2 py-1 rounded"
-                    style={{ background: '#F0B90B20', color: '#F0B90B' }}
+                    style={{ background: '#E781FD20', color: '#E781FD' }}
                   >
                     {t('fillDefault')}
                   </button>
@@ -265,8 +265,8 @@ export function CoinSourceEditor({
               />
               {!config.coin_pool_api_url && (
                 <div className="flex items-center gap-2 mt-2">
-                  <AlertCircle className="w-4 h-4" style={{ color: '#F0B90B' }} />
-                  <span className="text-xs" style={{ color: '#F0B90B' }}>
+                  <AlertCircle className="w-4 h-4" style={{ color: '#E781FD' }} />
+                  <span className="text-xs" style={{ color: '#E781FD' }}>
                     {t('apiUrlRequired')}
                   </span>
                 </div>
@@ -361,8 +361,8 @@ export function CoinSourceEditor({
               />
               {!config.oi_top_api_url && (
                 <div className="flex items-center gap-2 mt-2">
-                  <AlertCircle className="w-4 h-4" style={{ color: '#F0B90B' }} />
-                  <span className="text-xs" style={{ color: '#F0B90B' }}>
+                  <AlertCircle className="w-4 h-4" style={{ color: '#E781FD' }} />
+                  <span className="text-xs" style={{ color: '#E781FD' }}>
                     {t('apiUrlRequired')}
                   </span>
                 </div>

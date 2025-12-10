@@ -8,6 +8,7 @@ import { TraderConfigViewModal } from './TraderConfigViewModal'
 import { getTraderColor } from '../utils/traderColors'
 import { useLanguage } from '../contexts/LanguageContext'
 import { t } from '../i18n/translations'
+import { AccountDataView } from './AccountDataView';
 import { PunkAvatar, getTraderAvatar } from './PunkAvatar'
 
 export function CompetitionPage() {
@@ -45,6 +46,7 @@ export function CompetitionPage() {
   if (!competition) {
     return (
       <div className="space-y-6">
+        <AccountDataView competition={competition} />
         <div className="binance-card p-8 animate-pulse">
           <div className="flex items-center justify-between mb-6">
             <div className="space-y-3 flex-1">
@@ -70,13 +72,14 @@ export function CompetitionPage() {
     return (
       <div className="space-y-5 animate-fade-in">
         {/* Competition Header - 精简版 */}
+        <AccountDataView competition={competition} />
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-0">
           <div className="flex items-center gap-3 md:gap-4">
             <div
               className="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center"
               style={{
-                background: 'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)',
-                boxShadow: '0 4px 14px rgba(240, 185, 11, 0.4)',
+                background: 'linear-gradient(135deg, #E781FD 0%, #FF89DF 100%)',
+                boxShadow: '0 4px 14px rgba(231, 129, 253, 0.4)',
               }}
             >
               <Trophy
@@ -93,8 +96,8 @@ export function CompetitionPage() {
                 <span
                   className="text-xs font-normal px-2 py-1 rounded"
                   style={{
-                    background: 'rgba(240, 185, 11, 0.15)',
-                    color: '#F0B90B',
+                    background: 'rgba(231, 129, 253, 0.15)',
+                    color: '#E781FD',
                   }}
                 >
                   0 {t('traders', language)}
@@ -135,13 +138,14 @@ export function CompetitionPage() {
   return (
     <div className="space-y-5 animate-fade-in">
       {/* Competition Header - 精简版 */}
+      <AccountDataView competition={competition} />
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-0">
         <div className="flex items-center gap-3 md:gap-4">
           <div
             className="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center"
             style={{
-              background: 'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)',
-              boxShadow: '0 4px 14px rgba(240, 185, 11, 0.4)',
+              background: 'linear-gradient(135deg, #E781FD 0%, #FF89DF 100%)',
+              boxShadow: '0 4px 14px rgba(231, 129, 253, 0.4)',
             }}
           >
             <Trophy
@@ -158,8 +162,8 @@ export function CompetitionPage() {
               <span
                 className="text-xs font-normal px-2 py-1 rounded"
                 style={{
-                  background: 'rgba(240, 185, 11, 0.15)',
-                  color: '#F0B90B',
+                  background: 'rgba(231, 129, 253, 0.15)',
+                  color: '#E781FD',
                 }}
               >
                 {competition.count} {t('traders', language)}
@@ -176,7 +180,7 @@ export function CompetitionPage() {
           </div>
           <div
             className="text-base md:text-lg font-bold"
-            style={{ color: '#F0B90B' }}
+            style={{ color: '#E781FD' }}
           >
             {leader?.trader_name}
           </div>
@@ -228,9 +232,9 @@ export function CompetitionPage() {
             <div
               className="text-xs px-2 py-1 rounded"
               style={{
-                background: 'rgba(240, 185, 11, 0.1)',
-                color: '#F0B90B',
-                border: '1px solid rgba(240, 185, 11, 0.2)',
+                background: 'rgba(231, 129, 253, 0.1)',
+                color: '#E781FD',
+                border: '1px solid rgba(231, 129, 253, 0.2)',
               }}
             >
               {t('live', language)}
@@ -251,11 +255,11 @@ export function CompetitionPage() {
                   className="rounded p-3 transition-all duration-300 hover:translate-y-[-1px] cursor-pointer hover:shadow-lg"
                   style={{
                     background: isLeader
-                      ? 'linear-gradient(135deg, rgba(240, 185, 11, 0.08) 0%, #0B0E11 100%)'
+                      ? 'linear-gradient(135deg, rgba(231, 129, 253, 0.08) 0%, #0B0E11 100%)'
                       : '#0B0E11',
-                    border: `1px solid ${isLeader ? 'rgba(240, 185, 11, 0.4)' : '#2B3139'}`,
+                    border: `1px solid ${isLeader ? 'rgba(231, 129, 253, 0.4)' : '#2B3139'}`,
                     boxShadow: isLeader
-                      ? '0 3px 15px rgba(240, 185, 11, 0.12), 0 0 0 1px rgba(240, 185, 11, 0.15)'
+                      ? '0 3px 15px rgba(231, 129, 253, 0.12), 0 0 0 1px rgba(231, 129, 253, 0.15)'
                       : '0 1px 4px rgba(0, 0, 0, 0.3)',
                   }}
                 >
@@ -267,11 +271,11 @@ export function CompetitionPage() {
                         className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
                         style={{
                           background: index === 0
-                            ? 'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)'
+                            ? 'linear-gradient(135deg, #E781FD 0%, #FF89DF 100%)'
                             : index === 1
                               ? 'linear-gradient(135deg, #C0C0C0 0%, #E8E8E8 100%)'
                               : index === 2
-                                ? 'linear-gradient(135deg, #CD7F32 0%, #E8A64C 100%)'
+                                ? 'linear-gradient(135deg, #DB58F9 0%, #E681FC 100%)'
                                 : '#2B3139',
                           color: index < 3 ? '#000' : '#848E9C',
                         }}

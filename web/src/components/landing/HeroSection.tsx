@@ -25,7 +25,7 @@ export default function HeroSection({ language }: HeroSectionProps) {
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
-            backgroundImage: `linear-gradient(#F0B90B 1px, transparent 1px), linear-gradient(90deg, #F0B90B 1px, transparent 1px)`,
+            backgroundImage: `linear-gradient(#E781FD 1px, transparent 1px), linear-gradient(90deg, #E781FD 1px, transparent 1px)`,
             backgroundSize: '60px 60px',
           }}
         />
@@ -33,13 +33,13 @@ export default function HeroSection({ language }: HeroSectionProps) {
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(240, 185, 11, 0.08) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(231, 129, 253, 0.08) 0%, transparent 70%)',
           }}
         />
         {/* Floating Orbs */}
         <motion.div
           className="absolute top-20 right-20 w-32 h-32 rounded-full blur-3xl"
-          style={{ background: 'rgba(240, 185, 11, 0.15)' }}
+          style={{ background: 'rgba(231, 129, 253, 0.15)' }}
           animate={{
             y: [0, 30, 0],
             scale: [1, 1.1, 1],
@@ -48,7 +48,7 @@ export default function HeroSection({ language }: HeroSectionProps) {
         />
         <motion.div
           className="absolute bottom-40 left-20 w-48 h-48 rounded-full blur-3xl"
-          style={{ background: 'rgba(240, 185, 11, 0.1)' }}
+          style={{ background: 'rgba(231, 129, 253, 0.1)' }}
           animate={{
             y: [0, -40, 0],
             scale: [1, 1.2, 1],
@@ -65,12 +65,12 @@ export default function HeroSection({ language }: HeroSectionProps) {
           transition={{ duration: 0.6 }}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8"
           style={{
-            background: 'rgba(240, 185, 11, 0.1)',
-            border: '1px solid rgba(240, 185, 11, 0.3)',
+            background: 'rgba(231, 129, 253, 0.1)',
+            border: '1px solid rgba(231, 129, 253, 0.3)',
           }}
         >
-          <Zap className="w-4 h-4" style={{ color: '#F0B90B' }} />
-          <span className="text-sm font-medium" style={{ color: '#F0B90B' }}>
+          <Zap className="w-4 h-4" style={{ color: '#E781FD' }} />
+          <span className="text-sm font-medium" style={{ color: '#E781FD' }}>
             {isLoading ? (
               t('githubStarsInDays', language)
             ) : language === 'zh' ? (
@@ -104,7 +104,7 @@ export default function HeroSection({ language }: HeroSectionProps) {
           <span
             className="relative inline-block"
             style={{
-              background: 'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)',
+              background: 'linear-gradient(135deg, #E781FD 0%, #FF89DF 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
             }}
@@ -112,7 +112,7 @@ export default function HeroSection({ language }: HeroSectionProps) {
             {t('heroTitle2', language)}
             <motion.span
               className="absolute -bottom-2 left-0 h-1 rounded-full"
-              style={{ background: 'linear-gradient(90deg, #F0B90B, #FCD535)' }}
+              style={{ background: 'linear-gradient(90deg, #E781FD, #FF89DF)' }}
               initial={{ width: 0 }}
               animate={{ width: '100%' }}
               transition={{ duration: 0.8, delay: 0.8 }}
@@ -142,13 +142,13 @@ export default function HeroSection({ language }: HeroSectionProps) {
             href="/competition"
             className="group flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-lg transition-all"
             style={{
-              background: 'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)',
+              background: 'linear-gradient(135deg, #E781FD 0%, #FF89DF 100%)',
               color: '#0B0E11',
-              boxShadow: '0 4px 24px rgba(240, 185, 11, 0.3)',
+              boxShadow: '0 4px 24px rgba(231, 129, 253, 0.3)',
             }}
             whileHover={{
               scale: 1.02,
-              boxShadow: '0 8px 32px rgba(240, 185, 11, 0.4)',
+              boxShadow: '0 8px 32px rgba(231, 129, 253, 0.4)',
             }}
             whileTap={{ scale: 0.98 }}
           >
@@ -170,7 +170,7 @@ export default function HeroSection({ language }: HeroSectionProps) {
             whileHover={{
               scale: 1.02,
               background: 'rgba(255, 255, 255, 0.08)',
-              borderColor: 'rgba(240, 185, 11, 0.3)',
+              borderColor: 'rgba(231, 129, 253, 0.3)',
             }}
             whileTap={{ scale: 0.98 }}
           >
@@ -202,7 +202,7 @@ export default function HeroSection({ language }: HeroSectionProps) {
               <div
                 className="text-3xl sm:text-4xl font-bold mb-1"
                 style={{
-                  background: 'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)',
+                  background: 'linear-gradient(135deg, #E781FD 0%, #FF89DF 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                 }}
@@ -237,13 +237,13 @@ export default function HeroSection({ language }: HeroSectionProps) {
       >
         <motion.div
           className="w-6 h-10 rounded-full flex justify-center pt-2"
-          style={{ border: '2px solid rgba(240, 185, 11, 0.3)' }}
+          style={{ border: '2px solid rgba(231, 129, 253, 0.3)' }}
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
           <motion.div
             className="w-1.5 h-3 rounded-full"
-            style={{ background: '#F0B90B' }}
+            style={{ background: '#E781FD' }}
           />
         </motion.div>
       </motion.div>

@@ -42,7 +42,7 @@ export default function HowItWorksSection({ language }: HowItWorksSectionProps) 
       {/* Background Decoration */}
       <div
         className="absolute left-0 top-1/2 -translate-y-1/2 w-96 h-96 rounded-full blur-3xl opacity-20"
-        style={{ background: 'radial-gradient(circle, rgba(240, 185, 11, 0.15) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(231, 129, 253, 0.15) 0%, transparent 70%)' }}
       />
 
       <div className="max-w-6xl mx-auto px-4 relative z-10">
@@ -66,7 +66,7 @@ export default function HowItWorksSection({ language }: HowItWorksSectionProps) 
           {/* Connecting Line */}
           <div
             className="absolute left-[39px] top-0 bottom-0 w-px hidden lg:block"
-            style={{ background: 'linear-gradient(to bottom, transparent, rgba(240, 185, 11, 0.3), transparent)' }}
+            style={{ background: 'linear-gradient(to bottom, transparent, rgba(231, 129, 253, 0.3), transparent)' }}
           />
 
           <div className="space-y-6">
@@ -91,12 +91,12 @@ export default function HowItWorksSection({ language }: HowItWorksSectionProps) 
                     <motion.div
                       className="w-20 h-20 rounded-2xl flex items-center justify-center"
                       style={{
-                        background: 'linear-gradient(135deg, rgba(240, 185, 11, 0.2) 0%, rgba(240, 185, 11, 0.05) 100%)',
-                        border: '1px solid rgba(240, 185, 11, 0.3)',
+                        background: 'linear-gradient(135deg, rgba(231, 129, 253, 0.2) 0%, rgba(231, 129, 253, 0.05) 100%)',
+                        border: '1px solid rgba(231, 129, 253, 0.3)',
                       }}
                       whileHover={{ scale: 1.1 }}
                     >
-                      <step.icon className="w-8 h-8" style={{ color: '#F0B90B' }} />
+                      <step.icon className="w-8 h-8" style={{ color: '#E781FD' }} />
                     </motion.div>
                   </div>
 
@@ -105,7 +105,7 @@ export default function HowItWorksSection({ language }: HowItWorksSectionProps) 
                     <div className="flex items-center gap-3 mb-2">
                       <span
                         className="text-sm font-mono font-bold"
-                        style={{ color: '#F0B90B' }}
+                        style={{ color: '#E781FD' }}
                       >
                         {step.number}
                       </span>
@@ -139,8 +139,8 @@ export default function HowItWorksSection({ language }: HowItWorksSectionProps) 
         <motion.div
           className="mt-12 p-6 rounded-2xl flex items-start gap-4"
           style={{
-            background: 'rgba(240, 185, 11, 0.05)',
-            border: '1px solid rgba(240, 185, 11, 0.15)',
+            background: 'rgba(231, 129, 253, 0.05)',
+            border: '1px solid rgba(231, 129, 253, 0.15)',
           }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -148,12 +148,12 @@ export default function HowItWorksSection({ language }: HowItWorksSectionProps) 
         >
           <div
             className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-            style={{ background: 'rgba(240, 185, 11, 0.1)' }}
+            style={{ background: 'rgba(231, 129, 253, 0.1)' }}
           >
-            <AlertTriangle className="w-6 h-6" style={{ color: '#F0B90B' }} />
+            <AlertTriangle className="w-6 h-6" style={{ color: '#E781FD' }} />
           </div>
           <div>
-            <div className="font-semibold mb-2" style={{ color: '#F0B90B' }}>
+            <div className="font-semibold mb-2" style={{ color: '#E781FD' }}>
               {t('importantRiskWarning', language)}
             </div>
             <p className="text-sm leading-relaxed" style={{ color: '#5E6673' }}>

@@ -51,7 +51,7 @@ export function RiskControlEditor({
       {/* Position Limits */}
       <div>
         <div className="flex items-center gap-2 mb-4">
-          <Shield className="w-5 h-5" style={{ color: '#F0B90B' }} />
+          <Shield className="w-5 h-5" style={{ color: '#E781FD' }} />
           <h3 className="font-medium" style={{ color: '#EAECEF' }}>
             {t('positionLimits')}
           </h3>
@@ -107,7 +107,7 @@ export function RiskControlEditor({
               />
               <span
                 className="w-12 text-center font-mono"
-                style={{ color: '#F0B90B' }}
+                style={{ color: '#E781FD' }}
               >
                 {config.btc_eth_max_leverage}x
               </span>
@@ -135,7 +135,7 @@ export function RiskControlEditor({
               />
               <span
                 className="w-12 text-center font-mono"
-                style={{ color: '#F0B90B' }}
+                style={{ color: '#E781FD' }}
               >
                 {config.altcoin_max_leverage}x
               </span>

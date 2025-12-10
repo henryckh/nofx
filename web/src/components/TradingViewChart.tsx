@@ -178,7 +178,7 @@ function TradingViewChartComponent({
       >
         {!embedded && (
           <div className="flex items-center gap-2">
-            <TrendingUp className="w-5 h-5" style={{ color: '#F0B90B' }} />
+            <TrendingUp className="w-5 h-5" style={{ color: '#E781FD' }} />
             <h3
               className="text-base sm:text-lg font-bold"
               style={{ color: '#EAECEF' }}
@@ -225,10 +225,10 @@ function TradingViewChartComponent({
                     }}
                     className="w-full px-4 py-2 text-left text-sm transition-all hover:bg-opacity-50"
                     style={{
-                      color: exchange === ex.id ? '#F0B90B' : '#EAECEF',
+                      color: exchange === ex.id ? '#E781FD' : '#EAECEF',
                       background:
                         exchange === ex.id
-                          ? 'rgba(240, 185, 11, 0.1)'
+                          ? 'rgba(231, 129, 253, 0.1)'
                           : 'transparent',
                     }}
                   >
@@ -248,9 +248,9 @@ function TradingViewChartComponent({
               }}
               className="flex items-center gap-1 px-3 py-1.5 rounded text-sm font-bold transition-all"
               style={{
-                background: 'rgba(240, 185, 11, 0.1)',
-                border: '1px solid rgba(240, 185, 11, 0.3)',
-                color: '#F0B90B',
+                background: 'rgba(231, 129, 253, 0.1)',
+                border: '1px solid rgba(231, 129, 253, 0.3)',
+                color: '#E781FD',
               }}
             >
               {symbol}
@@ -285,7 +285,7 @@ function TradingViewChartComponent({
                       onClick={handleCustomSymbolSubmit}
                       className="px-3 py-1.5 rounded text-sm font-medium"
                       style={{
-                        background: '#F0B90B',
+                        background: '#E781FD',
                         color: '#0B0E11',
                       }}
                     >
@@ -312,10 +312,10 @@ function TradingViewChartComponent({
                         }}
                         className="px-2 py-1.5 rounded text-xs font-medium transition-all"
                         style={{
-                          color: symbol === sym ? '#F0B90B' : '#EAECEF',
+                          color: symbol === sym ? '#E781FD' : '#EAECEF',
                           background:
                             symbol === sym
-                              ? 'rgba(240, 185, 11, 0.1)'
+                              ? 'rgba(231, 129, 253, 0.1)'
                               : 'rgba(43, 49, 57, 0.3)',
                         }}
                       >
@@ -339,7 +339,7 @@ function TradingViewChartComponent({
                 onClick={() => setTimeInterval(int.id)}
                 className="px-2 py-1 rounded text-xs font-medium transition-all"
                 style={{
-                  background: timeInterval === int.id ? '#F0B90B' : 'transparent',
+                  background: timeInterval === int.id ? '#E781FD' : 'transparent',
                   color: timeInterval === int.id ? '#0B0E11' : '#848E9C',
                 }}
               >
@@ -353,7 +353,7 @@ function TradingViewChartComponent({
             onClick={() => setIsFullscreen(!isFullscreen)}
             className="p-1.5 rounded transition-all"
             style={{
-              background: isFullscreen ? '#F0B90B' : 'transparent',
+              background: isFullscreen ? '#E781FD' : 'transparent',
               color: isFullscreen ? '#0B0E11' : '#848E9C',
               border: '1px solid #2B3139',
             }}

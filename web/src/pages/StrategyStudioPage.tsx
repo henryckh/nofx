@@ -483,7 +483,7 @@ export function StrategyStudioPage() {
     {
       key: 'coinSource' as const,
       icon: Target,
-      color: '#F0B90B',
+      color: '#E781FD',
       title: t('coinSource'),
       content: editingConfig && (
         <CoinSourceEditor
@@ -565,7 +565,7 @@ export function StrategyStudioPage() {
       <div className="flex-shrink-0 px-4 py-3 border-b" style={{ borderColor: '#2B3139' }}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg" style={{ background: 'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)' }}>
+            <div className="p-2 rounded-lg" style={{ background: 'linear-gradient(135deg, #E781FD 0%, #FF89DF 100%)' }}>
               <Sparkles className="w-5 h-5 text-black" />
             </div>
             <div>
@@ -603,7 +603,7 @@ export function StrategyStudioPage() {
                 <button
                   onClick={handleCreateStrategy}
                   className="p-1 rounded hover:bg-white/10 transition-colors"
-                  style={{ color: '#F0B90B' }}
+                  style={{ color: '#E781FD' }}
                   title={language === 'zh' ? '新建策略' : 'New Strategy'}
                 >
                   <Plus className="w-4 h-4" />
@@ -625,7 +625,7 @@ export function StrategyStudioPage() {
                     selectedStrategy?.id === strategy.id ? 'ring-1 ring-yellow-500/50' : 'hover:bg-white/5'
                   }`}
                   style={{
-                    background: selectedStrategy?.id === strategy.id ? 'rgba(240, 185, 11, 0.1)' : 'transparent',
+                    background: selectedStrategy?.id === strategy.id ? 'rgba(231, 129, 253, 0.1)' : 'transparent',
                   }}
                 >
                   <div className="flex items-center justify-between">
@@ -665,7 +665,7 @@ export function StrategyStudioPage() {
                       </span>
                     )}
                     {strategy.is_default && (
-                      <span className="px-1.5 py-0.5 text-[10px] rounded" style={{ background: 'rgba(240, 185, 11, 0.15)', color: '#F0B90B' }}>
+                      <span className="px-1.5 py-0.5 text-[10px] rounded" style={{ background: 'rgba(231, 129, 253, 0.15)', color: '#E781FD' }}>
                         {t('default')}
                       </span>
                     )}
@@ -695,7 +695,7 @@ export function StrategyStudioPage() {
                     style={{ color: '#EAECEF' }}
                   />
                   {hasChanges && (
-                    <span className="text-xs" style={{ color: '#F0B90B' }}>● 未保存</span>
+                    <span className="text-xs" style={{ color: '#E781FD' }}>● 未保存</span>
                   )}
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
@@ -715,7 +715,7 @@ export function StrategyStudioPage() {
                       disabled={isSaving || !hasChanges}
                       className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors disabled:opacity-50"
                       style={{
-                        background: hasChanges ? '#F0B90B' : '#2B3139',
+                        background: hasChanges ? '#E781FD' : '#2B3139',
                         color: hasChanges ? '#0B0E11' : '#848E9C',
                       }}
                     >
@@ -976,12 +976,12 @@ export function StrategyStudioPage() {
                         {aiTestResult.reasoning && (
                           <div>
                             <div className="flex items-center gap-1.5 mb-1.5">
-                              <Sparkles className="w-3 h-3" style={{ color: '#F0B90B' }} />
+                              <Sparkles className="w-3 h-3" style={{ color: '#E781FD' }} />
                               <span className="text-xs font-medium" style={{ color: '#EAECEF' }}>{t('reasoning')}</span>
                             </div>
                             <pre
                               className="p-2 rounded-lg text-[10px] font-mono overflow-auto whitespace-pre-wrap"
-                              style={{ background: '#0B0E11', border: '1px solid rgba(240, 185, 11, 0.3)', color: '#EAECEF', maxHeight: '200px' }}
+                              style={{ background: '#0B0E11', border: '1px solid rgba(231, 129, 253, 0.3)', color: '#EAECEF', maxHeight: '200px' }}
                             >
                               {aiTestResult.reasoning}
                             </pre>

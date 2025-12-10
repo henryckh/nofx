@@ -282,9 +282,9 @@ export function EquityChart({ traderId, embedded = false }: EquityChartProps) {
             style={
               displayMode === 'dollar'
                 ? {
-                    background: '#F0B90B',
+                    background: '#E781FD',
                     color: '#000',
-                    boxShadow: '0 2px 8px rgba(240, 185, 11, 0.4)',
+                    boxShadow: '0 2px 8px rgba(231, 129, 253, 0.4)',
                   }
                 : { background: 'transparent', color: '#848E9C' }
             }
@@ -297,9 +297,9 @@ export function EquityChart({ traderId, embedded = false }: EquityChartProps) {
             style={
               displayMode === 'percent'
                 ? {
-                    background: '#F0B90B',
+                    background: '#E781FD',
                     color: '#000',
-                    boxShadow: '0 2px 8px rgba(240, 185, 11, 0.4)',
+                    boxShadow: '0 2px 8px rgba(231, 129, 253, 0.4)',
                   }
                 : { background: 'transparent', color: '#848E9C' }
             }
@@ -326,7 +326,7 @@ export function EquityChart({ traderId, embedded = false }: EquityChartProps) {
             right: '15px',
             fontSize: '20px',
             fontWeight: 'bold',
-            color: 'rgba(240, 185, 11, 0.15)',
+            color: 'rgba(231, 129, 253, 0.15)',
             zIndex: 10,
             pointerEvents: 'none',
             fontFamily: 'monospace',
@@ -341,8 +341,8 @@ export function EquityChart({ traderId, embedded = false }: EquityChartProps) {
           >
             <defs>
               <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#F0B90B" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#FCD535" stopOpacity={0.2} />
+                <stop offset="5%" stopColor="#E781FD" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#FF89DF" stopOpacity={0.2} />
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="#2B3139" />
@@ -384,11 +384,11 @@ export function EquityChart({ traderId, embedded = false }: EquityChartProps) {
               dataKey="value"
               stroke="url(#colorGradient)"
               strokeWidth={3}
-              dot={chartData.length > 50 ? false : { fill: '#F0B90B', r: 3 }}
+              dot={chartData.length > 50 ? false : { fill: '#E781FD', r: 3 }}
               activeDot={{
                 r: 6,
-                fill: '#FCD535',
-                stroke: '#F0B90B',
+                fill: '#FF89DF',
+                stroke: '#E781FD',
                 strokeWidth: 2,
               }}
               connectNulls={true}
@@ -404,7 +404,7 @@ export function EquityChart({ traderId, embedded = false }: EquityChartProps) {
       >
         <div
           className="p-2 rounded transition-all hover:bg-opacity-50"
-          style={{ background: 'rgba(240, 185, 11, 0.05)' }}
+          style={{ background: 'rgba(231, 129, 253, 0.05)' }}
         >
           <div
             className="text-xs mb-1 uppercase tracking-wider"
@@ -421,7 +421,7 @@ export function EquityChart({ traderId, embedded = false }: EquityChartProps) {
         </div>
         <div
           className="p-2 rounded transition-all hover:bg-opacity-50"
-          style={{ background: 'rgba(240, 185, 11, 0.05)' }}
+          style={{ background: 'rgba(231, 129, 253, 0.05)' }}
         >
           <div
             className="text-xs mb-1 uppercase tracking-wider"
@@ -438,7 +438,7 @@ export function EquityChart({ traderId, embedded = false }: EquityChartProps) {
         </div>
         <div
           className="p-2 rounded transition-all hover:bg-opacity-50"
-          style={{ background: 'rgba(240, 185, 11, 0.05)' }}
+          style={{ background: 'rgba(231, 129, 253, 0.05)' }}
         >
           <div
             className="text-xs mb-1 uppercase tracking-wider"
@@ -455,7 +455,7 @@ export function EquityChart({ traderId, embedded = false }: EquityChartProps) {
         </div>
         <div
           className="p-2 rounded transition-all hover:bg-opacity-50"
-          style={{ background: 'rgba(240, 185, 11, 0.05)' }}
+          style={{ background: 'rgba(231, 129, 253, 0.05)' }}
         >
           <div
             className="text-xs mb-1 uppercase tracking-wider"

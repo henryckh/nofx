@@ -138,7 +138,7 @@ export function IndicatorEditor({
 
   const categoryColors: Record<string, string> = {
     scalp: '#F6465D',
-    intraday: '#F0B90B',
+    intraday: '#E781FD',
     swing: '#0ECB81',
     position: '#60a5fa',
   }
@@ -160,22 +160,22 @@ export function IndicatorEditor({
       {/* Section 1: Market Data (Required) */}
       <div className="rounded-lg overflow-hidden" style={{ background: '#0B0E11', border: '1px solid #2B3139' }}>
         <div className="px-3 py-2 flex items-center gap-2" style={{ background: '#1E2329', borderBottom: '1px solid #2B3139' }}>
-          <BarChart2 className="w-4 h-4" style={{ color: '#F0B90B' }} />
+          <BarChart2 className="w-4 h-4" style={{ color: '#E781FD' }} />
           <span className="text-sm font-medium" style={{ color: '#EAECEF' }}>{t('marketData')}</span>
           <span className="text-xs" style={{ color: '#848E9C' }}>- {t('marketDataDesc')}</span>
         </div>
 
         <div className="p-3 space-y-4">
           {/* Raw Klines - Required, Always On */}
-          <div className="flex items-center justify-between p-3 rounded-lg" style={{ background: 'rgba(240, 185, 11, 0.08)', border: '1px solid rgba(240, 185, 11, 0.2)' }}>
+          <div className="flex items-center justify-between p-3 rounded-lg" style={{ background: 'rgba(231, 129, 253, 0.08)', border: '1px solid rgba(231, 129, 253, 0.2)' }}>
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'rgba(240, 185, 11, 0.15)' }}>
-                <TrendingUp className="w-4 h-4" style={{ color: '#F0B90B' }} />
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'rgba(231, 129, 253, 0.15)' }}>
+                <TrendingUp className="w-4 h-4" style={{ color: '#E781FD' }} />
               </div>
               <div>
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-medium" style={{ color: '#EAECEF' }}>{t('rawKlines')}</span>
-                  <span className="px-1.5 py-0.5 rounded text-[10px] font-medium flex items-center gap-1" style={{ background: 'rgba(240, 185, 11, 0.2)', color: '#F0B90B' }}>
+                  <span className="px-1.5 py-0.5 rounded text-[10px] font-medium flex items-center gap-1" style={{ background: 'rgba(231, 129, 253, 0.2)', color: '#E781FD' }}>
                     <Lock className="w-2.5 h-2.5" />
                     {t('required')}
                   </span>
@@ -282,7 +282,7 @@ export function IndicatorEditor({
           {/* Indicator Grid */}
           <div className="grid grid-cols-2 gap-2">
             {[
-              { key: 'enable_ema', label: 'ema', desc: 'emaDesc', color: '#F0B90B', periodKey: 'ema_periods', defaultPeriods: '20,50' },
+              { key: 'enable_ema', label: 'ema', desc: 'emaDesc', color: '#E781FD', periodKey: 'ema_periods', defaultPeriods: '20,50' },
               { key: 'enable_macd', label: 'macd', desc: 'macdDesc', color: '#a855f7' },
               { key: 'enable_rsi', label: 'rsi', desc: 'rsiDesc', color: '#F6465D', periodKey: 'rsi_periods', defaultPeriods: '7,14' },
               { key: 'enable_atr', label: 'atr', desc: 'atrDesc', color: '#60a5fa', periodKey: 'atr_periods', defaultPeriods: '14' },

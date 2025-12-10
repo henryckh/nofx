@@ -90,7 +90,7 @@ export default function FooterSection({ language }: FooterSectionProps) {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm transition-colors hover:text-[#F0B90B]"
+                    className="text-sm transition-colors hover:text-[#E781FD]"
                     style={{ color: '#5E6673' }}
                   >
                     {link.name}
@@ -112,7 +112,7 @@ export default function FooterSection({ language }: FooterSectionProps) {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm transition-colors hover:text-[#F0B90B] inline-flex items-center gap-1"
+                    className="text-sm transition-colors hover:text-[#E781FD] inline-flex items-center gap-1"
                     style={{ color: '#5E6673' }}
                   >
                     {link.name}
@@ -135,7 +135,7 @@ export default function FooterSection({ language }: FooterSectionProps) {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm transition-colors hover:text-[#F0B90B] inline-flex items-center gap-2"
+                    className="text-sm transition-colors hover:text-[#E781FD] inline-flex items-center gap-2"
                     style={{ color: '#5E6673' }}
                   >
                     {link.name}
@@ -143,8 +143,8 @@ export default function FooterSection({ language }: FooterSectionProps) {
                       <span
                         className="text-xs px-1.5 py-0.5 rounded"
                         style={{
-                          background: 'rgba(240, 185, 11, 0.1)',
-                          color: '#F0B90B',
+                          background: 'rgba(231, 129, 253, 0.1)',
+                          color: '#E781FD',
                         }}
                       >
                         {link.badge}

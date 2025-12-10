@@ -65,8 +65,8 @@ export function FAQLayout({ language }: FAQLayoutProps) {
           <div
             className="w-16 h-16 rounded-full flex items-center justify-center"
             style={{
-              background: 'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)',
-              boxShadow: '0 8px 24px rgba(240, 185, 11, 0.4)',
+              background: 'linear-gradient(135deg, #E781FD 0%, #FF89DF 100%)',
+              boxShadow: '0 8px 24px rgba(231, 129, 253, 0.4)',
             }}
           >
             <HelpCircle className="w-8 h-8" style={{ color: '#0B0E11' }} />
@@ -123,7 +123,7 @@ export function FAQLayout({ language }: FAQLayoutProps) {
                 className="mt-4 px-6 py-2 rounded-lg font-semibold transition-all hover:opacity-90"
                 style={{
                   background:
-                    'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)',
+                    'linear-gradient(135deg, #E781FD 0%, #FF89DF 100%)',
                   color: '#0B0E11',
                 }}
               >
@@ -139,8 +139,8 @@ export function FAQLayout({ language }: FAQLayoutProps) {
         className="mt-16 p-8 rounded-lg text-center"
         style={{
           background:
-            'linear-gradient(135deg, rgba(240, 185, 11, 0.1) 0%, rgba(252, 213, 53, 0.05) 100%)',
-          border: '1px solid rgba(240, 185, 11, 0.2)',
+            'linear-gradient(135deg, rgba(231, 129, 253, 0.1) 0%, rgba(255, 137, 223, 0.05) 100%)',
+          border: '1px solid rgba(231, 129, 253, 0.2)',
         }}
       >
         <h3 className="text-xl font-bold mb-3" style={{ color: '#EAECEF' }}>
@@ -169,7 +169,7 @@ export function FAQLayout({ language }: FAQLayoutProps) {
             rel="noopener noreferrer"
             className="px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
             style={{
-              background: 'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)',
+              background: 'linear-gradient(135deg, #E781FD 0%, #FF89DF 100%)',
               color: '#0B0E11',
             }}
           >

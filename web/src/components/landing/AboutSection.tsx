@@ -30,7 +30,7 @@ export default function AboutSection({ language }: AboutSectionProps) {
       {/* Background Decoration */}
       <div
         className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl opacity-30"
-        style={{ background: 'radial-gradient(circle, rgba(240, 185, 11, 0.1) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(231, 129, 253, 0.1) 0%, transparent 70%)' }}
       />
 
       <div className="max-w-6xl mx-auto px-4">
@@ -45,12 +45,12 @@ export default function AboutSection({ language }: AboutSectionProps) {
             <motion.div
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6"
               style={{
-                background: 'rgba(240, 185, 11, 0.1)',
-                border: '1px solid rgba(240, 185, 11, 0.2)',
+                background: 'rgba(231, 129, 253, 0.1)',
+                border: '1px solid rgba(231, 129, 253, 0.2)',
               }}
             >
-              <Terminal className="w-4 h-4" style={{ color: '#F0B90B' }} />
-              <span className="text-xs font-medium" style={{ color: '#F0B90B' }}>
+              <Terminal className="w-4 h-4" style={{ color: '#E781FD' }} />
+              <span className="text-xs font-medium" style={{ color: '#E781FD' }}>
                 {t('aboutNofx', language)}
               </span>
             </motion.div>
@@ -80,9 +80,9 @@ export default function AboutSection({ language }: AboutSectionProps) {
                 >
                   <div
                     className="w-10 h-10 rounded-lg flex items-center justify-center"
-                    style={{ background: 'rgba(240, 185, 11, 0.1)' }}
+                    style={{ background: 'rgba(231, 129, 253, 0.1)' }}
                   >
-                    <feature.icon className="w-5 h-5" style={{ color: '#F0B90B' }} />
+                    <feature.icon className="w-5 h-5" style={{ color: '#E781FD' }} />
                   </div>
                   <div>
                     <div className="text-sm font-semibold" style={{ color: '#EAECEF' }}>
@@ -130,7 +130,7 @@ export default function AboutSection({ language }: AboutSectionProps) {
                 <div style={{ color: '#5E6673' }}>$ git clone https://github.com/NoFxAiOS/nofx.git</div>
                 <div style={{ color: '#5E6673' }}>$ cd nofx && chmod +x start.sh</div>
                 <div style={{ color: '#5E6673' }}>$ ./start.sh start --build</div>
-                <div className="pt-2" style={{ color: '#F0B90B' }}>
+                <div className="pt-2" style={{ color: '#E781FD' }}>
                   ✓ {t('startupMessages1', language)}
                 </div>
                 <div style={{ color: '#0ECB81' }}>
@@ -144,7 +144,7 @@ export default function AboutSection({ language }: AboutSectionProps) {
                   animate={{ opacity: [1, 0.5, 1] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 >
-                  <span style={{ color: '#F0B90B' }}>▸</span>
+                  <span style={{ color: '#E781FD' }}>▸</span>
                   <span style={{ color: '#EAECEF' }}>_</span>
                 </motion.div>
               </div>

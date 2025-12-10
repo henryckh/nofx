@@ -475,7 +475,7 @@ function App() {
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = '#2B3139'
                 e.currentTarget.style.color = '#EAECEF'
-                e.currentTarget.style.borderColor = '#F0B90B'
+                e.currentTarget.style.borderColor = '#E781FD'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = '#1E2329'
@@ -624,13 +624,13 @@ function TraderDetailsPage({
           <div
             className="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center"
             style={{
-              background: 'rgba(240, 185, 11, 0.1)',
-              border: '2px solid rgba(240, 185, 11, 0.3)',
+              background: 'rgba(231, 129, 253, 0.1)',
+              border: '2px solid rgba(231, 129, 253, 0.3)',
             }}
           >
             <svg
               className="w-12 h-12"
-              style={{ color: '#F0B90B' }}
+              style={{ color: '#E781FD' }}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -659,9 +659,9 @@ function TraderDetailsPage({
             onClick={onNavigateToTraders}
             className="px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 active:scale-95"
             style={{
-              background: 'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)',
+              background: 'linear-gradient(135deg, #E781FD 0%, #FF89DF 100%)',
               color: '#0B0E11',
-              boxShadow: '0 4px 12px rgba(240, 185, 11, 0.3)',
+              boxShadow: '0 4px 12px rgba(231, 129, 253, 0.3)',
             }}
           >
             {t('goToTradersPage', language)}
@@ -680,13 +680,13 @@ function TraderDetailsPage({
           <div
             className="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center"
             style={{
-              background: 'rgba(240, 185, 11, 0.1)',
-              border: '2px solid rgba(240, 185, 11, 0.3)',
+              background: 'rgba(231, 129, 253, 0.1)',
+              border: '2px solid rgba(231, 129, 253, 0.3)',
             }}
           >
             <svg
               className="w-12 h-12"
-              style={{ color: '#F0B90B' }}
+              style={{ color: '#E781FD' }}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -715,9 +715,9 @@ function TraderDetailsPage({
             onClick={onNavigateToTraders}
             className="px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 active:scale-95"
             style={{
-              background: 'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)',
+              background: 'linear-gradient(135deg, #E781FD 0%, #FF89DF 100%)',
               color: '#0B0E11',
-              boxShadow: '0 4px 12px rgba(240, 185, 11, 0.3)',
+              boxShadow: '0 4px 12px rgba(231, 129, 253, 0.3)',
             }}
           >
             {t('goToTradersPage', language)}
@@ -763,9 +763,9 @@ function TraderDetailsPage({
         className="mb-6 rounded p-6 animate-scale-in"
         style={{
           background:
-            'linear-gradient(135deg, rgba(240, 185, 11, 0.15) 0%, rgba(252, 213, 53, 0.05) 100%)',
-          border: '1px solid rgba(240, 185, 11, 0.2)',
-          boxShadow: '0 0 30px rgba(240, 185, 11, 0.15)',
+            'linear-gradient(135deg, rgba(231, 129, 253, 0.15) 0%, rgba(255, 137, 223, 0.05) 100%)',
+          border: '1px solid rgba(231, 129, 253, 0.2)',
+          boxShadow: '0 0 30px rgba(231, 129, 253, 0.15)',
         }}
       >
         <div className="flex items-start justify-between mb-3">
@@ -913,9 +913,9 @@ function TraderDetailsPage({
                 <div
                   className="text-xs px-3 py-1 rounded"
                   style={{
-                    background: 'rgba(240, 185, 11, 0.1)',
-                    color: '#F0B90B',
-                    border: '1px solid rgba(240, 185, 11, 0.2)',
+                    background: 'rgba(231, 129, 253, 0.1)',
+                    color: '#E781FD',
+                    border: '1px solid rgba(231, 129, 253, 0.2)',
                   }}
                 >
                   {positions.length} {t('active', language)}
@@ -1042,7 +1042,7 @@ function TraderDetailsPage({
                         </td>
                         <td
                           className="px-1 py-3 font-mono whitespace-nowrap text-center"
-                          style={{ color: '#F0B90B' }}
+                          style={{ color: '#E781FD' }}
                         >
                           {pos.leverage}x
                         </td>

@@ -28,7 +28,7 @@ function TweetCard({ quote, authorName, handle, avatarUrl, tweetUrl, delay }: Tw
       transition={{ delay }}
       whileHover={{
         y: -4,
-        borderColor: 'rgba(240, 185, 11, 0.3)',
+        borderColor: 'rgba(231, 129, 253, 0.3)',
       }}
     >
       {/* Header */}
@@ -83,7 +83,7 @@ function TweetCard({ quote, authorName, handle, avatarUrl, tweetUrl, delay }: Tw
           <span>Like</span>
         </div>
         <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
-          <ExternalLink className="w-3.5 h-3.5" style={{ color: '#F0B90B' }} />
+          <ExternalLink className="w-3.5 h-3.5" style={{ color: '#E781FD' }} />
         </div>
       </div>
     </motion.a>

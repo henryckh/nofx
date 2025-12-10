@@ -39,13 +39,24 @@ export class CryptoService {
   }
 
   static async fetchCryptoConfig(): Promise<CryptoConfig> {
-    const response = await fetch('/api/crypto/config')
-    if (!response.ok) {
-      throw new Error(`Failed to fetch crypto config: ${response.statusText}`)
+    try {
+      const response = await fetch('/api/crypto/config')
+      if (!response.ok) {
+        // If endpoint doesn't exist (404) or crypto is not configured, return default
+        if (response.status === 404) {
+          this._transportEncryption = false
+          return { transport_encryption: false }
+        }
+        throw new Error(`Failed to fetch crypto config: ${response.statusText}`)
+      }
+      const data = await response.json()
+      this._transportEncryption = data.transport_encryption
+      return data
+    } catch (error) {
+      // If fetch fails (network error, CORS, etc.), assume crypto is disabled
+      this._transportEncryption = false
+      return { transport_encryption: false }
     }
-    const data = await response.json()
-    this._transportEncryption = data.transport_encryption
-    return data
   }
 
   private static async importPublicKey(pem: string): Promise<CryptoKey> {

@@ -195,7 +195,7 @@ export function TraderConfigModal({
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-[#2B3139] bg-gradient-to-r from-[#1E2329] to-[#252B35] sticky top-0 z-10 rounded-t-xl">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#F0B90B] to-[#E1A706] flex items-center justify-center text-black">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#E781FD] to-[#D821FF] flex items-center justify-center text-black">
               {isEditMode ? (
                 <Pencil className="w-5 h-5" />
               ) : (
@@ -227,7 +227,7 @@ export function TraderConfigModal({
           {/* Basic Info */}
           <div className="bg-[#0B0E11] border border-[#2B3139] rounded-lg p-5">
             <h3 className="text-lg font-semibold text-[#EAECEF] mb-5 flex items-center gap-2">
-              <span className="text-[#F0B90B]">1</span> 基础配置
+              <span className="text-[#E781FD]">1</span> 基础配置
             </h3>
             <div className="space-y-4">
               <div>
@@ -240,7 +240,7 @@ export function TraderConfigModal({
                   onChange={(e) =>
                     handleInputChange('trader_name', e.target.value)
                   }
-                  className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#F0B90B] focus:outline-none"
+                  className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#E781FD] focus:outline-none"
                   placeholder="请输入交易员名称"
                 />
               </div>
@@ -254,7 +254,7 @@ export function TraderConfigModal({
                     onChange={(e) =>
                       handleInputChange('ai_model', e.target.value)
                     }
-                    className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#F0B90B] focus:outline-none"
+                    className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#E781FD] focus:outline-none"
                   >
                     {availableModels.map((model) => (
                       <option key={model.id} value={model.id}>
@@ -272,7 +272,7 @@ export function TraderConfigModal({
                     onChange={(e) =>
                       handleInputChange('exchange_id', e.target.value)
                     }
-                    className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#F0B90B] focus:outline-none"
+                    className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#E781FD] focus:outline-none"
                   >
                     {availableExchanges.map((exchange) => (
                       <option key={exchange.id} value={exchange.id}>
@@ -293,12 +293,12 @@ export function TraderConfigModal({
                         href={regLink.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-2 inline-flex items-center gap-1.5 text-xs text-[#848E9C] hover:text-[#F0B90B] transition-colors"
+                        className="mt-2 inline-flex items-center gap-1.5 text-xs text-[#848E9C] hover:text-[#E781FD] transition-colors"
                       >
                         <UserPlus className="w-3.5 h-3.5" />
                         <span>还没有交易所账号？点击注册</span>
                         {regLink.hasReferral && (
-                          <span className="px-1.5 py-0.5 bg-[#F0B90B]/10 text-[#F0B90B] rounded text-[10px]">
+                          <span className="px-1.5 py-0.5 bg-[#E781FD]/10 text-[#E781FD] rounded text-[10px]">
                             折扣优惠
                           </span>
                         )}
@@ -314,8 +314,8 @@ export function TraderConfigModal({
           {/* Strategy Selection */}
           <div className="bg-[#0B0E11] border border-[#2B3139] rounded-lg p-5">
             <h3 className="text-lg font-semibold text-[#EAECEF] mb-5 flex items-center gap-2">
-              <span className="text-[#F0B90B]">2</span> 选择交易策略
-              <Sparkles className="w-4 h-4 text-[#F0B90B]" />
+              <span className="text-[#E781FD]">2</span> 选择交易策略
+              <Sparkles className="w-4 h-4 text-[#E781FD]" />
             </h3>
             <div className="space-y-4">
               <div>
@@ -327,7 +327,7 @@ export function TraderConfigModal({
                   onChange={(e) =>
                     handleInputChange('strategy_id', e.target.value)
                   }
-                  className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#F0B90B] focus:outline-none"
+                  className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#E781FD] focus:outline-none"
                 >
                   <option value="">-- 不使用策略（手动配置）--</option>
                   {strategies.map((strategy) => (
@@ -349,7 +349,7 @@ export function TraderConfigModal({
               {selectedStrategy && (
                 <div className="mt-3 p-4 bg-[#1E2329] border border-[#2B3139] rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-[#F0B90B] text-sm font-medium">
+                    <span className="text-[#E781FD] text-sm font-medium">
                       策略详情
                     </span>
                     {selectedStrategy.is_active && (
@@ -379,7 +379,7 @@ export function TraderConfigModal({
           {/* Trading Parameters */}
           <div className="bg-[#0B0E11] border border-[#2B3139] rounded-lg p-5">
             <h3 className="text-lg font-semibold text-[#EAECEF] mb-5 flex items-center gap-2">
-              <span className="text-[#F0B90B]">3</span> 交易参数
+              <span className="text-[#E781FD]">3</span> 交易参数
             </h3>
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
@@ -393,7 +393,7 @@ export function TraderConfigModal({
                       onClick={() => handleInputChange('is_cross_margin', true)}
                       className={`flex-1 px-3 py-2 rounded text-sm ${
                         formData.is_cross_margin
-                          ? 'bg-[#F0B90B] text-black'
+                          ? 'bg-[#E781FD] text-black'
                           : 'bg-[#0B0E11] text-[#848E9C] border border-[#2B3139]'
                       }`}
                     >
@@ -406,7 +406,7 @@ export function TraderConfigModal({
                       }
                       className={`flex-1 px-3 py-2 rounded text-sm ${
                         !formData.is_cross_margin
-                          ? 'bg-[#F0B90B] text-black'
+                          ? 'bg-[#E781FD] text-black'
                           : 'bg-[#0B0E11] text-[#848E9C] border border-[#2B3139]'
                       }`}
                     >
@@ -428,7 +428,7 @@ export function TraderConfigModal({
                         : 3
                       handleInputChange('scan_interval_minutes', safeValue)
                     }}
-                    className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#F0B90B] focus:outline-none"
+                    className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#E781FD] focus:outline-none"
                     min="3"
                     max="60"
                     step="1"
@@ -450,7 +450,7 @@ export function TraderConfigModal({
                       type="button"
                       onClick={handleFetchCurrentBalance}
                       disabled={isFetchingBalance}
-                      className="px-3 py-1 text-xs bg-[#F0B90B] text-black rounded hover:bg-[#E1A706] transition-colors disabled:bg-[#848E9C] disabled:cursor-not-allowed"
+                      className="px-3 py-1 text-xs bg-[#E781FD] text-black rounded hover:bg-[#D821FF] transition-colors disabled:bg-[#848E9C] disabled:cursor-not-allowed"
                     >
                       {isFetchingBalance ? '获取中...' : '获取当前余额'}
                     </button>
@@ -464,7 +464,7 @@ export function TraderConfigModal({
                         Number(e.target.value)
                       )
                     }
-                    className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#F0B90B] focus:outline-none"
+                    className="w-full px-3 py-2 bg-[#0B0E11] border border-[#2B3139] rounded text-[#EAECEF] focus:border-[#E781FD] focus:outline-none"
                     min="100"
                     step="0.01"
                   />
@@ -484,7 +484,7 @@ export function TraderConfigModal({
                 <div className="p-3 bg-[#1E2329] border border-[#2B3139] rounded flex items-center gap-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="w-4 h-4 text-[#F0B90B]"
+                    className="w-4 h-4 text-[#E781FD]"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -523,7 +523,7 @@ export function TraderConfigModal({
                 !formData.ai_model ||
                 !formData.exchange_id
               }
-              className="px-8 py-3 bg-gradient-to-r from-[#F0B90B] to-[#E1A706] text-black rounded-lg hover:from-[#E1A706] hover:to-[#D4951E] transition-all duration-200 disabled:bg-[#848E9C] disabled:cursor-not-allowed font-medium shadow-lg"
+              className="px-8 py-3 bg-gradient-to-r from-[#E781FD] to-[#D821FF] text-black rounded-lg hover:from-[#D821FF] hover:to-[#D00CFA] transition-all duration-200 disabled:bg-[#848E9C] disabled:cursor-not-allowed font-medium shadow-lg"
             >
               {isSaving ? '保存中...' : isEditMode ? '保存修改' : '创建交易员'}
             </button>

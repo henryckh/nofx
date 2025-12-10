@@ -423,7 +423,7 @@ export function BacktestPage() {
                 ? '#F6465D'
                 : toast.tone === 'success'
                 ? '#0ECB81'
-                : '#F0B90B',
+                : '#E781FD',
             borderColor:
               toast.tone === 'error'
                 ? 'rgba(246,70,93,0.3)'
@@ -450,7 +450,7 @@ export function BacktestPage() {
               type="submit"
               disabled={isStarting || !selectedModel || !selectedModel.enabled}
               className="px-4 py-2 rounded text-xs font-bold transition-opacity disabled:opacity-50"
-              style={{ background: '#F0B90B', color: '#000' }}
+              style={{ background: '#E781FD', color: '#000' }}
             >
               {isStarting ? tr('starting') : tr('start')}
             </button>
@@ -599,8 +599,8 @@ export function BacktestPage() {
                       background: active
                         ? 'rgba(240,185,11,0.12)'
                         : 'transparent',
-                      borderColor: active ? '#F0B90B' : '#2B3139',
-                      color: active ? '#F0B90B' : '#848E9C',
+                      borderColor: active ? '#E781FD' : '#2B3139',
+                      color: active ? '#E781FD' : '#848E9C',
                     }}
                   >
                     {tf}
@@ -917,7 +917,7 @@ export function BacktestPage() {
                   </div>
                 </div>
                 <button
-                  className="text-xs text-[#F0B90B]"
+                  className="text-xs text-[#E781FD]"
                   onClick={handleExport}
                 >
                   {tr('detail.exportLabel')}
@@ -980,7 +980,7 @@ export function BacktestPage() {
               <div className="flex justify-between items-center">
                 <span style={{ color: '#EAECEF' }}>{tr('aiTrace.title')}</span>
                 <button
-                  className="text-[#F0B90B]"
+                  className="text-[#E781FD]"
                   onClick={() => setTrace(undefined)}
                 >
                   {tr('aiTrace.clear')}
@@ -1104,7 +1104,7 @@ export function BacktestPage() {
                       <Line
                         type="monotone"
                         dataKey="equity"
-                        stroke="#F0B90B"
+                        stroke="#E781FD"
                         dot={false}
                         strokeWidth={2}
                       />

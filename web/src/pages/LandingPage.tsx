@@ -58,7 +58,7 @@ export function LandingPage() {
           {/* Background Glow */}
           <div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl opacity-30"
-            style={{ background: 'radial-gradient(circle, rgba(240, 185, 11, 0.15) 0%, transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle, rgba(231, 129, 253, 0.15) 0%, transparent 70%)' }}
           />
 
           <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
@@ -93,13 +93,13 @@ export function LandingPage() {
                 onClick={() => setShowLoginModal(true)}
                 className="group flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-lg"
                 style={{
-                  background: 'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)',
+                  background: 'linear-gradient(135deg, #E781FD 0%, #FF89DF 100%)',
                   color: '#0B0E11',
-                  boxShadow: '0 4px 24px rgba(240, 185, 11, 0.3)',
+                  boxShadow: '0 4px 24px rgba(231, 129, 253, 0.3)',
                 }}
                 whileHover={{
                   scale: 1.02,
-                  boxShadow: '0 8px 32px rgba(240, 185, 11, 0.4)',
+                  boxShadow: '0 8px 32px rgba(231, 129, 253, 0.4)',
                 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -120,7 +120,7 @@ export function LandingPage() {
                 whileHover={{
                   scale: 1.02,
                   background: 'rgba(255, 255, 255, 0.08)',
-                  borderColor: 'rgba(240, 185, 11, 0.3)',
+                  borderColor: 'rgba(231, 129, 253, 0.3)',
                 }}
                 whileTap={{ scale: 0.98 }}
               >

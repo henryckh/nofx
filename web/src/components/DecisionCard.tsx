@@ -75,7 +75,7 @@ export function DecisionCard({ decision, language }: DecisionCardProps) {
           <button
             onClick={() => setShowCoT(!showCoT)}
             className="flex items-center gap-2 text-sm transition-colors"
-            style={{ color: '#F0B90B' }}
+            style={{ color: '#E781FD' }}
           >
             <span className="font-semibold">
               📤 {t('aiThinking', language)}

@@ -137,9 +137,9 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
       <div className="flex flex-col items-center justify-center py-20">
         <div className="relative">
           <div className="w-16 h-16 border-4 border-t-transparent rounded-full animate-spin"
-               style={{ borderColor: '#F0B90B', borderTopColor: 'transparent' }} />
+               style={{ borderColor: '#E781FD', borderTopColor: 'transparent' }} />
           <TrendingUp className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                      style={{ color: '#F0B90B' }} />
+                      style={{ color: '#E781FD' }} />
         </div>
         <div className="text-sm mt-4 font-medium" style={{ color: '#848E9C' }}>
           {t('loadingChartData', language) || 'Loading chart data...'}
@@ -152,8 +152,8 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
     return (
       <div className="flex flex-col items-center justify-center py-20">
         <div className="w-20 h-20 rounded-2xl flex items-center justify-center mb-4"
-             style={{ background: 'rgba(240, 185, 11, 0.1)' }}>
-          <BarChart3 className="w-10 h-10" style={{ color: '#F0B90B', opacity: 0.6 }} />
+             style={{ background: 'rgba(231, 129, 253, 0.1)' }}>
+          <BarChart3 className="w-10 h-10" style={{ color: '#E781FD', opacity: 0.6 }} />
         </div>
         <div className="text-lg font-bold mb-2" style={{ color: '#EAECEF' }}>
           {t('noHistoricalData', language)}
@@ -210,13 +210,13 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
           className="rounded-xl p-4 shadow-2xl backdrop-blur-sm"
           style={{
             background: 'rgba(30, 35, 41, 0.95)',
-            border: '1px solid rgba(240, 185, 11, 0.2)',
+            border: '1px solid rgba(231, 129, 253, 0.2)',
             minWidth: '200px'
           }}
         >
           <div className="flex items-center gap-2 mb-3 pb-2" style={{ borderBottom: '1px solid #2B3139' }}>
-            <Zap className="w-3.5 h-3.5" style={{ color: '#F0B90B' }} />
-            <span className="text-xs font-medium" style={{ color: '#F0B90B' }}>
+            <Zap className="w-3.5 h-3.5" style={{ color: '#E781FD' }} />
+            <span className="text-xs font-medium" style={{ color: '#E781FD' }}>
               {dateStr} {data.time}
             </span>
           </div>
@@ -278,8 +278,8 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
           <div key={trader.trader_id}
                className="flex items-center gap-2 px-3 py-1.5 rounded-full transition-all hover:scale-105"
                style={{
-                 background: idx === 0 ? 'rgba(240, 185, 11, 0.15)' : 'rgba(43, 49, 57, 0.5)',
-                 border: `1px solid ${idx === 0 ? 'rgba(240, 185, 11, 0.3)' : '#2B3139'}`
+                 background: idx === 0 ? 'rgba(231, 129, 253, 0.15)' : 'rgba(43, 49, 57, 0.5)',
+                 border: `1px solid ${idx === 0 ? 'rgba(231, 129, 253, 0.3)' : '#2B3139'}`
                }}>
             <div className="w-2 h-2 rounded-full"
                  style={{ background: traderColor(trader.trader_id) }} />
@@ -306,7 +306,7 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
           transform: 'translate(-50%, -50%)',
           fontSize: '80px',
           fontWeight: 'bold',
-          color: 'rgba(240, 185, 11, 0.03)',
+          color: 'rgba(231, 129, 253, 0.03)',
           zIndex: 1,
           pointerEvents: 'none',
           fontFamily: 'monospace',
@@ -451,11 +451,11 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
       {/* Bottom Stats */}
       <div className="grid grid-cols-4 gap-2">
         <div className="p-3 rounded-lg text-center"
-             style={{ background: 'rgba(240, 185, 11, 0.05)', border: '1px solid rgba(240, 185, 11, 0.1)' }}>
+             style={{ background: 'rgba(231, 129, 253, 0.05)', border: '1px solid rgba(231, 129, 253, 0.1)' }}>
           <div className="text-[10px] uppercase tracking-wider mb-1" style={{ color: '#848E9C' }}>
             {t('leader', language)}
           </div>
-          <div className="text-sm font-bold truncate" style={{ color: '#F0B90B' }}>
+          <div className="text-sm font-bold truncate" style={{ color: '#E781FD' }}>
             {leader?.trader_name || '-'}
           </div>
         </div>

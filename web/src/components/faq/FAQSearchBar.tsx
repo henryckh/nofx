@@ -29,8 +29,8 @@ export function FAQSearchBar({
           color: '#EAECEF',
         }}
         onFocus={(e) => {
-          e.target.style.borderColor = '#F0B90B'
-          e.target.style.boxShadow = '0 0 0 3px rgba(240, 185, 11, 0.1)'
+          e.target.style.borderColor = '#E781FD'
+          e.target.style.boxShadow = '0 0 0 3px rgba(231, 129, 253, 0.1)'
         }}
         onBlur={(e) => {
           e.target.style.borderColor = '#2B3139'
